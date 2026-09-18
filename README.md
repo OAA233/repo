@@ -40,6 +40,18 @@ GitHub Pages 国外快、国内常被墙；jsDelivr 是国内 CDN，不通就依
 | com.a0.doubletapflipcameraplus | 0.0.7 | 双击翻转相机 |
 | com.a0.resumerecafterflip | 0.8.0 | 相机翻转打断录像后自动续录，停止时把各分段无损拼成一个完整视频 |
 
+## 各插件的工程位置
+
+都在 `~/Desktop/王源/` 下，与本源同级：
+
+| 工程 | 对应包 | 构建方式 |
+|---|---|---|
+| `ResumeRecAfterFlip/` | com.a0.resumerecafterflip | `./build.sh`（加 `--release` 会自动拷进 debs/ 并重建索引） |
+| `XHS-NoSwipe/` | com.a0.noswipe | `v7.15/build_deb.sh`（独立 git 仓库 RedNote-Video-NoSwipe） |
+| `Mirror17/` | com.a0.mirror17dim / mirror17ka | Swift 工程，产物在 `iphone-rootless/` |
+
+新增包时：工程放这里 → 改 `control`（`Package: com.a0.*`、`Author/Maintainer: 王`、`Section: Tweaks`）→ 打包丢进 `debs/` → 放 `icons/<包名>.png`（180×180，缺省用 default.png）→ 重跑本脚本 → 部署。
+
 ## 发新版
 
 1. 新 .deb 丢进 `debs/`（同名多版本也行，装的时候取最高版）

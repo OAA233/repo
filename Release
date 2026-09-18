@@ -6,12 +6,12 @@ Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
 Description: 王的插件源
-Date: Fri, 18 Sep 2026 13:33:02 GMT
+Date: Fri, 18 Sep 2026 13:43:16 GMT
 MD5Sum:
  db0b388ffdfbb7e9850878e2d42ce43c 2999 Packages
  2ad2a92761bace8ea9e25d4a25e6ccbf 1550 Packages.bz2
- 0ca82b920ca0575107d1e161d0e927ea 1419 Packages.gz
+ 340e369de9b713610bdb76d83c44bf28 1419 Packages.gz
 SHA256:
  98926360529eb10a8034cb5c7c6981b4a47b6f676d7cd0934cf1d222a0de422e 2999 Packages
  d03b5ea7f9b03232f78653979142a44f33aaf3ea81f746e82f7fa62e3bb3866c 1550 Packages.bz2
- 933e09c67b22b7aa5891b123f50f31fc25610f1bcde5bafadd6f4eda19a83b73 1419 Packages.gz
+ 4f7a21c0935c3bc85b6f26516a420a63dde8b373e82562db9d7494880614665a 1419 Packages.gz

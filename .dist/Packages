@@ -66,8 +66,11 @@ Author: 王
 Maintainer: 王
 Section: Tweaks
 Depends: firmware (>= 15.0), mobilesubstrate
+Conflicts: com.local.resumerecafterflip
+Replaces: com.local.resumerecafterflip
+Provides: com.local.resumerecafterflip
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.resumerecafterflip.png
 Filename: debs/com.a0.resumerecafterflip_0.8.0_iphoneos-arm64.deb
-Size: 16818
-SHA256: 86e702b0d0be9305c963a092ab094a9628fc065696b8d7f2848af8c8c67d7664
-MD5sum: e8ad3b9097d2105efb9d73b4e58a7ed7
+Size: 16846
+SHA256: 20f9cd7b74a03980785fb31f451218e567bd95993b02055498730f94d72342d4
+MD5sum: c776fdbb14969aa986c3f361779a63c8
