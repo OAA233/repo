@@ -113,6 +113,26 @@ def write_all():
     open(os.path.join(ROOT, "Release"), "w").write("\n".join(lines) + "\n")
     open(os.path.join(ROOT, ".nojekyll"), "w").write("")
 
+    # 给人看的落地页 (.nojekyll 关掉了 Jekyll，没有 index.html 就是 404)
+    rows = []
+    for s in text.strip().split("\n\n"):
+        d = dict(parse_control(s))
+        rows.append(f"<tr><td>{d['Name']}</td><td>{d['Version']}</td><td>{d['Description'].splitlines()[0]}</td></tr>")
+    open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(f"""<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{LABEL}</title>
+<style>body{{font:16px/1.6 -apple-system,sans-serif;max-width:40em;margin:2em auto;padding:0 1em}}
+a.btn{{display:inline-block;background:#5b5bd6;color:#fff;padding:.7em 1.2em;border-radius:.6em;text-decoration:none}}
+code{{background:#0001;padding:.15em .4em;border-radius:.3em}}table{{border-collapse:collapse;width:100%}}
+td,th{{border-bottom:1px solid #8884;padding:.4em .3em;text-align:left;font-size:.95em}}</style>
+<h2>{LABEL}</h2>
+<p><a class="btn" href="sileo://source/https://oaa233.github.io/repo/">添加到 Sileo</a></p>
+<p>或手动加源：<code>https://oaa233.github.io/repo/</code></p>
+<table><tr><th>包</th><th>版本</th><th>说明</th></tr>
+{chr(10).join(rows)}
+</table>
+""")
+
 
 # ---------- 校验 ----------
 def check():
