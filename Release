@@ -1,17 +1,17 @@
-Origin: a0
-Label: a0 repo
+Origin: 王
+Label: 王
 Suite: stable
 Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
-Description: a0 tweaks repo
-Date: Fri, 18 Sep 2026 13:17:02 GMT
+Description: 王的插件源
+Date: Fri, 18 Sep 2026 13:26:01 GMT
 MD5Sum:
- c14103e625673055d011b007b35a2256 2115 Packages
- a100ec7226fe4f3ced76db9ab349b412 1198 Packages.bz2
- e3f19b674f404a142cb4dc7f0e7169b7 1049 Packages.gz
+ 6f90dd1559bb4d79cfdf3b0c24746fa8 2138 Packages
+ 47ce19922d5b95b79652c055aa98c676 1183 Packages.bz2
+ 2e6ae0ff472b520b522763e866fd5c78 1046 Packages.gz
 SHA256:
- 3b97365e34e7155ed7c0840c92571d7e0b251d227c144fa31058e83605dc85e8 2115 Packages
- 4f6b7ba14b34a5d93e53686ea2a0321f58defcd520dc3e8c86a35115c92f253a 1198 Packages.bz2
- a686a93b75c152d4d23459b576bb9cbfc2c1b718d7ea45398bc26f15ed6ea706 1049 Packages.gz
+ ce6275c465b3c411166fce912a6e0b9da80aa1b0d3b4ec79dd8f593ea4746005 2138 Packages
+ 214ee21aae4cd8ff2740906e39eb154e27d5c3b76dfa62fc075d362f17270a1c 1183 Packages.bz2
+ b60929aa06841c4f5ecb4ed907be461120c1309d5c468d9faccc069593c9a7e8 1046 Packages.gz

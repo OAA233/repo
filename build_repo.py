@@ -15,10 +15,13 @@ DEBS = os.path.join(ROOT, "debs")
 PAID = os.path.join(ROOT, "paid.txt")
 
 # 源的身份信息 —— 改成你自己的
-ORIGIN = "a0"
-LABEL = "a0 repo"
-DESCRIPTION = "a0 tweaks repo"
+ORIGIN = "王"
+LABEL = "王"
+DESCRIPTION = "王的插件源"
 ARCHS = "iphoneos-arm iphoneos-arm64"
+
+# 包里 control 写的还是旧占位名，仓库侧统一显示成这个（改 deb 要重新打包，先不动 deb）
+AUTHOR = "王"
 
 # 可用地址，第 1 个是主源（Cloudflare Pages），后面是国内/海外备用
 MIRRORS = ["https://sileo-repo.pages.dev/",
@@ -83,6 +86,9 @@ def build_packages():
         blob = open(path, "rb").read()
 
         # 付费标记 (合并原本可能已有的 Tag)
+        for k in ("Author", "Maintainer"):          # deb 里是旧占位名，仓库侧改写
+            if d.get(k, "") in ("a0", ""):
+                d[k] = AUTHOR
         if d["Package"] in paid:
             tags = [t.strip() for t in d.get("Tag", "").split(",") if t.strip()]
             if "cydia::commercial" not in tags:

@@ -3,7 +3,8 @@ Name: DoubleTapFlipCamera Plus
 Version: 0.0.7
 Architecture: iphoneos-arm64
 Description: Double-tap to flip camera while idle; probe-logged v4.
-Author: a0
+Author: 王
+Maintainer: 王
 Section: Tweaks
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.doubletapflipcameraplus.png
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
@@ -16,8 +17,8 @@ Name: Mirror17 Dim
 Version: 1.0.0
 Architecture: iphoneos-arm64
 Description: 有镜像客户端连接时把 iPhone 屏幕亮度降到最低，全部断开后恢复原亮度（配合 TrollVNC 使用，不修改 TrollVNC 本体）
-Author: a0
-Maintainer: a0
+Author: 王
+Maintainer: 王
 Section: Tweaks
 Depends: firmware (>= 14.0)
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
@@ -31,8 +32,8 @@ Name: Mirror17 Keep Awake
 Version: 1.0.0
 Architecture: iphoneos-arm64
 Description: 投屏期间禁止 iPhone 自动锁屏（注入 SpringBoard，设 idleTimerDisabled）。配合 com.a0.mirror17dim 使用
-Author: a0
-Maintainer: a0
+Author: 王
+Maintainer: 王
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
@@ -46,8 +47,8 @@ Name: XHS NoSwipe (net_buffer_aux)
 Version: 7.15
 Architecture: iphoneos-arm64
 Description: XHS video swipe blocker + image-text guard, for com.xingin.discover only
-Author: a0
-Maintainer: a0
+Author: 王
+Maintainer: 王
 Section: Tweaks
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png
 Filename: debs/com.a0.noswipe_7.15.deb

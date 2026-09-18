@@ -1,6 +1,8 @@
-# a0 的 Sileo / Zebra 源
+# 王的 Sileo / Zebra 源
 
 纯静态 APT 源，没有服务端。
+
+源名（`Origin`/`Label`）、落地页标题、包列表里显示的作者名，都在 `build_repo.py` 顶上那几个常量里 —— 改完重跑一次 `./deploy.sh` 就生效。里面 `AUTHOR = "王"` 那行的作用是把 deb 控制文件里的旧占位名统一显示成现在这个名字（deb 本身没动，装上以后本地包信息里还是旧名）。
 
 ## 换到自己的地址（Cloudflare Pages，免备案、免费）
 
