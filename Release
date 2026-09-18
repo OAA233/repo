@@ -6,12 +6,12 @@ Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
 Description: 王的插件源
-Date: Fri, 18 Sep 2026 13:26:01 GMT
+Date: Fri, 18 Sep 2026 13:33:02 GMT
 MD5Sum:
- 6f90dd1559bb4d79cfdf3b0c24746fa8 2138 Packages
- 47ce19922d5b95b79652c055aa98c676 1183 Packages.bz2
- 2e6ae0ff472b520b522763e866fd5c78 1046 Packages.gz
+ db0b388ffdfbb7e9850878e2d42ce43c 2999 Packages
+ 2ad2a92761bace8ea9e25d4a25e6ccbf 1550 Packages.bz2
+ 0ca82b920ca0575107d1e161d0e927ea 1419 Packages.gz
 SHA256:
- ce6275c465b3c411166fce912a6e0b9da80aa1b0d3b4ec79dd8f593ea4746005 2138 Packages
- 214ee21aae4cd8ff2740906e39eb154e27d5c3b76dfa62fc075d362f17270a1c 1183 Packages.bz2
- b60929aa06841c4f5ecb4ed907be461120c1309d5c468d9faccc069593c9a7e8 1046 Packages.gz
+ 98926360529eb10a8034cb5c7c6981b4a47b6f676d7cd0934cf1d222a0de422e 2999 Packages
+ d03b5ea7f9b03232f78653979142a44f33aaf3ea81f746e82f7fa62e3bb3866c 1550 Packages.bz2
+ 933e09c67b22b7aa5891b123f50f31fc25610f1bcde5bafadd6f4eda19a83b73 1419 Packages.gz
