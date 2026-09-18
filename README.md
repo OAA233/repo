@@ -31,6 +31,16 @@ GitHub Pages 国外快、国内常被墙；jsDelivr 是国内 CDN，不通就依
 
 Pages 约 1 分钟后生效。
 
+## 图标
+
+Sileo / Zebra 包列表里每个包的图标来自这里：
+
+- `icons/<包名>.png` —— 只作用于那一个包，如 `icons/com.a0.noswipe.png`
+- `icons/default.png` —— 没单独给的包用这张
+- `CydiaIcon.png` —— 源本身在源列表里的图标
+
+都建议 180×180 PNG（透明底最好，深色列表里不糊）。换图后重跑脚本 + push + 清缓存即可。
+
 ## 付费包
 
 把包标识符一行一个写进 `paid.txt`，重跑脚本 → 该包会带 `Tag: cydia::commercial`（Sileo 认这个才会走购买/授权流程）。
