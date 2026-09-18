@@ -9,7 +9,7 @@
    "views": [
     {
      "class": "DepictionHeaderView",
-     "title": "Mirror17 Keep Awake"
+     "title": "Mirror17"
     },
     {
      "class": "DepictionSubheaderView",
