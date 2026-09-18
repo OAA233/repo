@@ -6,12 +6,12 @@ Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
 Description: a0 tweaks repo
-Date: Fri, 18 Sep 2026 11:30:13 GMT
+Date: Fri, 18 Sep 2026 11:35:40 GMT
 MD5Sum:
  8091dae12414489b46d51a4d9cf32a39 1809 Packages
  ce1eb6a1d2ac2500b61d1c04f9b4f62f 1096 Packages.bz2
- 48bd3573184a5e0b1071cf1afca3bd32 976 Packages.gz
+ 9b59527d6f10e2d6753a6cc4483a6959 976 Packages.gz
 SHA256:
  459a76163775fefb861bd9c3016b1c69ebff239b30b4b308b7e206ab6e0d7d78 1809 Packages
  b53a3cac61634047a391163eb4eb1b1088176fcf10e965a391c7beebde0372be 1096 Packages.bz2
- 532cc80c913d5b6749879d928d4b68e4562d70d6621fe19c2faa9cbaf6e98655 976 Packages.gz
+ fe14ca3ea4435053d04f9fe1106c4e9ae67fbb869421b338afc87510dc6d8617 976 Packages.gz

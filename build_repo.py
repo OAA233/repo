@@ -20,6 +20,12 @@ LABEL = "a0 repo"
 DESCRIPTION = "a0 tweaks repo"
 ARCHS = "iphoneos-arm iphoneos-arm64"
 
+# 4 个可用地址：第 1 个 GitHub Pages，后面 3 个 jsDelivr 的国内可用节点
+MIRRORS = ["https://oaa233.github.io/repo/",
+           "https://cdn.jsdelivr.net/gh/OAA233/repo@main/",
+           "https://fastly.jsdelivr.net/gh/OAA233/repo@main/",
+           "https://testingcf.jsdelivr.net/gh/OAA233/repo@main/"]
+
 
 # ---------- .deb 读取 (ar + control.tar.*) ----------
 def ar_members(blob):
@@ -122,16 +128,22 @@ def write_all():
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{LABEL}</title>
 <style>body{{font:16px/1.6 -apple-system,sans-serif;max-width:40em;margin:2em auto;padding:0 1em}}
-a.btn{{display:inline-block;background:#5b5bd6;color:#fff;padding:.7em 1.2em;border-radius:.6em;text-decoration:none}}
-code{{background:#0001;padding:.15em .4em;border-radius:.3em}}table{{border-collapse:collapse;width:100%}}
-td,th{{border-bottom:1px solid #8884;padding:.4em .3em;text-align:left;font-size:.95em}}</style>
+a.btn{{display:inline-block;background:#5b5bd6;color:#fff;padding:.7em 1.2em;border-radius:.6em;text-decoration:none;margin:.3em .3em .3em 0}}
+code{{background:#0001;padding:.15em .4em;border-radius:.3em;word-break:break-all}}table{{border-collapse:collapse;width:100%}}
+td,th{{border-bottom:1px solid #8884;padding:.4em .3em;text-align:left;font-size:.95em}}
+small{{color:#888}}</style>
 <h2>{LABEL}</h2>
-<p><a class="btn" href="sileo://source/https://oaa233.github.io/repo/">添加到 Sileo</a></p>
-<p>或手动加源：<code>https://oaa233.github.io/repo/</code></p>
+<p><a class="btn" href="sileo://source/{MIRRORS[0]}">添加到 Sileo（主）</a>
+<a class="btn" href="sileo://source/{MIRRORS[1]}">添加到 Sileo（备用）</a></p>
+<p><b>在软件源里手动添加</b>（一行一个，先试第一个）：</p>
+<p><code>{MIRRORS[0]}</code><br><small>GitHub Pages，国外快，国内可能被墙</small></p>
+<p><code>{MIRRORS[1]}</code><br><small>jsDelivr 国内 CDN，不通就换 {MIRRORS[2]} 或 {MIRRORS[3]}</small></p>
+<p><small>⚠️ 添加源时只粘上面这种纯网址，不要粘 <code>sileo://</code> 开头的那种链接（那是给浏览器点击用的）。</small></p>
 <table><tr><th>包</th><th>版本</th><th>说明</th></tr>
 {chr(10).join(rows)}
 </table>
 """)
+
 
 
 # ---------- 校验 ----------
