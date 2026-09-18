@@ -48,7 +48,7 @@ MD5sum: 365d26a522a72409ecfd0711b0cb852e
 
 Package: com.a0.noswipe
 Name: XHS NoSwipe (net_buffer_aux)
-Version: 7.13
+Version: 7.12
 Architecture: iphoneos-arm64
 Description: 小红书禁滑：视频 / 图文详情页禁止继续下滑，只作用于 com.xingin.discover（小红书），不碰别的 App。
 Author: 王源
@@ -57,10 +57,10 @@ Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png?v=eb309fd0
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.noswipe.json
-Filename: debs/com.a0.noswipe_7.13.deb
-Size: 26426
-SHA256: ab42a37569bcfd06bad850ac2098d49426faf6e3ee9120cd538c95802a4c1cb4
-MD5sum: 9cb16f036f94f80842a28adf0ba7c17f
+Filename: debs/com.a0.noswipe_7.12.deb
+Size: 24872
+SHA256: 734ad4be01fbc9f9ddbeec0364a88f1868b2b10927b2f375336d7c9ae5d04515
+MD5sum: 4467976796921039486ec51dc243e977
 
 Package: com.a0.resumerecafterflip
 Name: Camera Resume Rec
