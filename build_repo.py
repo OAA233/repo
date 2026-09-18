@@ -20,12 +20,13 @@ LABEL = "a0 repo"
 DESCRIPTION = "a0 tweaks repo"
 ARCHS = "iphoneos-arm iphoneos-arm64"
 
-# 4 个可用地址：第 1 个 GitHub Pages，后面 3 个 jsDelivr 的国内可用节点
-MIRRORS = ["https://oaa233.github.io/repo/",
+# 可用地址，第 1 个是主源（Cloudflare Pages），后面是国内/海外备用
+MIRRORS = ["https://sileo-repo.pages.dev/",
            "https://cdn.jsdelivr.net/gh/OAA233/repo@main/",
            "https://fastly.jsdelivr.net/gh/OAA233/repo@main/",
-           "https://testingcf.jsdelivr.net/gh/OAA233/repo@main/"]
-# 图标走 jsDelivr（手机在国内也能拉到；Pages 常被墙）
+           "https://oaa233.github.io/repo/"]
+# 图标固定走 jsDelivr（国内实测能拉）。主源如果是 Cloudflare Pages，手机偶尔不通时
+# 图标也不会跟着挂掉。想让图标也走主源就把下面这行改成 MIRRORS[0]。
 ICON_BASE = MIRRORS[1]
 
 

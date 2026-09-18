@@ -1,0 +1,56 @@
+Package: com.a0.doubletapflipcameraplus
+Name: DoubleTapFlipCamera Plus
+Version: 0.0.7
+Architecture: iphoneos-arm64
+Description: Double-tap to flip camera while idle; probe-logged v4.
+Author: a0
+Section: Tweaks
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.doubletapflipcameraplus.png
+Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
+Size: 6298
+SHA256: eff4e9fbb572a36921e4ae05fc3a4ec56e29dc7a3f42d6c5393fe1fa409fe02c
+MD5sum: 2b80f4415e98624ec28bad0a1ca3fb72
+
+Package: com.a0.mirror17dim
+Name: Mirror17 Dim
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: 有镜像客户端连接时把 iPhone 屏幕亮度降到最低，全部断开后恢复原亮度（配合 TrollVNC 使用，不修改 TrollVNC 本体）
+Author: a0
+Maintainer: a0
+Section: Tweaks
+Depends: firmware (>= 14.0)
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
+Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
+Size: 14076
+SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
+MD5sum: 5f071ea7927ad52eec2081f94be3513c
+
+Package: com.a0.mirror17ka
+Name: Mirror17 Keep Awake
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: 投屏期间禁止 iPhone 自动锁屏（注入 SpringBoard，设 idleTimerDisabled）。配合 com.a0.mirror17dim 使用
+Author: a0
+Maintainer: a0
+Section: Tweaks
+Depends: firmware (>= 14.0), ellekit
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
+Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
+Size: 5758
+SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
+MD5sum: 365d26a522a72409ecfd0711b0cb852e
+
+Package: com.a0.noswipe
+Name: XHS NoSwipe (net_buffer_aux)
+Version: 7.15
+Architecture: iphoneos-arm64
+Description: XHS video swipe blocker + image-text guard, for com.xingin.discover only
+Author: a0
+Maintainer: a0
+Section: Tweaks
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png
+Filename: debs/com.a0.noswipe_7.15.deb
+Size: 26848
+SHA256: 6971a2f970b13b9ee825e0b6ed03493bd832e3ef51bf388954356ff81df4f444
+MD5sum: 038f3c082ad8da67a6f0db765f868aa8
