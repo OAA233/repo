@@ -253,7 +253,7 @@ def write_all():
 <p><small>需要 macOS 14+ 和 Apple 芯片。第三方动态库已经内嵌在包里，不用额外装东西；
 但「数据线直控」要 <code>brew install libimobiledevice</code>，「Wi-Fi 直控」要
 <code>brew install --cask tigervnc</code>。没做 Apple 公证，第一次打开可能要在
-「终端」跑 <code>xattr -dr com.apple.quarantine /Applications/我的镜子17.app</code>。</small></p>
+「终端」跑 <code>xattr -dr com.apple.quarantine /Applications/Mirror17.app</code>。</small></p>
 {docs_html}
 <p><small>镜像（主源连不上时用）：{MIRRORS[1]}mac/{quote(macs[0])}</small></p>
 """

@@ -1,4 +1,4 @@
-我的镜子17 for macOS — 安装说明
+Mirror17 for macOS — 安装说明
 ===============================
 
 这个文件夹里的东西是给 Mac 用的，不是越狱插件。
@@ -7,12 +7,12 @@ Sileo / Zebra 装不了它们（那两个只会处理 iPhone 的 .deb），所�
 安装步骤
 --------
 
-1. 下载 Mirror17-mac-<版本>.zip，双击解压得到「我的镜子17.app」。
+1. 下载 Mirror17-mac-<版本>.zip，双击解压得到Mirror17.app。
 2. 把它拖进「应用程序」。
 3. 第一次打开如果提示「已损坏，无法打开」或「无法验证开发者」，
    在「终端」里执行下面这行（把路径换成你放的位置），之后就能正常双击打开：
 
-       xattr -dr com.apple.quarantine /Applications/我的镜子17.app
+       xattr -dr com.apple.quarantine /Applications/Mirror17.app
 
    或者：在访达里按住 Control 点图标 → 打开 → 在弹窗里再点一次「打开」。
    （原因：这个 app 只做了 ad-hoc 签名，没有 Apple 开发者证书，也没花钱做公证。）
@@ -30,7 +30,7 @@ Sileo / Zebra 装不了它们（那两个只会处理 iPhone 的 .deb），所�
 - 走「数据线直控」需要 iproxy：brew install libimobiledevice
 - 走「Wi-Fi 直控」需要 TigerVNC：brew install --cask tigervnc
 - 底部控制条里除最左边那个箭头之外的按键需要授权：
-  系统设置 → 隐私与安全性 → 辅助功能 → 勾上「我的镜子17」
+  系统设置 → 隐私与安全性 → 辅助功能 → 勾上 Mirror17
 
 底部控制条是什么
 ----------------
@@ -49,7 +49,7 @@ Sileo / Zebra 装不了它们（那两个只会处理 iPhone 的 .deb），所�
 iPhone 那边
 -----------
 
-装源里的「我的镜子17」（连接时压暗屏幕）和「我的镜子17 · 常亮」（投屏期间不锁屏），
+装源里的 Mirror17 Dim（连接时压暗屏幕）和 Mirror17 Keep Awake（投屏期间不锁屏），
 再在 iPhone 上打开 TrollVNC、启用服务、设「完全访问密码」并关掉「仅查看」。
 
 关于隐私
