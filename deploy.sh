@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PROJECT=sileo-repo   # 上线地址就是 https://$PROJECT.pages.dev/
+PROJECT=wangyuan-repo   # 上线地址就是 https://$PROJECT.pages.dev/
 
 python3 build_repo.py
 

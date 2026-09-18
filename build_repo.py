@@ -21,13 +21,13 @@ DESCRIPTION = "Wang's rootless tweaks (iOS 17) · 王的无根越狱插件源"
 ARCHS = "iphoneos-arm iphoneos-arm64"
 
 # 包里 control 写的还是旧占位名，仓库侧统一显示成这个（改 deb 要重新打包，先不动 deb）
-AUTHOR = "王"
+AUTHOR = "Wang"
 
 # 可用地址，第 1 个是主源（Cloudflare Pages），后面是国内/海外备用
-MIRRORS = ["https://sileo-repo.pages.dev/",
+MIRRORS = ["https://wangyuan-repo.pages.dev/",
            "https://cdn.jsdelivr.net/gh/OAA233/repo@main/",
            "https://fastly.jsdelivr.net/gh/OAA233/repo@main/",
-           "https://oaa233.github.io/repo/"]
+           "https://sileo-repo.pages.dev/"]
 # 图标固定走 jsDelivr（国内实测能拉）。主源如果是 Cloudflare Pages，手机偶尔不通时
 # 图标也不会跟着挂掉。想让图标也走主源就把下面这行改成 MIRRORS[0]。
 ICON_BASE = MIRRORS[1]
