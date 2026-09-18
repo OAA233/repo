@@ -13,7 +13,7 @@
     },
     {
      "class": "DepictionSubheaderView",
-     "title": "1.0.0 · Wang"
+     "title": "1.0.0 · 王源"
     },
     {
      "class": "DepictionMarkdownView",
@@ -35,7 +35,7 @@
     {
      "class": "DepictionTableTextView",
      "title": "作者",
-     "text": "王"
+     "text": "王源"
     }
    ]
   }

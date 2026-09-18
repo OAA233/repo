@@ -21,17 +21,20 @@ DEBS = os.path.join(ROOT, "debs")
 PAID = os.path.join(ROOT, "paid.txt")
 META = os.path.join(ROOT, "meta")
 SHOTS = os.path.join(ROOT, "shots")
+MAC = os.path.join(ROOT, "mac")            # 非 APT 的普通下载件（Mac 客户端 zip 等）
 DEPICTIONS = os.path.join(ROOT, "depictions")
 ZSTD = shutil.which("zstd") or "/opt/homebrew/bin/zstd"
 
 # 源的身份信息 —— 改成你自己的
-ORIGIN = "Wang's Repo"
-LABEL = "Wang's Repo"
-DESCRIPTION = "Wang's rootless tweaks (iOS 17) · 王的无根越狱插件源"
+ORIGIN = "Wangyuan's Repo"
+LABEL = "Wangyuan's Repo"
+DESCRIPTION = "Wangyuan's rootless tweaks (iOS 17) · 王源的无根越狱插件源"
 ARCHS = "iphoneos-arm iphoneos-arm64"
 
 # 包里 control 写的还是旧占位名，仓库侧统一显示成这个（改 deb 要重新打包，先不动 deb）
-AUTHOR = "Wang"
+AUTHOR = "王源"
+# 这些旧名字一律在源侧改写成 AUTHOR（deb 本体不动）
+LEGACY_AUTHORS = ("a0", "", "王", "Wang", "wang", "wangyuan")
 
 # 可用地址，第 1 个是主源（Cloudflare Pages），后面是国内/海外备用
 MIRRORS = ["https://wangyuan-repo.pages.dev/",
@@ -141,7 +144,7 @@ def build_packages():
 
         # 付费标记 (合并原本可能已有的 Tag)
         for k in ("Author", "Maintainer"):          # deb 里是旧占位名，仓库侧改写
-            if d.get(k, "") in ("a0", ""):
+            if d.get(k, "").strip() in LEGACY_AUTHORS:
                 d[k] = AUTHOR
         # 中文说明：meta/<包名>.json 里的 desc 第一行进列表，完整 markdown 进介绍页
         meta = load_meta(d["Package"])
@@ -185,6 +188,7 @@ def build_packages():
 def write_all():
     os.makedirs(DEBS, exist_ok=True)
     os.makedirs(SHOTS, exist_ok=True)
+    os.makedirs(MAC, exist_ok=True)
     shutil.rmtree(DEPICTIONS, ignore_errors=True)   # 清掉已删包的旧介绍页
     text = build_packages()
     blob = text.encode()
@@ -222,6 +226,25 @@ def write_all():
     for s in text.strip().split("\n\n"):
         d = dict(parse_control(s))
         rows.append(f"<tr><td>{d['Name']}</td><td>{d['Version']}</td><td>{d['Description'].splitlines()[0]}</td></tr>")
+
+    # 非 APT 的普通下载件：mac/ 里的 zip/dmg（Mac 客户端这类东西 Sileo 装不了，只能当附件下）
+    macs = sorted((n for n in os.listdir(MAC)
+                   if n.lower().endswith((".zip", ".dmg", ".pkg", ".tar.gz"))) if os.path.isdir(MAC) else [],
+                  key=lambda n: os.path.getmtime(os.path.join(MAC, n)), reverse=True)
+    mac_html = ""
+    if macs:
+        links = "".join(
+            f'<li><a href="mac/{quote(n)}">{n}</a> '
+            f'<small>{os.path.getsize(os.path.join(MAC, n)) // 1024} KB · '
+            f'{__import__("time").strftime("%Y-%m-%d", __import__("time").localtime(os.path.getmtime(os.path.join(MAC, n))))}</small></li>'
+            for n in macs)
+        mac_html = f"""
+<h3>Mac 客户端下载</h3>
+<p>这些是 macOS 上的配套程序，Sileo/Zebra 装不了，直接下载解压用：</p>
+<ul>{links}</ul>
+<p><small>镜像（主源连不上时用）：{MIRRORS[1]}mac/{quote(macs[0])}</small></p>
+"""
+
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(f"""<!doctype html>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{LABEL}</title>
@@ -229,18 +252,18 @@ def write_all():
 a.btn{{display:inline-block;background:#5b5bd6;color:#fff;padding:.7em 1.2em;border-radius:.6em;text-decoration:none;margin:.3em .3em .3em 0}}
 code{{background:#0001;padding:.15em .4em;border-radius:.3em;word-break:break-all}}table{{border-collapse:collapse;width:100%}}
 td,th{{border-bottom:1px solid #8884;padding:.4em .3em;text-align:left;font-size:.95em}}
-small{{color:#888}}</style>
+ul{{padding-left:1.2em}}small{{color:#888}}</style>
 <h2>{LABEL}</h2>
 <p><a class="btn" href="sileo://source/{MIRRORS[0]}">添加到 Sileo（主）</a>
 <a class="btn" href="sileo://source/{MIRRORS[1]}">添加到 Sileo（备用）</a></p>
 <p><b>在软件源里手动添加</b>（一行一个，先试第一个）：</p>
-<p><code>{MIRRORS[0]}</code><br><small>GitHub Pages，国外快，国内可能被墙</small></p>
+<p><code>{MIRRORS[0]}</code><br><small>Cloudflare Pages 主源</small></p>
 <p><code>{MIRRORS[1]}</code><br><small>jsDelivr 国内 CDN，不通就换 {MIRRORS[2]} 或 {MIRRORS[3]}</small></p>
 <p><small>⚠️ 添加源时只粘上面这种纯网址，不要粘 <code>sileo://</code> 开头的那种链接（那是给浏览器点击用的）。</small></p>
 <table><tr><th>包</th><th>版本</th><th>说明</th></tr>
 {chr(10).join(rows)}
 </table>
-""")
+{mac_html}""")
 
 
 

@@ -1,19 +1,19 @@
-Origin: Wang's Repo
-Label: Wang's Repo
+Origin: Wangyuan's Repo
+Label: Wangyuan's Repo
 Suite: stable
 Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
-Description: Wang's rootless tweaks (iOS 17) · 王的无根越狱插件源
-Date: Fri, 18 Sep 2026 14:26:02 GMT
+Description: Wangyuan's rootless tweaks (iOS 17) · 王源的无根越狱插件源
+Date: Fri, 18 Sep 2026 14:39:49 GMT
 MD5Sum:
- 3981071122f9a9ea599e48e4a6dead99 3511 Packages
- c787100380ec1d7959446fc790387b45 1612 Packages.bz2
- 8581f3237f85a95f02654e7b0d13b8a3 1481 Packages.gz
- 02938fa6f617593046e85617bbd688d9 1541 Packages.zst
+ 197ad91288f34c49e320484fd8efbdbf 3533 Packages
+ 3913748338d40419426a0457987ec9ac 1610 Packages.bz2
+ 31abc149cd02acd1f3f43f48a474f902 1474 Packages.gz
+ eedc2ad65db0ac92cc2d4ed899f04309 1532 Packages.zst
 SHA256:
- 6aeaff0b88352b5a129e8229bfb62134b0513ccb740e10e5f8ce6ca8c2f042d9 3511 Packages
- 39fb297fae7acd7719dd6941b472a5d77ac860481de2a1dad4b987455bd7a116 1612 Packages.bz2
- 4cca7cf5424c5b63061bb3b4ff0685cdd1ff6e6401dd2f3ee94b2ce2e333e863 1481 Packages.gz
- f639ed23235b5e2df86e56f981129cf44fd0d0a3c31281478394134092007ccd 1541 Packages.zst
+ 5273218cbd501ca32a1333ca44fc101d3254ff313e97b436f997d9605f602378 3533 Packages
+ 12d433a7822aa12aaed9091041cfe8bbb6ec2e3ffc7cd1b04563f89f0f2eb304 1610 Packages.bz2
+ e1dfa8bfecad6efc16ff359e4cd23558ea86b36845e7d82d3016d478730e4335 1474 Packages.gz
+ 936367fc42ac7fe2bb3b17dd3f4eee088f96e4514c93c1df980c5a73e2b8d65e 1532 Packages.zst
