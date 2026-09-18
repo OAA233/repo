@@ -35,10 +35,13 @@ jsDelivr 是国内 CDN，不通就依次换后面的节点。一键加源链接�
 | 包 | 版本 | 说明 |
 |---|---|---|
 | com.a0.noswipe | 7.13 | XHS NoSwipe — 小红书禁滑 + 图文守护 |
-| com.a0.mirror17dim | 1.0.0 | 有镜像客户端连接时把 iPhone 亮度降到最低 |
-| com.a0.mirror17ka | 1.0.0 | 投屏期间禁止自动锁屏 |
+| com.a0.mirror17dim | 1.0.0 | 我的镜子17 — 有镜像客户端连接时把 iPhone 亮度降到最低 |
+| com.a0.mirror17ka | 1.0.0 | 我的镜子17 · 常亮 — 投屏期间禁止自动锁屏 |
 | com.a0.doubletapflipcameraplus | 0.0.7 | 双击翻转相机 |
 | com.a0.resumerecafterflip | 0.8.0 | 相机翻转打断录像后自动续录，停止时把各分段无损拼成一个完整视频 |
+
+> 列表里显示的名字由 `meta/<包名>.json` 的 `name` 字段覆盖（deb 本体没动），
+> 所以「我的镜子17」这两个包在手机上 `dpkg -l` 看到的仍是旧名 `Mirror17 Dim` / `Mirror17 Keep Awake`。
 
 ## Mac 客户端（不在 APT 里）
 
