@@ -1,28 +1,39 @@
-# a0 Sileo 源
+# a0 的 Sileo / Zebra 源
 
-Sileo / Zebra / Cydia 通用 APT 源。纯静态，扔 GitHub Pages 就行。
+纯静态 APT 源，没有服务端。
 
-## 加源（装好后在 Sileo 里）
+**加源地址**
 
-    https://oaa233.github.io/SileoRepo/
+    https://oaa233.github.io/repo/
 
-## 日常维护
+一键加源（Sileo / Cydia 链接，发给别人用）：
 
-1. 新 .deb 丢进 `debs/`
-2. `python3 build_repo.py`（会打印每个包 + PASS/FAIL 自校验）
-3. `git add -A && git commit -m "update" && git push`
+    sileo://source/https://oaa233.github.io/repo/
+
+## 当前包
+
+| 包 | 版本 | 说明 |
+|---|---|---|
+| com.a0.noswipe | 7.15 | XHS NoSwipe — 小红书禁滑 + 图文守护 |
+| com.a0.mirror17dim | 1.0.0 | 有镜像客户端连接时把 iPhone 亮度降到最低 |
+| com.a0.mirror17ka | 1.0.0 | 投屏期间禁止自动锁屏 |
+| com.a0.doubletapflipcameraplus | 0.0.7 | 双击翻转相机 |
+
+## 发新版
+
+1. 新 .deb 丢进 `debs/`（同名多版本也行，装的时候取最高版）
+2. `python3 build_repo.py` — 生成 Packages / Packages.bz2 / Packages.gz / Release，并自校验哈希
+3. `git add -A && git commit -m "xxx 1.2" && git push`
+
+Pages 约 1 分钟后生效。
 
 ## 付费包
 
-把包标识符一行一个写进 `paid.txt`，重跑脚本 → 生成的 Packages 里该包会带
-`Tag: cydia::commercial`（Sileo 认这个标签才会走购买/授权流程）。
+把包标识符一行一个写进 `paid.txt`，重跑脚本 → 该包会带 `Tag: cydia::commercial`（Sileo 认这个才会走购买/授权流程）。
 
-⚠️ GitHub Pages 上所有文件都是公开的：付费的 .deb 放这里等于免费送人。
-付费包的二进制要单独放（见对话里的 B 方案：Cloudflare R2 + Worker 带 token）。
+⚠️ Pages 上所有文件都是公开可下的：付费的 .deb 放这里等于免费送人。付费包的二进制要放别处（Cloudflare R2 + Worker 带 token），这里只放免费包。
 
-## 文件
+## 备注
 
-- `debs/` — 包本体
-- `build_repo.py` — 生成 + 校验（Packages / Packages.bz2 / Packages.gz / Release）
-- `paid.txt` — 付费包白名单
-- `.nojekyll` — 让 Pages 别用 Jekyll 处理这些文件
+- `.nojekyll` 是必须的，否则 Pages 的 Jekyll 会动这些文件。
+- 包的描述/依赖来自 .deb 里的 control 文件，改文案要重新打包 deb，不是改这里。
