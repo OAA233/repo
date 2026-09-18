@@ -15,5 +15,6 @@
    "title": "安装说明 README.txt",
    "url": "mac/README.txt"
   }
- ]
+ ],
+ "depends": "firmware (>= 14.0), ellekit"
 }

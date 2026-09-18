@@ -166,6 +166,8 @@ def build_packages():
                 d[k] = AUTHOR
         # 中文说明：meta/<包名>.json 里的 desc 第一行进列表，完整 markdown 进介绍页
         meta = load_meta(d["Package"])
+        if meta.get("depends"):                     # 仓库侧改依赖（不用重打包 deb）
+            d["Depends"] = meta["depends"]
         # 显示名改写：meta/<包名>.json 里写 "name": "我的镜子17" 就行，不用重打 deb
         if meta.get("name"):
             d["Name"] = meta["name"]

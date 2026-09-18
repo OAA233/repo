@@ -6,6 +6,7 @@ Description: 系统相机里双击屏幕翻转前后摄（仅在空闲状态下�
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
+Depends: mobilesubstrate | ellekit
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.doubletapflipcameraplus.png?v=8cfe6032
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.doubletapflipcameraplus.json
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
@@ -21,7 +22,7 @@ Description: 有镜像客户端（VNC 5901 / 原生 H.264 38917）连到 iPhone 
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
-Depends: firmware (>= 14.0)
+Depends: firmware (>= 14.0), ellekit
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17dim.png?v=d247d1f7
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17dim.json
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
@@ -37,7 +38,7 @@ Description: 投屏 / 镜像期间禁止 iPhone 自动锁屏。
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
-Depends: firmware (>= 14.0), ellekit
+Depends: firmware (>= 14.0), ellekit, com.a0.mirror17dim
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17ka.png?v=d247d1f7
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17ka.json
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
@@ -53,6 +54,7 @@ Description: 小红书禁滑：视频 / 图文详情页禁止继续下滑，只�
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
+Depends: mobilesubstrate | ellekit
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png?v=eb309fd0
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.noswipe.json
 Filename: debs/com.a0.noswipe_7.13.deb
@@ -68,7 +70,7 @@ Description: 系统相机录像中双击翻转会打断录像（错误 -11818）
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
-Depends: firmware (>= 15.0), mobilesubstrate
+Depends: firmware (>= 15.0), mobilesubstrate | ellekit
 Conflicts: com.local.resumerecafterflip
 Replaces: com.local.resumerecafterflip
 Provides: com.local.resumerecafterflip

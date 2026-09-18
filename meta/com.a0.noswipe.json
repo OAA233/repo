@@ -4,5 +4,6 @@
   "版本": "7.13",
   "兼容": "iOS 17.0（无根 /var/jb）",
   "作者": "王源"
- }
+ },
+ "depends": "mobilesubstrate | ellekit"
 }

@@ -4,5 +4,6 @@
   "版本": "0.0.7",
   "兼容": "iOS 17.0",
   "作者": "王源"
- }
+ },
+ "depends": "mobilesubstrate | ellekit"
 }
