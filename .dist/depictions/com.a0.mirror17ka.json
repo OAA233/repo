@@ -56,6 +56,20 @@
      "class": "DepictionTableTextView",
      "title": "作者",
      "text": "王源"
+    },
+    {
+     "class": "DepictionTableButtonView",
+     "title": "下载 Mac 客户端（zip）",
+     "action": "https://cdn.jsdelivr.net/gh/OAA233/repo@main/mac/Mirror17-mac-1.0.0.zip",
+     "openExternal": true,
+     "tintColor": "#5b5bd6"
+    },
+    {
+     "class": "DepictionTableButtonView",
+     "title": "安装说明 README.txt",
+     "action": "https://cdn.jsdelivr.net/gh/OAA233/repo@main/mac/README.txt",
+     "openExternal": true,
+     "tintColor": "#5b5bd6"
     }
    ]
   }

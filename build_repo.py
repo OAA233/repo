@@ -102,6 +102,15 @@ def shot_files(pkg):
             if n.lower().endswith((".png", ".jpg", ".jpeg")) and n != "banner.png"]
 
 
+def newest_mac():
+    """mac/ 里最新的那个下载件（zip/dmg/pkg），给 meta 里的 "mac:" 快捷写法用。"""
+    if not os.path.isdir(MAC):
+        return None
+    files = [n for n in os.listdir(MAC)
+             if n.lower().endswith((".zip", ".dmg", ".pkg", ".tar.gz"))]
+    return max(files, key=lambda n: os.path.getmtime(os.path.join(MAC, n))) if files else None
+
+
 def build_depiction(stanza, meta):
     pkg = stanza["Package"]
     views = [{"class": "DepictionHeaderView", "title": stanza.get("Name", pkg)},
@@ -118,6 +127,14 @@ def build_depiction(stanza, meta):
         views.append({"class": "DepictionTableTextView", "title": str(k), "text": str(v)})
     if meta.get("info"):
         views.insert(len(views) - len(meta["info"]), {"class": "DepictionSeparatorView"})
+    for b in (meta.get("buttons") or []):        # 介绍页里的按钮（比如 Mac 客户端下载）
+        raw = b["url"]
+        if raw == "mac:":                        # 自动指向 mac/ 里最新的那个
+            raw = "mac/" + (newest_mac() or "")
+        url = raw if raw.startswith("http") else f"{DEP_BASE}{raw}"
+        views.append({"class": "DepictionTableButtonView", "title": b["title"], "action": url,
+                      "openExternal": bool(b.get("external", True)),
+                      "tintColor": b.get("tintColor", "#5b5bd6")})
     doc = {"minVersion": "0.4", "class": "DepictionTabView", "tintColor": "#5b5bd6",
            "tabs": [{"class": "DepictionStackView", "tabname": "介绍", "views": views}]}
     if os.path.exists(os.path.join(SHOTS, pkg, "banner.png")):

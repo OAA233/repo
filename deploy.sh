@@ -54,7 +54,12 @@ fi
 # 项目不存在就先建（已存在会报错，忽略即可）
 npx --yes wrangler@4 pages project create "$PROJECT" --production-branch=main >/dev/null 2>&1 || true
 
-npx --yes wrangler@4 pages deploy .dist --project-name="$PROJECT" --branch=main --commit-dirty=true
+if ! npx --yes wrangler@4 pages deploy .dist --project-name="$PROJECT" --branch=main --commit-dirty=true; then
+  echo "⚠️ Cloudflare 上传失败（多半是本地网络问题），等 5 秒重试一次…"
+  sleep 5
+  npx --yes wrangler@4 pages deploy .dist --project-name="$PROJECT" --branch=main --commit-dirty=true \
+    || echo "⚠️ 还是失败：主源（Cloudflare）没更新，但下面照常同步 GitHub —— jsDelivr 备用源是最新的"
+fi
 
 # 同步到 GitHub（jsDelivr 备用源和图标/介绍页读的就是它），再清掉 CDN 缓存
 git add -A >/dev/null 2>&1 && git commit -q -m "deploy: $(date '+%Y-%m-%d %H:%M')" >/dev/null 2>&1 || true

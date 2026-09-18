@@ -5,5 +5,15 @@
   "版本": "1.0.0",
   "兼容": "iOS 17.0（无根 /var/jb）",
   "作者": "王源"
- }
+ },
+ "buttons": [
+  {
+   "title": "下载 Mac 客户端（zip）",
+   "url": "mac:"
+  },
+  {
+   "title": "安装说明 README.txt",
+   "url": "mac/README.txt"
+  }
+ ]
 }
