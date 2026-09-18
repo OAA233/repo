@@ -41,8 +41,8 @@ MIRRORS = ["https://wangyuan-repo.pages.dev/",
 # 图标固定走 jsDelivr（国内实测能拉）。主源如果是 Cloudflare Pages，手机偶尔不通时
 # 图标也不会跟着挂掉。想让图标也走主源就把下面这行改成 MIRRORS[0]。
 ICON_BASE = MIRRORS[1]
-# 介绍页 JSON 和贴图跟主源走（它们是页面的内容，主源不通时页面本来就打不开）
-DEP_BASE = MIRRORS[0]
+# 介绍页 JSON 和贴图也走 jsDelivr：实测国内这条路比 pages.dev 稳（pages.dev 偶发连不上）
+DEP_BASE = ICON_BASE
 
 
 # ---------- .deb 读取 (ar + control.tar.*) ----------

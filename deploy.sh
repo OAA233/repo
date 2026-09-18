@@ -54,5 +54,13 @@ fi
 npx --yes wrangler@4 pages project create "$PROJECT" --production-branch=main >/dev/null 2>&1 || true
 
 npx --yes wrangler@4 pages deploy .dist --project-name="$PROJECT" --branch=main --commit-dirty=true
+
+# 同步到 GitHub（jsDelivr 备用源和图标/介绍页读的就是它），再清掉 CDN 缓存
+git add -A >/dev/null 2>&1 && git commit -q -m "deploy: $(date '+%Y-%m-%d %H:%M')" >/dev/null 2>&1 || true
+git push -q origin main >/dev/null 2>&1 && echo "已同步到 GitHub" || echo "（GitHub 推送失败，跳过 —— jsDelivr 备用源会滞后）"
+for f in Packages Packages.zst Packages.bz2 Packages.gz Release index.html depictions/*.json shots/*/*; do
+  curl -s -m 15 "https://purge.jsdelivr.net/gh/OAA233/repo@main/$f" -o /dev/null 2>/dev/null || true
+done
+echo "已清 jsDelivr 缓存"
 echo
 echo "主源地址: https://$PROJECT.pages.dev/"

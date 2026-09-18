@@ -7,7 +7,7 @@ Author: Wang
 Maintainer: Wang
 Section: Tweaks
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.doubletapflipcameraplus.png
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.doubletapflipcameraplus.json
+SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.doubletapflipcameraplus.json
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
 Size: 6298
 SHA256: eff4e9fbb572a36921e4ae05fc3a4ec56e29dc7a3f42d6c5393fe1fa409fe02c
@@ -23,7 +23,7 @@ Maintainer: Wang
 Section: Tweaks
 Depends: firmware (>= 14.0)
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json
+SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17dim.json
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
 SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
@@ -39,7 +39,7 @@ Maintainer: Wang
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json
+SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17ka.json
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
@@ -54,7 +54,7 @@ Author: Wang
 Maintainer: Wang
 Section: Tweaks
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json
+SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.noswipe.json
 Filename: debs/com.a0.noswipe_7.13.deb
 Size: 26426
 SHA256: ab42a37569bcfd06bad850ac2098d49426faf6e3ee9120cd538c95802a4c1cb4
@@ -73,7 +73,7 @@ Conflicts: com.local.resumerecafterflip
 Replaces: com.local.resumerecafterflip
 Provides: com.local.resumerecafterflip
 Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.resumerecafterflip.png
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.resumerecafterflip.json
+SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.resumerecafterflip.json
 Filename: debs/com.a0.resumerecafterflip_0.8.0_iphoneos-arm64.deb
 Size: 16846
 SHA256: 20f9cd7b74a03980785fb31f451218e567bd95993b02055498730f94d72342d4
