@@ -9,7 +9,7 @@
    "views": [
     {
      "class": "DepictionHeaderView",
-     "title": "Mirror17"
+     "title": "Mirror17 调暗"
     },
     {
      "class": "DepictionSubheaderView",
