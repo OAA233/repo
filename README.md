@@ -106,6 +106,10 @@ Sileo / Zebra 包列表里每个包的图标来自这里：
 
 都建议 180×180 PNG（透明底最好，深色列表里不糊）。换图后重跑脚本 + push + 清缓存即可。
 
+没有美术资源时可以生成：`tools/make_icons.py`（Pillow，4× 超采样再 LANCZOS 缩到 180）。
+`com.a0.mirror17dim` / `com.a0.mirror17ka` 的图标就是这个脚本出的
+—— 深色圆角方底 + 白色手机主体 + 右下角圆形徽标，跟另外三个手工图标同一套风格。
+
 ## 付费包
 
 把包标识符一行一个写进 `paid.txt`，重跑脚本 → 该包会带 `Tag: cydia::commercial`（Sileo 认这个才会走购买/授权流程）。

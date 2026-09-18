@@ -22,7 +22,7 @@ Author: 王源
 Maintainer: 王源
 Section: Tweaks
 Depends: firmware (>= 14.0)
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17dim.png
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17dim.json
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
@@ -38,7 +38,7 @@ Author: 王源
 Maintainer: 王源
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17ka.png
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17ka.json
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
