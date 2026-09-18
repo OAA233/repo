@@ -24,12 +24,12 @@
      },
      "screenshots": [
       {
-       "url": "https://cdn.jsdelivr.net/gh/OAA233/repo@main/shots/com.a0.mirror17dim/01-connect.png",
+       "url": "https://wangyuan-repo.pages.dev/shots/com.a0.mirror17dim/01-connect.png?v=560108ba",
        "accessibilityText": "",
        "video": false
       },
       {
-       "url": "https://cdn.jsdelivr.net/gh/OAA233/repo@main/shots/com.a0.mirror17dim/02-connected.png",
+       "url": "https://wangyuan-repo.pages.dev/shots/com.a0.mirror17dim/02-connected.png?v=af44f89f",
        "accessibilityText": "",
        "video": false
       }
@@ -60,14 +60,14 @@
     {
      "class": "DepictionTableButtonView",
      "title": "下载 Mac 客户端（zip）",
-     "action": "https://cdn.jsdelivr.net/gh/OAA233/repo@main/mac/Mirror17-mac-1.0.0.zip",
+     "action": "https://wangyuan-repo.pages.dev/mac/Mirror17-mac-1.0.0.zip",
      "openExternal": true,
      "tintColor": "#5b5bd6"
     },
     {
      "class": "DepictionTableButtonView",
      "title": "安装说明 README.txt",
-     "action": "https://cdn.jsdelivr.net/gh/OAA233/repo@main/mac/README.txt",
+     "action": "https://wangyuan-repo.pages.dev/mac/README.txt",
      "openExternal": true,
      "tintColor": "#5b5bd6"
     }

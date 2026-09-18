@@ -41,8 +41,10 @@ LEGACY_AUTHORS = ("a0", "", "王", "Wang", "wang", "wangyuan")
 # 实测会出现三个镜像三个版本的惨案（主源 7.12 / cdn 7.13 / fastly 7.15），所以索引不用它。
 MIRRORS = ["https://wangyuan-repo.pages.dev/",     # 主源（Cloudflare Pages）
            "https://oaa233.github.io/repo/"]        # 同一份 push 重建，天然同步
-# 图标/介绍页/贴图这类媒体文件才走 jsDelivr：按内容变化、可以显式 purge，国内也拉得到。
-ICON_BASE = "https://cdn.jsdelivr.net/gh/OAA233/repo@main/"
+# 图标/介绍页/贴图也走主源：jsDelivr 对 @main 不认 purge，介绍页会一直拿旧缓存。
+# URL 全部带内容哈希(?v=)，改完刷新源立即生效。国内裸网打不开 pages.dev 时，
+# 临时把 ICON_BASE 改回 jsDelivr 并手动 purge。
+ICON_BASE = MIRRORS[0]
 DEP_BASE = ICON_BASE
 
 
@@ -113,8 +115,11 @@ def build_depiction(stanza, meta):
     views = [{"class": "DepictionHeaderView", "title": stanza.get("Name", pkg)},
              {"class": "DepictionSubheaderView",
               "title": f"{stanza.get('Version', '?')} · {stanza.get('Author', AUTHOR)}"}]
-    shots = [{"url": f"{DEP_BASE}shots/{pkg}/{quote(n)}", "accessibilityText": "", "video": False}
-             for n in shot_files(pkg)]
+    shots = []
+    for n in shot_files(pkg):
+        v = hashlib.md5(open(os.path.join(SHOTS, pkg, n), "rb").read()).hexdigest()[:8]
+        shots.append({"url": f"{DEP_BASE}shots/{pkg}/{quote(n)}?v={v}",
+                      "accessibilityText": "", "video": False})
     if shots:
         views.append({"class": "DepictionScreenshotsView", "itemCornerRadius": 8,
                       "itemSize": {"x": 260, "y": 563}, "screenshots": shots})
@@ -134,8 +139,10 @@ def build_depiction(stanza, meta):
                       "tintColor": b.get("tintColor", "#5b5bd6")})
     doc = {"minVersion": "0.4", "class": "DepictionTabView", "tintColor": "#5b5bd6",
            "tabs": [{"class": "DepictionStackView", "tabname": "介绍", "views": views}]}
-    if os.path.exists(os.path.join(SHOTS, pkg, "banner.png")):
-        doc["headerImage"] = f"{DEP_BASE}shots/{pkg}/banner.png"
+    banner = os.path.join(SHOTS, pkg, "banner.png")
+    if os.path.exists(banner):
+        v = hashlib.md5(open(banner, "rb").read()).hexdigest()[:8]
+        doc["headerImage"] = f"{DEP_BASE}shots/{pkg}/banner.png?v={v}"
     return doc
 
 
@@ -171,10 +178,14 @@ def build_packages():
         if meta.get("desc"):
             first = re.sub(r"[#*`>]", "", meta["desc"].strip().split("\n")[0]).strip()
             d["Description"] = first[:120]
+        dep_ver = ""
         if has_depiction(d["Package"]):
             os.makedirs(DEPICTIONS, exist_ok=True)
+            doc = json.dumps(build_depiction(d, meta), ensure_ascii=False, indent=1)
             with open(os.path.join(DEPICTIONS, d["Package"] + ".json"), "w", encoding="utf-8") as fh:
-                json.dump(build_depiction(d, meta), fh, ensure_ascii=False, indent=1)
+                fh.write(doc)
+            # URL 带内容哈希：介绍页一变 URL 就变，绕开 Sileo 与 CDN 的旧缓存
+            dep_ver = "?v=" + hashlib.md5(doc.encode()).hexdigest()[:8]
         if d["Package"] in paid:
             tags = [t.strip() for t in d.get("Tag", "").split(",") if t.strip()]
             if "cydia::commercial" not in tags:
@@ -194,9 +205,10 @@ def build_packages():
             icon_ver = hashlib.md5(open(icon, "rb").read()).hexdigest()[:8]
             out.append(f"Icon: {ICON_BASE}icons/{os.path.basename(icon)}?v={icon_ver}")
         if has_depiction(d["Package"]):
-            out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json")
+            out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json{dep_ver}")
             if os.path.exists(os.path.join(SHOTS, d["Package"], "banner.png")):
-                out.append(f"Header: {DEP_BASE}shots/{d['Package']}/banner.png")
+                bv = hashlib.md5(open(os.path.join(SHOTS, d["Package"], "banner.png"), "rb").read()).hexdigest()[:8]
+                out.append(f"Header: {DEP_BASE}shots/{d['Package']}/banner.png?v={bv}")
         out.append(f"Filename: debs/{fn}")
         out.append(f"Size: {len(blob)}")
         out.append(f"SHA256: {hashlib.sha256(blob).hexdigest()}")
