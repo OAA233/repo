@@ -37,15 +37,12 @@ AUTHOR = "王源"
 # 这些旧名字一律在源侧改写成 AUTHOR（deb 本体不动）
 LEGACY_AUTHORS = ("a0", "", "王", "Wang", "wang", "wangyuan")
 
-# 可用地址，第 1 个是主源（Cloudflare Pages），后面是国内/海外备用
-MIRRORS = ["https://wangyuan-repo.pages.dev/",
-           "https://cdn.jsdelivr.net/gh/OAA233/repo@main/",
-           "https://fastly.jsdelivr.net/gh/OAA233/repo@main/",
-           "https://sileo-repo.pages.dev/"]
-# 图标固定走 jsDelivr（国内实测能拉）。主源如果是 Cloudflare Pages，手机偶尔不通时
-# 图标也不会跟着挂掉。想让图标也走主源就把下面这行改成 MIRRORS[0]。
-ICON_BASE = MIRRORS[1]
-# 介绍页 JSON 和贴图也走 jsDelivr：实测国内这条路比 pages.dev 稳（pages.dev 偶发连不上）
+# 索引类文件的镜像：必须和主源**真的同步**。jsDelivr 对分支(@main)缓存不认 purge，
+# 实测会出现三个镜像三个版本的惨案（主源 7.12 / cdn 7.13 / fastly 7.15），所以索引不用它。
+MIRRORS = ["https://wangyuan-repo.pages.dev/",     # 主源（Cloudflare Pages）
+           "https://oaa233.github.io/repo/"]        # 同一份 push 重建，天然同步
+# 图标/介绍页/贴图这类媒体文件才走 jsDelivr：按内容变化、可以显式 purge，国内也拉得到。
+ICON_BASE = "https://cdn.jsdelivr.net/gh/OAA233/repo@main/"
 DEP_BASE = ICON_BASE
 
 
@@ -247,10 +244,20 @@ def write_all():
     open(os.path.join(ROOT, ".nojekyll"), "w").write("")
 
     # 给人看的落地页 (.nojekyll 关掉了 Jekyll，没有 index.html 就是 404)
-    rows = []
+    esc = __import__("html").escape
+    cards = []
     for s in text.strip().split("\n\n"):
         d = dict(parse_control(s))
-        rows.append(f"<tr><td>{d['Name']}</td><td>{d['Version']}</td><td>{d['Description'].splitlines()[0]}</td></tr>")
+        icon = f"icons/{d['Package']}.png"
+        if not os.path.exists(os.path.join(ROOT, icon)):
+            icon = "icons/default.png"
+        cards.append((d["Name"], d["Version"], d["Description"].splitlines()[0], icon))
+    pkg_html = "".join(
+        f'<div class="card"><img class="icon" src="{esc(icon)}" alt="" width="56" height="56">'
+        f'<div class="meta"><div class="row"><span class="name">{esc(name)}</span>'
+        f'<span class="ver">{esc(ver)}</span></div>'
+        f'<div class="desc" title="{esc(desc)}">{esc(desc)}</div></div></div>'
+        for name, ver, desc, icon in cards)
 
     # 非 APT 的普通下载件：mac/ 里的 zip/dmg（Mac 客户端这类东西 Sileo 装不了，只能当附件下）
     macs = sorted((n for n in os.listdir(MAC)
@@ -258,46 +265,138 @@ def write_all():
                   key=lambda n: os.path.getmtime(os.path.join(MAC, n)), reverse=True)
     mac_html = ""
     if macs:
-        links = "".join(
-            f'<li><a href="mac/{quote(n)}">{n}</a> '
-            f'<small>{os.path.getsize(os.path.join(MAC, n)) // 1024} KB · '
-            f'{__import__("time").strftime("%Y-%m-%d", __import__("time").localtime(os.path.getmtime(os.path.join(MAC, n))))}</small></li>'
-            for n in macs)
+        MAC_ICON = ('<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" '
+                    'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'
+                    '<rect x="3.5" y="4" width="17" height="11.5" rx="2"/>'
+                    '<path d="M12 15.5v3.5"/><path d="M8.5 21h7"/></svg>')
+        items = []
+        for n in macs:
+            p = os.path.join(MAC, n)
+            info = (f"{os.path.getsize(p) // 1024} KB · "
+                    f'{__import__("time").strftime("%Y-%m-%d", __import__("time").localtime(os.path.getmtime(p)))}'
+                    " · 下载解压使用")
+            items.append(
+                f'<a class="card" href="mac/{quote(n)}">'
+                f'<div class="icon macicon" aria-hidden="true">{MAC_ICON}</div>'
+                f'<div class="meta"><div class="row"><span class="name">{esc(n)}</span></div>'
+                f'<div class="desc">{esc(info)}</div></div></a>')
+        mac_cards = "\n".join(items)
         # mac/ 里的说明文档也一起列出来，方便下载者（README.txt / NOTICE.txt）
-        docs = "".join(f'<a href="mac/{quote(n)}">{n}</a> ' for n in ("README.txt", "NOTICE.txt")
+        docs = "".join(f'<a href="mac/{quote(n)}">{esc(n)}</a> ' for n in ("README.txt", "NOTICE.txt")
                        if os.path.exists(os.path.join(MAC, n)))
-        docs_html = f'<p><small>安装说明与许可证：{docs}</small></p>' if docs else ""
+        docs_html = f'<p class="fine">安装说明与许可证：{docs}</p>' if docs else ""
         mac_html = f"""
-<h3>Mac 客户端下载</h3>
-<p>这些是 macOS 上的配套程序，Sileo/Zebra 装不了，直接下载解压用：</p>
-<ul>{links}</ul>
-<p><small>需要 macOS 14+ 和 Apple 芯片。第三方动态库已经内嵌在包里，不用额外装东西；
-但「数据线直控」要 <code>brew install libimobiledevice</code>，「Wi-Fi 直控」要
-<code>brew install --cask tigervnc</code>。没做 Apple 公证，第一次打开可能要在
-「终端」跑 <code>xattr -dr com.apple.quarantine /Applications/Mirror17.app</code>。</small></p>
-{docs_html}
-<p><small>镜像（主源连不上时用）：{MIRRORS[1]}mac/{quote(macs[0])}</small></p>
-"""
+<section>
+  <h2>Mac 客户端下载</h2>
+  <p class="sectionnote">macOS 上的配套程序，Sileo/Zebra 装不了，直接下载解压使用。</p>
+  {mac_cards}
+  <p class="fine">需要 macOS 14+ 和 Apple 芯片；第三方动态库已内嵌在包里，不用额外装东西。
+  「数据线直控」要 <code>brew install libimobiledevice</code>，「Wi-Fi 直控」要
+  <code>brew install --cask tigervnc</code>。没做 Apple 公证，第一次打开可能要在「终端」跑
+  <code>xattr -dr com.apple.quarantine /Applications/Mirror17.app</code>。</p>
+  {docs_html}
+  <p class="fine">镜像直链（主源连不上时用）：<a href="{MIRRORS[1]}mac/{quote(macs[0])}">{esc(MIRRORS[1])}mac/{esc(macs[0])}</a></p>
+</section>"""
 
+    CSS = """
+:root{--bg:#0d0f13;--panel:#161a21;--border:#282d38;--text:#e9ebef;--sub:#9aa2ad;--code:#0a0c10;--accent:#5b5bd6}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--panel:#ffffff;--border:#e4e6eb;--text:#17181c;--sub:#6d7480;--code:#eef0f4}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:30px 16px 52px}
+h1{font-size:1.72rem;line-height:1.25;margin:0 0 6px}
+.tagline{margin:0 0 26px;color:var(--sub)}
+h2{font-size:.9rem;font-weight:600;letter-spacing:.1em;color:var(--sub);margin:32px 0 12px;text-transform:uppercase}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
+.panel h2{margin:0 0 14px}
+.urlrow{display:flex;gap:10px;margin-bottom:14px}
+.mainurl{flex:1;min-width:0;display:flex;align-items:center;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1.04rem;font-weight:600;
+  background:var(--code);border:1px solid var(--border);border-radius:12px;padding:12px 14px;word-break:break-all}
+.copy{flex:none;border:1px solid var(--border);background:transparent;color:var(--text);
+  border-radius:12px;padding:0 16px;font-size:.92rem;cursor:pointer;font-family:inherit}
+.copy:active{transform:translateY(1px)}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 18px;border-radius:12px;
+  text-decoration:none;font-weight:600;font-size:.98rem}
+.btn:hover{filter:brightness(1.12)}
+.mirrors{margin-top:16px;border-top:1px solid var(--border);padding-top:12px}
+.mhead{color:var(--sub);font-size:.85rem;margin-bottom:8px}
+.mrow{display:flex;gap:10px;align-items:baseline;justify-content:space-between;padding:3px 0}
+.mrow code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;word-break:break-all}
+.mrow span{color:var(--sub);font-size:.78rem;flex:none}
+code{background:var(--code);padding:.1em .35em;border-radius:6px}
+.card{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--border);
+  border-radius:16px;padding:13px 14px;transition:border-color .15s ease}
+.cards .card+.card{margin-top:10px}
+a.card{text-decoration:none;color:inherit}
+.card:hover{border-color:var(--accent)}
+.icon{width:56px;height:56px;border-radius:13px;flex:none;display:block;background:var(--code);object-fit:cover}
+.macicon{display:flex;align-items:center;justify-content:center;color:var(--sub)}
+.meta{min-width:0;flex:1}
+.row{display:flex;align-items:baseline;gap:10px}
+.name{font-weight:650;font-size:1.03rem;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ver{color:var(--sub);font-size:.84rem;flex:none}
+.desc{color:var(--sub);font-size:.9rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sectionnote{color:var(--sub);margin:-4px 0 12px;font-size:.92rem}
+.fine{color:var(--sub);font-size:.82rem;line-height:1.75;overflow-wrap:anywhere}
+.fine a{color:var(--text)}
+.fine code,.warn code{font-size:.9em}
+.warn{margin:14px 1px 0;color:var(--sub);font-size:.85rem}
+footer{margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+footer small{color:var(--sub);word-break:break-all}
+"""
+    JS = """function cp(b,t){var d=function(){b.textContent='已复制';
+setTimeout(function(){b.textContent='复制'},1200)};
+try{navigator.clipboard.writeText(t).then(d,function(){fb(t);d()})}catch(e){fb(t);d()}}
+function fb(t){try{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);
+x.select();document.execCommand('copy');document.body.removeChild(x)}catch(e){}}"""
+
+    date = __import__("time").strftime("%Y-%m-%d")
+    # 备用地址按 MIRRORS 列表实际长度生成，别写死下标（列表增删会 IndexError）
+    _labels = ["GitHub Pages · 海外快", "Cloudflare Pages · 备用", "备用", "备用"]
+    mirror_rows = "\n".join(
+        f'    <div class="mrow"><code>{esc(u)}</code><span>{_labels[i - 1]}</span></div>'
+        for i, u in enumerate(MIRRORS[1:], start=1))
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(f"""<!doctype html>
+<html lang="zh-CN">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{LABEL}</title>
-<style>body{{font:16px/1.6 -apple-system,sans-serif;max-width:40em;margin:2em auto;padding:0 1em}}
-a.btn{{display:inline-block;background:#5b5bd6;color:#fff;padding:.7em 1.2em;border-radius:.6em;text-decoration:none;margin:.3em .3em .3em 0}}
-code{{background:#0001;padding:.15em .4em;border-radius:.3em;word-break:break-all}}table{{border-collapse:collapse;width:100%}}
-td,th{{border-bottom:1px solid #8884;padding:.4em .3em;text-align:left;font-size:.95em}}
-ul{{padding-left:1.2em}}small{{color:#888}}</style>
-<h2>{LABEL}</h2>
-<p><a class="btn" href="sileo://source/{MIRRORS[0]}">添加到 Sileo（主）</a>
-<a class="btn" href="sileo://source/{MIRRORS[1]}">添加到 Sileo（备用）</a></p>
-<p><b>在软件源里手动添加</b>（一行一个，先试第一个）：</p>
-<p><code>{MIRRORS[0]}</code><br><small>Cloudflare Pages 主源</small></p>
-<p><code>{MIRRORS[1]}</code><br><small>jsDelivr 国内 CDN，不通就换 {MIRRORS[2]} 或 {MIRRORS[3]}</small></p>
-<p><small>⚠️ 添加源时只粘上面这种纯网址，不要粘 <code>sileo://</code> 开头的那种链接（那是给浏览器点击用的）。</small></p>
-<table><tr><th>包</th><th>版本</th><th>说明</th></tr>
-{chr(10).join(rows)}
-</table>
-{mac_html}""")
+<meta name="color-scheme" content="dark light">
+<title>{esc(LABEL)}</title>
+<style>{CSS}</style>
+<div class="wrap">
+<header>
+  <h1>{esc(LABEL)}</h1>
+  <p class="tagline">{esc(DESCRIPTION)}</p>
+</header>
+
+<section class="panel">
+  <h2>添加软件源</h2>
+  <div class="urlrow">
+    <code class="mainurl">{esc(MIRRORS[0])}</code>
+    <button class="copy" type="button" onclick="cp(this,'{MIRRORS[0]}')">复制</button>
+  </div>
+  <a class="btn" href="sileo://source/{MIRRORS[0]}">添加到 Sileo</a>
+  <div class="mirrors">
+    <div class="mhead">备用地址 —— 主源连不上时在「添加源」里手动粘贴：</div>
+{mirror_rows}
+  </div>
+  <p class="warn">⚠️ 添加源时只粘上面这种纯网址，不要粘 <code>sileo://</code> 开头的一键链接（那是给浏览器点开的）。</p>
+</section>
+
+<section>
+  <h2>软件包 · {len(cards)}</h2>
+  <div class="cards">
+{pkg_html}
+  </div>
+</section>
+{mac_html}
+<footer><small>本页由 build_repo.py 生成 · 更新 {date} · 主源 {esc(MIRRORS[0])}</small></footer>
+</div>
+<script>{JS}</script>
+</html>""")
 
 
 
