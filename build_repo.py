@@ -8,11 +8,12 @@
        生成时会自动加 Tag: cydia::commercial (Sileo 认这个才会走购买流程)。
 新版本: 把新 .deb 丢进 debs/ 再跑一次即可，同一个包名多版本没问题，装的时候取最高版。
 """
-import bz2, gzip, hashlib, io, os, sys, tarfile
+import bz2, gzip, hashlib, io, os, shutil, subprocess, sys, tarfile
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DEBS = os.path.join(ROOT, "debs")
 PAID = os.path.join(ROOT, "paid.txt")
+ZSTD = shutil.which("zstd") or "/opt/homebrew/bin/zstd"
 
 # 源的身份信息 —— 改成你自己的
 ORIGIN = "Wang's Repo"
@@ -119,16 +120,30 @@ def write_all():
     os.makedirs(DEBS, exist_ok=True)
     text = build_packages()
     blob = text.encode()
+    variants = ["Packages", "Packages.bz2", "Packages.gz"]
     for name, data in [("Packages", blob), ("Packages.bz2", bz2.compress(blob)),
                        ("Packages.gz", gzip.compress(blob))]:
         open(os.path.join(ROOT, name), "wb").write(data)
+
+    # Sileo 优先探测 Packages.zst；Cloudflare Pages 对不存在的路径会拿 index.html 冒充
+    # 200，客户端解压就报 "Hash invalid / ZSTDError"，所以必须给一份真的 .zst
+    if os.path.exists(ZSTD):
+        subprocess.run([ZSTD, "-q", "-f", os.path.join(ROOT, "Packages"), "-o",
+                        os.path.join(ROOT, "Packages.zst")], check=True)
+        variants.append("Packages.zst")
+    else:
+        print("  (没找到 zstd 命令，跳过 Packages.zst —— brew install zstd)")
+
+    # 同上：缺文件时老老实实 404，别拿 index.html 冒充
+    open(os.path.join(ROOT, "404.html"), "w").write(
+        "<!doctype html><meta charset=utf-8><title>404</title>404: no such file in this repo.\n")
 
     lines = [f"Origin: {ORIGIN}", f"Label: {LABEL}", "Suite: stable", "Version: 1.0",
              "Codename: ios", f"Architectures: {ARCHS}", "Components: main",
              f"Description: {DESCRIPTION}", "Date: " + __import__("email.utils", fromlist=["x"]).formatdate(usegmt=True)]
     for algo, fn in [("MD5Sum", hashlib.md5), ("SHA256", hashlib.sha256)]:
         lines.append(f"{algo}:")
-        for name in ["Packages", "Packages.bz2", "Packages.gz"]:
+        for name in variants:
             data = open(os.path.join(ROOT, name), "rb").read()
             lines.append(f" {fn(data).hexdigest()} {len(data)} {name}")
     open(os.path.join(ROOT, "Release"), "w").write("\n".join(lines) + "\n")
@@ -199,6 +214,16 @@ def check():
         if dec(open(os.path.join(ROOT, name), "rb").read()) != open(os.path.join(ROOT, "Packages"), "rb").read():
             print(f"FAIL {name} 解压内容不一致")
             ok = False
+    # zst 是 Sileo 的首选，必须解得回来
+    zst = os.path.join(ROOT, "Packages.zst")
+    if os.path.exists(zst):
+        out = subprocess.run([ZSTD, "-d", "-c", zst], capture_output=True, check=True).stdout
+        if out != open(os.path.join(ROOT, "Packages"), "rb").read():
+            print("FAIL Packages.zst 解压内容不一致")
+            ok = False
+    else:
+        print("FAIL 缺 Packages.zst（Sileo 会报 Hash/ZSTD 错误）")
+        ok = False
     print("PASS" if ok else "FAILED", f"— {len(stanzas)} 个包, {os.path.getsize(os.path.join(ROOT, 'Packages'))} 字节")
     return ok
 

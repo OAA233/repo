@@ -11,7 +11,9 @@ python3 build_repo.py
 # 只把这些文件传上去：源码、脚本、paid.txt 留在本地
 rm -rf .dist
 mkdir -p .dist
-cp Packages Packages.bz2 Packages.gz Release index.html CydiaIcon.png README.md .nojekyll .dist/
+for f in Packages Packages.bz2 Packages.gz Packages.zst Release index.html 404.html CydiaIcon.png README.md .nojekyll; do
+  [ -f "$f" ] && cp "$f" .dist/
+done
 cp -R debs icons .dist/
 
 # 传之前先在本地当静态服务器验一遍（Packages/Release/deb/图标是否齐全）
