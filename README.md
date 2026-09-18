@@ -2,13 +2,15 @@
 
 纯静态 APT 源，没有服务端。
 
-**加源地址**
+**加源地址**（在 Zebra/Sileo 的「添加源」里只粘纯网址，不要粘 `sileo://` 开头那种链接 —— 那是给浏览器点击用的）
 
-    https://oaa233.github.io/repo/
+    主：  https://oaa233.github.io/repo/
+    备用：https://cdn.jsdelivr.net/gh/OAA233/repo@main/
+          https://fastly.jsdelivr.net/gh/OAA233/repo@main/
+          https://testingcf.jsdelivr.net/gh/OAA233/repo@main/
 
-一键加源（Sileo / Cydia 链接，发给别人用）：
-
-    sileo://source/https://oaa233.github.io/repo/
+GitHub Pages 国外快、国内常被墙；jsDelivr 是国内 CDN，不通就依次换后面两个节点。
+一键加源链接（发到手机点开）：<https://oaa233.github.io/repo/>
 
 ## 当前包
 
@@ -22,8 +24,10 @@
 ## 发新版
 
 1. 新 .deb 丢进 `debs/`（同名多版本也行，装的时候取最高版）
-2. `python3 build_repo.py` — 生成 Packages / Packages.bz2 / Packages.gz / Release，并自校验哈希
+2. `python3 build_repo.py` — 生成 Packages / Packages.bz2 / Packages.gz / Release / index.html，并自校验哈希
 3. `git add -A && git commit -m "xxx 1.2" && git push`
+4. 清 jsDelivr 缓存，否则备用地址最多 12 小时才看到新版：
+   `curl -s "https://purge.jsdelivr.net/gh/OAA233/repo@main/Packages" >/dev/null`
 
 Pages 约 1 分钟后生效。
 
