@@ -13,7 +13,7 @@
     },
     {
      "class": "DepictionSubheaderView",
-     "title": "0.0.7 · 王源"
+     "title": "0.0.7 · wangyuan"
     },
     {
      "class": "DepictionMarkdownView",
@@ -35,7 +35,7 @@
     {
      "class": "DepictionTableTextView",
      "title": "作者",
-     "text": "王源"
+     "text": "wangyuan"
     }
    ]
   }

@@ -13,7 +13,7 @@
     },
     {
      "class": "DepictionSubheaderView",
-     "title": "1.0.0 · 王源"
+     "title": "1.0.0 · wangyuan"
     },
     {
      "class": "DepictionScreenshotsView",
@@ -55,7 +55,7 @@
     {
      "class": "DepictionTableTextView",
      "title": "作者",
-     "text": "王源"
+     "text": "wangyuan"
     },
     {
      "class": "DepictionTableButtonView",
