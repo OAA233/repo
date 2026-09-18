@@ -7,7 +7,8 @@
 付费包: 把包名(控制文件里的 Package:)一行一个写进 paid.txt，
        生成时会自动加 Tag: cydia::commercial (Sileo 认这个才会走购买流程)。
 说明与贴图: 每个包可选一份 meta/<包名>.json:
-       {"desc": "中文说明(markdown)", "info": {"兼容": "iOS 17", "作者": "王"}}
+       {"name": "我的镜子17", "desc": "中文说明(markdown)", "info": {"兼容": "iOS 17.0"}}
+       name 会覆盖包列表里显示的名字(不用重打 deb)，desc 第一行进列表、整段进介绍页。
        贴图丢进 shots/<包名>/ 里(任意 *.png|jpg，按文件名排序)，
        文件名叫 banner.png 的那张会当介绍页顶图。
        有 meta 或贴图的包会自动生成 depictions/<包名>.json 原生介绍页。
@@ -148,6 +149,9 @@ def build_packages():
                 d[k] = AUTHOR
         # 中文说明：meta/<包名>.json 里的 desc 第一行进列表，完整 markdown 进介绍页
         meta = load_meta(d["Package"])
+        # 显示名改写：meta/<包名>.json 里写 "name": "我的镜子17" 就行，不用重打 deb
+        if meta.get("name"):
+            d["Name"] = meta["name"]
         if meta.get("desc"):
             first = re.sub(r"[#*`>]", "", meta["desc"].strip().split("\n")[0]).strip()
             d["Description"] = first[:120]
