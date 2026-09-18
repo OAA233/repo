@@ -34,7 +34,7 @@ for stanza in pkgs.decode().split("\n\n"):
     d = dict(re.findall(r"^([A-Za-z0-9-]+): (.*)$", stanza, re.M))
     blob = get(d["Filename"])
     assert hashlib.sha256(blob).hexdigest() == d["SHA256"], f"{d['Package']} deb 哈希对不上"
-    icon = "icons/" + d["Icon"].rsplit("/", 1)[1]   # 图标可能不在主源上，只取文件名本地验
+    icon = "icons/" + d["Icon"].rsplit("/", 1)[1].split("?")[0]   # 图标可能不在主源上，只取文件名本地验（?v= 是缓存版本号）
     assert get(icon), f"{d['Package']} 图标拉不到"
     if "SileoDepiction" in d:
         assert get("depictions/" + d["SileoDepiction"].rsplit("/", 1)[1]), f"{d['Package']} 介绍页拉不到"

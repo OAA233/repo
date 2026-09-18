@@ -191,7 +191,9 @@ def build_packages():
         if not os.path.exists(icon):
             icon = os.path.join(ROOT, "icons", "default.png")
         if os.path.exists(icon):
-            out.append(f"Icon: {ICON_BASE}icons/{os.path.basename(icon)}")
+            # URL 带图标内容哈希：文件一变 URL 就变，绕开 Sileo 按键控的图标缓存
+            icon_ver = hashlib.md5(open(icon, "rb").read()).hexdigest()[:8]
+            out.append(f"Icon: {ICON_BASE}icons/{os.path.basename(icon)}?v={icon_ver}")
         if has_depiction(d["Package"]):
             out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json")
             if os.path.exists(os.path.join(SHOTS, d["Package"], "banner.png")):

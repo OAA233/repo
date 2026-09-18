@@ -6,7 +6,7 @@ Description: 系统相机里双击屏幕翻转前后摄（仅在空闲状态下�
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.doubletapflipcameraplus.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.doubletapflipcameraplus.png?v=8cfe6032
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.doubletapflipcameraplus.json
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
 Size: 6298
@@ -22,7 +22,7 @@ Author: 王源
 Maintainer: 王源
 Section: Tweaks
 Depends: firmware (>= 14.0)
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17dim.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17dim.png?v=d247d1f7
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17dim.json
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
@@ -38,7 +38,7 @@ Author: 王源
 Maintainer: 王源
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17ka.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.mirror17ka.png?v=d247d1f7
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.mirror17ka.json
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
@@ -53,7 +53,7 @@ Description: 小红书禁滑：视频 / 图文详情页禁止继续下滑，只�
 Author: 王源
 Maintainer: 王源
 Section: Tweaks
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.noswipe.png?v=eb309fd0
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.noswipe.json
 Filename: debs/com.a0.noswipe_7.13.deb
 Size: 26426
@@ -72,7 +72,7 @@ Depends: firmware (>= 15.0), mobilesubstrate
 Conflicts: com.local.resumerecafterflip
 Replaces: com.local.resumerecafterflip
 Provides: com.local.resumerecafterflip
-Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.resumerecafterflip.png
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/com.a0.resumerecafterflip.png?v=8cfe6032
 SileoDepiction: https://cdn.jsdelivr.net/gh/OAA233/repo@main/depictions/com.a0.resumerecafterflip.json
 Filename: debs/com.a0.resumerecafterflip_0.8.0_iphoneos-arm64.deb
 Size: 16846
