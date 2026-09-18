@@ -41,6 +41,9 @@ if [ "${1:-}" = "--stage" ]; then
   exit 0
 fi
 
+# 项目不存在就先建（已存在会报错，忽略即可）
+npx --yes wrangler@4 pages project create "$PROJECT" --production-branch=main >/dev/null 2>&1 || true
+
 npx --yes wrangler@4 pages deploy .dist --project-name="$PROJECT" --branch=main --commit-dirty=true
 echo
 echo "主源地址: https://$PROJECT.pages.dev/"
