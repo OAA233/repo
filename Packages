@@ -5,6 +5,7 @@ Architecture: iphoneos-arm64
 Description: Double-tap to flip camera while idle; probe-logged v4.
 Author: a0
 Section: Tweaks
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
 Size: 6298
 SHA256: eff4e9fbb572a36921e4ae05fc3a4ec56e29dc7a3f42d6c5393fe1fa409fe02c
@@ -19,6 +20,7 @@ Author: a0
 Maintainer: a0
 Section: Tweaks
 Depends: firmware (>= 14.0)
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
 SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
@@ -33,6 +35,7 @@ Author: a0
 Maintainer: a0
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
@@ -46,6 +49,7 @@ Description: XHS video swipe blocker + image-text guard, for com.xingin.discover
 Author: a0
 Maintainer: a0
 Section: Tweaks
+Icon: https://cdn.jsdelivr.net/gh/OAA233/repo@main/icons/default.png
 Filename: debs/com.a0.noswipe_7.15.deb
 Size: 26848
 SHA256: 6971a2f970b13b9ee825e0b6ed03493bd832e3ef51bf388954356ff81df4f444

@@ -25,6 +25,8 @@ MIRRORS = ["https://oaa233.github.io/repo/",
            "https://cdn.jsdelivr.net/gh/OAA233/repo@main/",
            "https://fastly.jsdelivr.net/gh/OAA233/repo@main/",
            "https://testingcf.jsdelivr.net/gh/OAA233/repo@main/"]
+# 图标走 jsDelivr（手机在国内也能拉到；Pages 常被墙）
+ICON_BASE = MIRRORS[1]
 
 
 # ---------- .deb 读取 (ar + control.tar.*) ----------
@@ -90,6 +92,12 @@ def build_packages():
                 "Maintainer", "Section", "Depends", "Pre-Depends", "Conflicts", "Replaces",
                 "Provides", "Tag", "Icon", "Depiction", "SileoDepiction"]
         out = [f"{k}: {d[k]}" for k in head if k in d]
+        # Sileo/Zebra 包列表里的图标：icons/<包名>.png，没有就用 icons/default.png
+        icon = os.path.join(ROOT, "icons", d["Package"] + ".png")
+        if not os.path.exists(icon):
+            icon = os.path.join(ROOT, "icons", "default.png")
+        if os.path.exists(icon):
+            out.append(f"Icon: {ICON_BASE}icons/{os.path.basename(icon)}")
         out.append(f"Filename: debs/{fn}")
         out.append(f"Size: {len(blob)}")
         out.append(f"SHA256: {hashlib.sha256(blob).hexdigest()}")
