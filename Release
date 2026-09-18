@@ -1,17 +1,17 @@
-Origin: 王
-Label: 王
+Origin: Wang's Repo
+Label: Wang's Repo
 Suite: stable
 Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
-Description: 王的插件源
-Date: Fri, 18 Sep 2026 13:43:16 GMT
+Description: Wang's rootless tweaks (iOS 17) · 王的无根越狱插件源
+Date: Fri, 18 Sep 2026 13:56:18 GMT
 MD5Sum:
  db0b388ffdfbb7e9850878e2d42ce43c 2999 Packages
  2ad2a92761bace8ea9e25d4a25e6ccbf 1550 Packages.bz2
- 340e369de9b713610bdb76d83c44bf28 1419 Packages.gz
+ a50985ab1dd778014e3b0a1f9463c8c5 1419 Packages.gz
 SHA256:
  98926360529eb10a8034cb5c7c6981b4a47b6f676d7cd0934cf1d222a0de422e 2999 Packages
  d03b5ea7f9b03232f78653979142a44f33aaf3ea81f746e82f7fa62e3bb3866c 1550 Packages.bz2
- 4f7a21c0935c3bc85b6f26516a420a63dde8b373e82562db9d7494880614665a 1419 Packages.gz
+ 61b0a343ed1762d3ad19effeca91767b2d6e870ccc5463353b0da3d770b45072 1419 Packages.gz

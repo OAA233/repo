@@ -15,9 +15,9 @@ DEBS = os.path.join(ROOT, "debs")
 PAID = os.path.join(ROOT, "paid.txt")
 
 # 源的身份信息 —— 改成你自己的
-ORIGIN = "王"
-LABEL = "王"
-DESCRIPTION = "王的插件源"
+ORIGIN = "Wang's Repo"
+LABEL = "Wang's Repo"
+DESCRIPTION = "Wang's rootless tweaks (iOS 17) · 王的无根越狱插件源"
 ARCHS = "iphoneos-arm iphoneos-arm64"
 
 # 包里 control 写的还是旧占位名，仓库侧统一显示成这个（改 deb 要重新打包，先不动 deb）
