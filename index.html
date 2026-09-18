@@ -24,4 +24,9 @@ ul{padding-left:1.2em}small{color:#888}</style>
 <h3>Mac 客户端下载</h3>
 <p>这些是 macOS 上的配套程序，Sileo/Zebra 装不了，直接下载解压用：</p>
 <ul><li><a href="mac/Mirror17-mac-1.0.0.zip">Mirror17-mac-1.0.0.zip</a> <small>3829 KB · 2026-09-18</small></li></ul>
+<p><small>需要 macOS 14+ 和 Apple 芯片。第三方动态库已经内嵌在包里，不用额外装东西；
+但「数据线直控」要 <code>brew install libimobiledevice</code>，「Wi-Fi 直控」要
+<code>brew install --cask tigervnc</code>。没做 Apple 公证，第一次打开可能要在
+「终端」跑 <code>xattr -dr com.apple.quarantine /Applications/我的镜子17.app</code>。</small></p>
+<p><small>安装说明与许可证：<a href="mac/README.txt">README.txt</a> <a href="mac/NOTICE.txt">NOTICE.txt</a> </small></p>
 <p><small>镜像（主源连不上时用）：https://cdn.jsdelivr.net/gh/OAA233/repo@main/mac/Mirror17-mac-1.0.0.zip</small></p>

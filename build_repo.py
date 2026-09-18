@@ -242,10 +242,19 @@ def write_all():
             f'<small>{os.path.getsize(os.path.join(MAC, n)) // 1024} KB · '
             f'{__import__("time").strftime("%Y-%m-%d", __import__("time").localtime(os.path.getmtime(os.path.join(MAC, n))))}</small></li>'
             for n in macs)
+        # mac/ 里的说明文档也一起列出来，方便下载者（README.txt / NOTICE.txt）
+        docs = "".join(f'<a href="mac/{quote(n)}">{n}</a> ' for n in ("README.txt", "NOTICE.txt")
+                       if os.path.exists(os.path.join(MAC, n)))
+        docs_html = f'<p><small>安装说明与许可证：{docs}</small></p>' if docs else ""
         mac_html = f"""
 <h3>Mac 客户端下载</h3>
 <p>这些是 macOS 上的配套程序，Sileo/Zebra 装不了，直接下载解压用：</p>
 <ul>{links}</ul>
+<p><small>需要 macOS 14+ 和 Apple 芯片。第三方动态库已经内嵌在包里，不用额外装东西；
+但「数据线直控」要 <code>brew install libimobiledevice</code>，「Wi-Fi 直控」要
+<code>brew install --cask tigervnc</code>。没做 Apple 公证，第一次打开可能要在
+「终端」跑 <code>xattr -dr com.apple.quarantine /Applications/我的镜子17.app</code>。</small></p>
+{docs_html}
 <p><small>镜像（主源连不上时用）：{MIRRORS[1]}mac/{quote(macs[0])}</small></p>
 """
 
