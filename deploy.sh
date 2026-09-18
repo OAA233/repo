@@ -31,7 +31,7 @@ for stanza in pkgs.decode().split("\n\n"):
     d = dict(re.findall(r"^([A-Za-z0-9-]+): (.*)$", stanza, re.M))
     blob = get(d["Filename"])
     assert hashlib.sha256(blob).hexdigest() == d["SHA256"], f"{d['Package']} deb 哈希对不上"
-    icon = d["Icon"].split("/", 3)[3]
+    icon = "icons/" + d["Icon"].rsplit("/", 1)[1]   # 图标可能不在主源上，只取文件名本地验
     assert get(icon), f"{d['Package']} 图标拉不到"
 print(f"本地自检通过：{len([s for s in pkgs.decode().split(chr(10)+chr(10)) if s.strip()])} 个包 + 全部图标")
 EOF
