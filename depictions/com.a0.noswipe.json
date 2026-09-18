@@ -1,0 +1,43 @@
+{
+ "minVersion": "0.4",
+ "class": "DepictionTabView",
+ "tintColor": "#5b5bd6",
+ "tabs": [
+  {
+   "class": "DepictionStackView",
+   "tabname": "介绍",
+   "views": [
+    {
+     "class": "DepictionHeaderView",
+     "title": "XHS NoSwipe (net_buffer_aux)"
+    },
+    {
+     "class": "DepictionSubheaderView",
+     "title": "7.13 · Wang"
+    },
+    {
+     "class": "DepictionMarkdownView",
+     "markdown": "小红书禁滑：视频 / 图文详情页禁止继续下滑，只作用于 com.xingin.discover（小红书），不碰别的 App。\n\n**做什么**\n\n- 视频与图文详情页：禁止下滑切到下一条\n- 判定分三态 ——「确定图文 / 确定视频 / 还没看清」：看不清时不下结论，0.2 秒后复核（最多 5 次），所以不会出现「第一次点进去滑不动、退出再进才好」\n- 评论区重新锁住，划不到下一条\n\n**版本说明**\n\n- 7.13 是当前稳定版：修掉「第一次点进长文图文滑不动」\n\n**安装**\n\n- iOS 17 无根越狱（NathanLR 等），装完 respring 生效\n- 只 hook 小红书（com.xingin.discover）"
+    },
+    {
+     "class": "DepictionSeparatorView"
+    },
+    {
+     "class": "DepictionTableTextView",
+     "title": "版本",
+     "text": "7.13"
+    },
+    {
+     "class": "DepictionTableTextView",
+     "title": "兼容",
+     "text": "iOS 17（无根 /var/jb）"
+    },
+    {
+     "class": "DepictionTableTextView",
+     "title": "作者",
+     "text": "王"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "desc": "有镜像客户端（VNC 5901 / 原生 H.264 38917）连到 iPhone 上的 TrollVNC 时，把实体屏幕亮度降到最低；全部断开后恢复连接前的亮度。\n\n- 独立守护进程（mirror17dimd），不改 TrollVNC 本体\n- 原亮度持久化在 /var/jb/tmp/mirror17dim.state：进程崩溃或被杀死后重启会读回，不会把手机永久锁在最低亮度\n- 通过 TrollVNC 自带的控制套接字 127.0.0.1:46752 读客户端数量，同时用 libproc 扫 5901 / 38917 上的 established 连接\n\n配合 Mirror17（Mac 端直控）使用。",
+ "info": {
+  "版本": "1.0.0",
+  "兼容": "iOS 14+（无根 /var/jb）",
+  "作者": "王"
+ }
+}

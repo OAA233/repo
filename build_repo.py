@@ -6,13 +6,22 @@
 
 付费包: 把包名(控制文件里的 Package:)一行一个写进 paid.txt，
        生成时会自动加 Tag: cydia::commercial (Sileo 认这个才会走购买流程)。
+说明与贴图: 每个包可选一份 meta/<包名>.json:
+       {"desc": "中文说明(markdown)", "info": {"兼容": "iOS 17", "作者": "王"}}
+       贴图丢进 shots/<包名>/ 里(任意 *.png|jpg，按文件名排序)，
+       文件名叫 banner.png 的那张会当介绍页顶图。
+       有 meta 或贴图的包会自动生成 depictions/<包名>.json 原生介绍页。
 新版本: 把新 .deb 丢进 debs/ 再跑一次即可，同一个包名多版本没问题，装的时候取最高版。
 """
-import bz2, gzip, hashlib, io, os, shutil, subprocess, sys, tarfile
+import bz2, gzip, hashlib, io, json, os, re, shutil, subprocess, sys, tarfile
+from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DEBS = os.path.join(ROOT, "debs")
 PAID = os.path.join(ROOT, "paid.txt")
+META = os.path.join(ROOT, "meta")
+SHOTS = os.path.join(ROOT, "shots")
+DEPICTIONS = os.path.join(ROOT, "depictions")
 ZSTD = shutil.which("zstd") or "/opt/homebrew/bin/zstd"
 
 # 源的身份信息 —— 改成你自己的
@@ -32,6 +41,8 @@ MIRRORS = ["https://wangyuan-repo.pages.dev/",
 # 图标固定走 jsDelivr（国内实测能拉）。主源如果是 Cloudflare Pages，手机偶尔不通时
 # 图标也不会跟着挂掉。想让图标也走主源就把下面这行改成 MIRRORS[0]。
 ICON_BASE = MIRRORS[1]
+# 介绍页 JSON 和贴图跟主源走（它们是页面的内容，主源不通时页面本来就打不开）
+DEP_BASE = MIRRORS[0]
 
 
 # ---------- .deb 读取 (ar + control.tar.*) ----------
@@ -73,6 +84,48 @@ def parse_control(text):
     return fields
 
 
+# ---------- 介绍页 (Sileo 原生 depiction) ----------
+def load_meta(pkg):
+    p = os.path.join(META, pkg + ".json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+def shot_files(pkg):
+    d = os.path.join(SHOTS, pkg)
+    if not os.path.isdir(d):
+        return []
+    return [n for n in sorted(os.listdir(d))
+            if n.lower().endswith((".png", ".jpg", ".jpeg")) and n != "banner.png"]
+
+
+def build_depiction(stanza, meta):
+    pkg = stanza["Package"]
+    views = [{"class": "DepictionHeaderView", "title": stanza.get("Name", pkg)},
+             {"class": "DepictionSubheaderView",
+              "title": f"{stanza.get('Version', '?')} · {stanza.get('Author', AUTHOR)}"}]
+    shots = [{"url": f"{DEP_BASE}shots/{pkg}/{quote(n)}", "accessibilityText": "", "video": False}
+             for n in shot_files(pkg)]
+    if shots:
+        views.append({"class": "DepictionScreenshotsView", "itemCornerRadius": 8,
+                      "itemSize": {"x": 260, "y": 563}, "screenshots": shots})
+    if meta.get("desc"):
+        views.append({"class": "DepictionMarkdownView", "markdown": meta["desc"]})
+    for k, v in (meta.get("info") or {}).items():
+        views.append({"class": "DepictionTableTextView", "title": str(k), "text": str(v)})
+    if meta.get("info"):
+        views.insert(len(views) - len(meta["info"]), {"class": "DepictionSeparatorView"})
+    doc = {"minVersion": "0.4", "class": "DepictionTabView", "tintColor": "#5b5bd6",
+           "tabs": [{"class": "DepictionStackView", "tabname": "介绍", "views": views}]}
+    if os.path.exists(os.path.join(SHOTS, pkg, "banner.png")):
+        doc["headerImage"] = f"{DEP_BASE}shots/{pkg}/banner.png"
+    return doc
+
+
+def has_depiction(pkg):
+    return bool(load_meta(pkg)) or bool(shot_files(pkg)) or \
+        os.path.exists(os.path.join(SHOTS, pkg, "banner.png"))
+
+
 # ---------- 生成 Packages ----------
 def build_packages():
     paid = {l.split("#")[0].strip() for l in open(PAID, encoding="utf-8")} if os.path.exists(PAID) else set()
@@ -90,6 +143,15 @@ def build_packages():
         for k in ("Author", "Maintainer"):          # deb 里是旧占位名，仓库侧改写
             if d.get(k, "") in ("a0", ""):
                 d[k] = AUTHOR
+        # 中文说明：meta/<包名>.json 里的 desc 第一行进列表，完整 markdown 进介绍页
+        meta = load_meta(d["Package"])
+        if meta.get("desc"):
+            first = re.sub(r"[#*`>]", "", meta["desc"].strip().split("\n")[0]).strip()
+            d["Description"] = first[:120]
+        if has_depiction(d["Package"]):
+            os.makedirs(DEPICTIONS, exist_ok=True)
+            with open(os.path.join(DEPICTIONS, d["Package"] + ".json"), "w", encoding="utf-8") as fh:
+                json.dump(build_depiction(d, meta), fh, ensure_ascii=False, indent=1)
         if d["Package"] in paid:
             tags = [t.strip() for t in d.get("Tag", "").split(",") if t.strip()]
             if "cydia::commercial" not in tags:
@@ -106,6 +168,10 @@ def build_packages():
             icon = os.path.join(ROOT, "icons", "default.png")
         if os.path.exists(icon):
             out.append(f"Icon: {ICON_BASE}icons/{os.path.basename(icon)}")
+        if has_depiction(d["Package"]):
+            out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json")
+            if os.path.exists(os.path.join(SHOTS, d["Package"], "banner.png")):
+                out.append(f"Header: {DEP_BASE}shots/{d['Package']}/banner.png")
         out.append(f"Filename: debs/{fn}")
         out.append(f"Size: {len(blob)}")
         out.append(f"SHA256: {hashlib.sha256(blob).hexdigest()}")
@@ -118,6 +184,8 @@ def build_packages():
 
 def write_all():
     os.makedirs(DEBS, exist_ok=True)
+    os.makedirs(SHOTS, exist_ok=True)
+    shutil.rmtree(DEPICTIONS, ignore_errors=True)   # 清掉已删包的旧介绍页
     text = build_packages()
     blob = text.encode()
     variants = ["Packages", "Packages.bz2", "Packages.gz"]

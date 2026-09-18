@@ -1,0 +1,43 @@
+{
+ "minVersion": "0.4",
+ "class": "DepictionTabView",
+ "tintColor": "#5b5bd6",
+ "tabs": [
+  {
+   "class": "DepictionStackView",
+   "tabname": "介绍",
+   "views": [
+    {
+     "class": "DepictionHeaderView",
+     "title": "Mirror17 Keep Awake"
+    },
+    {
+     "class": "DepictionSubheaderView",
+     "title": "1.0.0 · Wang"
+    },
+    {
+     "class": "DepictionMarkdownView",
+     "markdown": "投屏 / 镜像期间禁止 iPhone 自动锁屏。\n\n做法是注入 SpringBoard 设 `idleTimerDisabled` —— iOS 17 上别的办法（后台任务、定时器、私有断言）都拦不住自动锁屏，只有从 SpringBoard 内部下手才可靠。\n\n配合 com.a0.mirror17dim 一起用：一个管亮度，一个管锁屏。"
+    },
+    {
+     "class": "DepictionSeparatorView"
+    },
+    {
+     "class": "DepictionTableTextView",
+     "title": "版本",
+     "text": "1.0.0"
+    },
+    {
+     "class": "DepictionTableTextView",
+     "title": "兼容",
+     "text": "iOS 14+（无根 /var/jb）"
+    },
+    {
+     "class": "DepictionTableTextView",
+     "title": "作者",
+     "text": "王"
+    }
+   ]
+  }
+ ]
+}

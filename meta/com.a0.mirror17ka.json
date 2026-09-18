@@ -1,0 +1,8 @@
+{
+ "desc": "投屏 / 镜像期间禁止 iPhone 自动锁屏。\n\n做法是注入 SpringBoard 设 `idleTimerDisabled` —— iOS 17 上别的办法（后台任务、定时器、私有断言）都拦不住自动锁屏，只有从 SpringBoard 内部下手才可靠。\n\n配合 com.a0.mirror17dim 一起用：一个管亮度，一个管锁屏。",
+ "info": {
+  "版本": "1.0.0",
+  "兼容": "iOS 14+（无根 /var/jb）",
+  "作者": "王"
+ }
+}

@@ -14,7 +14,7 @@ mkdir -p .dist
 for f in Packages Packages.bz2 Packages.gz Packages.zst Release index.html 404.html CydiaIcon.png README.md .nojekyll; do
   [ -f "$f" ] && cp "$f" .dist/
 done
-cp -R debs icons .dist/
+cp -R debs icons depictions shots .dist/
 
 # 传之前先在本地当静态服务器验一遍（Packages/Release/deb/图标是否齐全）
 python3 - <<'EOF'
@@ -35,7 +35,14 @@ for stanza in pkgs.decode().split("\n\n"):
     assert hashlib.sha256(blob).hexdigest() == d["SHA256"], f"{d['Package']} deb 哈希对不上"
     icon = "icons/" + d["Icon"].rsplit("/", 1)[1]   # 图标可能不在主源上，只取文件名本地验
     assert get(icon), f"{d['Package']} 图标拉不到"
-print(f"本地自检通过：{len([s for s in pkgs.decode().split(chr(10)+chr(10)) if s.strip()])} 个包 + 全部图标")
+    if "SileoDepiction" in d:
+        assert get("depictions/" + d["SileoDepiction"].rsplit("/", 1)[1]), f"{d['Package']} 介绍页拉不到"
+    if "Header" in d:
+        assert get("shots/" + d["Package"] + "/banner.png"), f"{d['Package']} 顶图拉不到"
+    for url in re.findall(r'"url": "([^"]+)"', (get("depictions/" + d["Package"] + ".json").decode()
+                                               if "SileoDepiction" in d else "")):
+        assert get("shots/" + d["Package"] + "/" + url.rsplit("/", 1)[1]), f"{d['Package']} 贴图 {url} 拉不到"
+print(f"本地自检通过：{len([s for s in pkgs.decode().split(chr(10)+chr(10)) if s.strip()])} 个包 + 图标/介绍页/贴图")
 EOF
 
 if [ "${1:-}" = "--stage" ]; then
