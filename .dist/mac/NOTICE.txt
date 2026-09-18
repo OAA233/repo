@@ -1,0 +1,23 @@
+Mirror17.app 内含的第三方组件
+=============================
+
+本 app 把下面这些动态库原样打包进了 Contents/Frameworks/，下载者不需要额外安装任何东西。
+但打包 = 再分发，所以把许可证和源码位置写在这里。
+
+1) libvncclient  —— 来自 libvncserver 0.9.15
+   许可证: GPL-2.0-or-later
+   源码:   https://github.com/LibVNC/libvncserver
+   本项目链接它来实现内嵌 VNC 客户端（Sources/EmbeddedVNC/）。
+   ⚠️ GPL-2.0 是传染性许可：对外分发这个 app 就等于要一并提供对应源码。
+      如果你不打算公开自己的源码，就别把这一版放出去（改成让用户自己 brew install libvncserver）。
+
+2) libjpeg  —— 来自 jpeg-turbo 3.2.0
+   许可证: BSD-3-Clause / IJG
+   源码:   https://github.com/libjpeg-turbo/libjpeg-turbo
+
+3) libssl / libcrypto  —— 来自 OpenSSL 4.0.2
+   许可证: Apache-2.0
+   源码:   https://github.com/openssl/openssl
+
+另外：TigerVNC 与 libimobiledevice 是运行时可选依赖，**没有**打包进来，
+用户想用「Wi-Fi 直控」或「数据线直控」时按 mac/README.txt 自己 brew 装。

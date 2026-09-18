@@ -14,7 +14,7 @@ SHA256: eff4e9fbb572a36921e4ae05fc3a4ec56e29dc7a3f42d6c5393fe1fa409fe02c
 MD5sum: 2b80f4415e98624ec28bad0a1ca3fb72
 
 Package: com.a0.mirror17dim
-Name: Mirror17 Dim
+Name: 我的镜子17
 Version: 1.0.0
 Architecture: iphoneos-arm64
 Description: 有镜像客户端（VNC 5901 / 原生 H.264 38917）连到 iPhone 上的 TrollVNC 时，把实体屏幕亮度降到最低；全部断开后恢复连接前的亮度。
@@ -30,7 +30,7 @@ SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
 MD5sum: 5f071ea7927ad52eec2081f94be3513c
 
 Package: com.a0.mirror17ka
-Name: Mirror17 Keep Awake
+Name: 我的镜子17 · 常亮
 Version: 1.0.0
 Architecture: iphoneos-arm64
 Description: 投屏 / 镜像期间禁止 iPhone 自动锁屏。
