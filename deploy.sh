@@ -14,7 +14,7 @@ mkdir -p .dist
 for f in Packages Packages.bz2 Packages.gz Packages.zst Release index.html 404.html CydiaIcon.png README.md .nojekyll; do
   [ -f "$f" ] && cp "$f" .dist/
 done
-cp -R debs icons depictions shots .dist/
+cp -R debs icons depictions pkg shots .dist/
 [ -d mac ] && cp -R mac .dist/    # Mac 客户端 zip 之类的普通下载件（可选）
 
 # 传之前先在本地当静态服务器验一遍（Packages/Release/deb/图标是否齐全）
@@ -64,7 +64,7 @@ fi
 # 同步到 GitHub（jsDelivr 备用源和图标/介绍页读的就是它），再清掉 CDN 缓存
 git add -A >/dev/null 2>&1 && git commit -q -m "deploy: $(date '+%Y-%m-%d %H:%M')" >/dev/null 2>&1 || true
 git push -q origin main >/dev/null 2>&1 && echo "已同步到 GitHub" || echo "（GitHub 推送失败，跳过 —— jsDelivr 备用源会滞后）"
-for f in Packages Packages.zst Packages.bz2 Packages.gz Release index.html CydiaIcon.png icons/*.png depictions/*.json shots/*/* mac/*; do
+for f in Packages Packages.zst Packages.bz2 Packages.gz Release index.html CydiaIcon.png icons/*.png depictions/*.json pkg/*.html shots/*/* mac/*; do
   curl -s -m 15 "https://purge.jsdelivr.net/gh/OAA233/repo@main/$f" -o /dev/null 2>/dev/null || true
 done
 echo "已清 jsDelivr 缓存"

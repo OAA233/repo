@@ -24,6 +24,7 @@ META = os.path.join(ROOT, "meta")
 SHOTS = os.path.join(ROOT, "shots")
 MAC = os.path.join(ROOT, "mac")            # 非 APT 的普通下载件（Mac 客户端 zip 等）
 DEPICTIONS = os.path.join(ROOT, "depictions")
+PKG = os.path.join(ROOT, "pkg")             # 网页版详情页（给浏览器看，Sileo 不读它）
 ZSTD = shutil.which("zstd") or "/opt/homebrew/bin/zstd"
 
 # 源的身份信息 —— 改成你自己的
@@ -151,6 +152,92 @@ def has_depiction(pkg):
         os.path.exists(os.path.join(SHOTS, pkg, "banner.png"))
 
 
+def esc_html(s):
+    return __import__("html").escape(str(s))
+
+
+def md_inline(s):
+    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+
+
+def md_to_html(md):
+    """desc 用的 markdown 子集（**粗体** / - 列表 / ## ### 标题 / 空行分段）→ HTML。"""
+    out, in_list = [], False
+    for line in md.split("\n"):
+        if line.startswith("- "):
+            if not in_list:
+                out.append("<ul>")
+                in_list = True
+            out.append(f"<li>{md_inline(esc_html(line[2:]))}</li>")
+            continue
+        if in_list:
+            out.append("</ul>")
+            in_list = False
+        if not line.strip():
+            continue
+        if line.startswith("### "):
+            out.append(f"<h3>{md_inline(esc_html(line[4:]))}</h3>")
+        elif line.startswith("## "):
+            out.append(f"<h2>{md_inline(esc_html(line[3:]))}</h2>")
+        else:
+            out.append(f"<p>{md_inline(esc_html(line))}</p>")
+    if in_list:
+        out.append("</ul>")
+    return "\n".join(out)
+
+
+PKG_CSS = """
+:root{--bg:#0d0f13;--panel:#161a21;--border:#282d38;--text:#e9ebef;--sub:#9aa2ad;--accent:#5b5bd6}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--panel:#ffffff;--border:#e4e6eb;--text:#17181c;--sub:#6d7480}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:28px 16px 56px}
+.backlink a{color:var(--sub);text-decoration:none;font-size:.9rem}
+h1{font-size:1.6rem;margin:6px 0 4px}
+.tagline{color:var(--sub);margin:0 0 20px}
+.shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
+.shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.prose h2,.prose h3{margin:1.4em 0 .5em}
+.prose p{margin:.8em 0}
+.prose ul{margin:.6em 0;padding-left:1.3em}
+.prose li{margin:.35em 0}
+table.info{border-collapse:collapse;width:100%;margin-top:26px}
+table.info th,table.info td{border-bottom:1px solid var(--border);text-align:left;padding:9px 4px;font-size:.95em;font-weight:normal}
+table.info th{color:var(--sub);width:7em}
+"""
+
+
+def build_pkg_page(d, meta, doc):
+    """把介绍页（depiction）渲染成给人看的静态网页，落地页卡片点开就是它。"""
+    pkg = d["Package"]
+    shots = []
+    for t in doc.get("tabs", []):
+        for v in t.get("views", []):
+            if v.get("class") == "DepictionScreenshotsView":
+                shots = [s["url"] for s in v["screenshots"]]
+    shots_html = "".join(f'<img src="{esc_html(u)}" alt="">' for u in shots)
+    info_rows = "".join(
+        f"<tr><th>{esc_html(k)}</th><td>{esc_html(v)}</td></tr>"
+        for k, v in (meta.get("info") or {}).items())
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>{esc_html(d["Name"])} · {LABEL}</title>
+<style>{PKG_CSS}</style>
+<div class="wrap">
+<p class="backlink"><a href="../index.html">← 返回源首页</a></p>
+<h1>{esc_html(d["Name"])}</h1>
+<p class="tagline">{esc_html(d.get("Version", "?"))} · {esc_html(d.get("Author", AUTHOR))}</p>
+{f'<div class="shots">{shots_html}</div>' if shots else ""}
+<div class="prose">{md_to_html(meta.get("desc") or "")}</div>
+{('<table class="info">' + info_rows + "</table>") if info_rows else ""}
+</div>
+</html>"""
+
+
 # ---------- 生成 Packages ----------
 def build_packages():
     paid = {l.split("#")[0].strip() for l in open(PAID, encoding="utf-8")} if os.path.exists(PAID) else set()
@@ -181,11 +268,15 @@ def build_packages():
         dep_ver = ""
         if has_depiction(d["Package"]):
             os.makedirs(DEPICTIONS, exist_ok=True)
-            doc = json.dumps(build_depiction(d, meta), ensure_ascii=False, indent=1)
+            doc = build_depiction(d, meta)
+            doc_json = json.dumps(doc, ensure_ascii=False, indent=1)
             with open(os.path.join(DEPICTIONS, d["Package"] + ".json"), "w", encoding="utf-8") as fh:
-                fh.write(doc)
+                fh.write(doc_json)
             # URL 带内容哈希：介绍页一变 URL 就变，绕开 Sileo 与 CDN 的旧缓存
-            dep_ver = "?v=" + hashlib.md5(doc.encode()).hexdigest()[:8]
+            dep_ver = "?v=" + hashlib.md5(doc_json.encode()).hexdigest()[:8]
+            os.makedirs(PKG, exist_ok=True)
+            with open(os.path.join(PKG, d["Package"] + ".html"), "w", encoding="utf-8") as fh:
+                fh.write(build_pkg_page(d, meta, doc))
         if d["Package"] in paid:
             tags = [t.strip() for t in d.get("Tag", "").split(",") if t.strip()]
             if "cydia::commercial" not in tags:
@@ -224,6 +315,7 @@ def write_all():
     os.makedirs(SHOTS, exist_ok=True)
     os.makedirs(MAC, exist_ok=True)
     shutil.rmtree(DEPICTIONS, ignore_errors=True)   # 清掉已删包的旧介绍页
+    shutil.rmtree(PKG, ignore_errors=True)          # 同上：网页版详情页
     text = build_packages()
     blob = text.encode()
     variants = ["Packages", "Packages.bz2", "Packages.gz"]
@@ -263,13 +355,14 @@ def write_all():
         icon = f"icons/{d['Package']}.png"
         if not os.path.exists(os.path.join(ROOT, icon)):
             icon = "icons/default.png"
-        cards.append((d["Name"], d["Version"], d["Description"].splitlines()[0], icon))
+        cards.append((d["Name"], d["Version"], d["Description"].splitlines()[0], icon, d["Package"]))
     pkg_html = "".join(
-        f'<div class="card"><img class="icon" src="{esc(icon)}" alt="" width="56" height="56">'
+        f'<a class="card" href="pkg/{quote(pid)}.html">'
+        f'<img class="icon" src="{esc(icon)}" alt="" width="56" height="56">'
         f'<div class="meta"><div class="row"><span class="name">{esc(name)}</span>'
         f'<span class="ver">{esc(ver)}</span></div>'
-        f'<div class="desc" title="{esc(desc)}">{esc(desc)}</div></div></div>'
-        for name, ver, desc, icon in cards)
+        f'<div class="desc" title="{esc(desc)}">{esc(desc)}</div></div></a>'
+        for name, ver, desc, icon, pid in cards)
 
     # 非 APT 的普通下载件：mac/ 里的 zip/dmg（Mac 客户端这类东西 Sileo 装不了，只能当附件下）
     macs = sorted((n for n in os.listdir(MAC)

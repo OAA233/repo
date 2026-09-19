@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Mirror17 调暗 · Wangyuan's Repo</title>
+<style>
+:root{--bg:#0d0f13;--panel:#161a21;--border:#282d38;--text:#e9ebef;--sub:#9aa2ad;--accent:#5b5bd6}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--panel:#ffffff;--border:#e4e6eb;--text:#17181c;--sub:#6d7480}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:28px 16px 56px}
+.backlink a{color:var(--sub);text-decoration:none;font-size:.9rem}
+h1{font-size:1.6rem;margin:6px 0 4px}
+.tagline{color:var(--sub);margin:0 0 20px}
+.shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
+.shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.prose h2,.prose h3{margin:1.4em 0 .5em}
+.prose p{margin:.8em 0}
+.prose ul{margin:.6em 0;padding-left:1.3em}
+.prose li{margin:.35em 0}
+table.info{border-collapse:collapse;width:100%;margin-top:26px}
+table.info th,table.info td{border-bottom:1px solid var(--border);text-align:left;padding:9px 4px;font-size:.95em;font-weight:normal}
+table.info th{color:var(--sub);width:7em}
+</style>
+<div class="wrap">
+<p class="backlink"><a href="../index.html">← 返回源首页</a></p>
+<h1>Mirror17 调暗</h1>
+<p class="tagline">1.0.0 · wangyuan</p>
+<div class="shots"><img src="https://wangyuan-repo.pages.dev/shots/com.a0.mirror17dim/01-connect.png?v=560108ba" alt=""><img src="https://wangyuan-repo.pages.dev/shots/com.a0.mirror17dim/02-connected.png?v=af44f89f" alt=""></div>
+<div class="prose"><p>有镜像客户端（VNC 5901 / 原生 H.264 38917）连到 iPhone 上的 TrollVNC 时，把实体屏幕亮度降到最低；全部断开后恢复连接前的亮度。</p>
+<ul>
+<li>独立守护进程（mirror17dimd），不改 TrollVNC 本体</li>
+<li>原亮度持久化在 /var/jb/tmp/mirror17dim.state：进程崩溃或被杀死后重启会读回，不会把手机永久锁在最低亮度</li>
+<li>通过 TrollVNC 自带的控制套接字 127.0.0.1:46752 读客户端数量，同时用 libproc 扫 5901 / 38917 上的 established 连接</li>
+</ul>
+<p><strong>配套的 Mac 端（Mirror17）</strong></p>
+<p>装好这个包之后，Mac 上运行 Mirror17，用数据线或 Wi-Fi 连上 iPhone，画面会直接显示在 Mac 窗口里。窗口底部有一条悬浮控制条，从左到右是：</p>
+<ul>
+<li><strong>返回主页</strong> —— 回到 iPhone 主屏幕</li>
+<li><strong>后台</strong> —— 打开多任务</li>
+<li><strong>后退10秒</strong> —— 在画面上模拟向左拖动进度</li>
+<li><strong>暂停</strong> —— 播放 / 暂停</li>
+<li><strong>快进10秒</strong> —— 在画面上模拟向右拖动进度</li>
+</ul>
+<p>最左边那个箭头是系统返回手势，最右边的「⋯」里是更多（切换采集卡画面 / 开启媒体键映射 / 翻转滚动方向）。</p>
+<p>配合 com.a0.mirror17ka（投屏期间禁止自动锁屏）一起用：一个管亮度，一个管锁屏。</p></div>
+<table class="info"><tr><th>版本</th><td>1.0.0</td></tr><tr><th>兼容</th><td>iOS 17.0（无根 /var/jb）</td></tr><tr><th>作者</th><td>wangyuan</td></tr></table>
+</div>
+</html>
