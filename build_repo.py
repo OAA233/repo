@@ -466,7 +466,8 @@ body{{margin:0;background:#0d0d12;color:#e8e8ef;font:15px/1.6 -apple-system,"Pin
 header{{padding:12px 16px;border-bottom:1px solid #262631;display:flex;justify-content:space-between;align-items:center}}
 header span{{font-weight:600}}a{{color:#8f8ff0;text-decoration:none}}
 main{{padding:14px 12px 44px;display:flex;flex-direction:column;gap:14px;align-items:center}}
-main img{{width:100%;max-width:520px;display:block;border-radius:12px;border:1px solid #262631}}
+main a{{display:block;width:100%;max-width:520px}}
+main img{{width:100%;display:block;border-radius:12px;border:1px solid #262631}}
 </style></head><body>
 <header><span>{esc_html(d.get("Name", pkg))} · 图片</span><a href="{MIRRORS[0]}">← 返回源首页</a></header>
 <main>{imgs}</main></body></html>
