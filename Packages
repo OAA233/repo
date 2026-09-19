@@ -9,7 +9,7 @@ Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.doubletapflipcameraplus.png?v=8cfe6032
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.doubletapflipcameraplus.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.doubletapflipcameraplus.json?v=7adb6d6f
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.doubletapflipcameraplus.json?v=974e8748
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
 Size: 6298
 SHA256: eff4e9fbb572a36921e4ae05fc3a4ec56e29dc7a3f42d6c5393fe1fa409fe02c
@@ -19,14 +19,14 @@ Package: com.a0.mirror17dim
 Name: Mirror17 调暗
 Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: 有镜像客户端（VNC 5901 / 原生 H.264 38917）连到 iPhone 上的 TrollVNC 时，把实体屏幕亮度降到最低；全部断开后恢复连接前的亮度。
+Description: 配套的 Mac 端（Mirror17）
 Author: wangyuan
 Maintainer: wangyuan
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17dim.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17dim.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json?v=692139db
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json?v=48b52613
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
 SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
@@ -36,14 +36,14 @@ Package: com.a0.mirror17ka
 Name: Mirror17 常亮
 Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: 投屏 / 镜像期间禁止 iPhone 自动锁屏。
+Description: 投屏 / 镜像期间禁止 iPhone 自动锁屏
 Author: wangyuan
 Maintainer: wangyuan
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit, com.a0.mirror17dim
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17ka.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17ka.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json?v=498c90c0
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json?v=9efed3e2
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
@@ -53,14 +53,14 @@ Package: com.a0.noswipe
 Name: XHS NoSwipe (net_buffer_aux)
 Version: 7.12
 Architecture: iphoneos-arm64
-Description: 小红书禁滑：禁止下滑，改变习惯，节约时间。只作用于 com.xingin.discover（小红书），不碰别的 App。
+Description: 小红书禁滑：禁止下滑，改变习惯，节约时间。
 Author: wangyuan
 Maintainer: wangyuan
 Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.noswipe.png?v=eb309fd0
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.noswipe.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=87fad6cd
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=0da7c8f6
 Filename: debs/com.a0.noswipe_7.12.deb
 Size: 24872
 SHA256: 734ad4be01fbc9f9ddbeec0364a88f1868b2b10927b2f375336d7c9ae5d04515
@@ -70,7 +70,7 @@ Package: com.a0.resumerecafterflip
 Name: Camera Resume Rec
 Version: 0.8.0
 Architecture: iphoneos-arm64
-Description: 系统相机录像中双击翻转会打断录像（错误 -11818）。本插件在被打断后自动续录，并在你按停止时把各分段无损拼成一个完整视频写入相册，原分段自动清理。
+Description: 系统相机录像中双击翻转会打断录像，本插件在被打断后自动续录，并在你按停止时把各分段无损拼成一个完整视频写入相册，原分段自动清理。
 Author: wangyuan
 Maintainer: wangyuan
 Section: Tweaks
@@ -80,7 +80,7 @@ Replaces: com.local.resumerecafterflip
 Provides: com.local.resumerecafterflip
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.resumerecafterflip.png?v=8cfe6032
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.resumerecafterflip.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.resumerecafterflip.json?v=37d59a35
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.resumerecafterflip.json?v=93e5faa2
 Filename: debs/com.a0.resumerecafterflip_0.8.0_iphoneos-arm64.deb
 Size: 16846
 SHA256: 20f9cd7b74a03980785fb31f451218e567bd95993b02055498730f94d72342d4

@@ -54,24 +54,18 @@ body.editing .banner,body.hasdraft .banner{display:block}
 <p class="tagline">1.0.0 · wangyuan</p>
 <div class="shots"><img src="https://wangyuan-repo.pages.dev/shots/com.a0.mirror17dim/01-connect.png?v=560108ba" alt=""><img src="https://wangyuan-repo.pages.dev/shots/com.a0.mirror17dim/02-connected.png?v=af44f89f" alt=""></div>
 <div class="dlbtns"><a class="dlbtn" href="https://wangyuan-repo.pages.dev/mac/Mirror17-mac-1.0.0.zip">下载 Mac 客户端（zip）</a><a class="dlbtn" href="https://wangyuan-repo.pages.dev/mac/README.txt">安装说明 README.txt</a></div>
-<div class="prose"><p>有镜像客户端（VNC 5901 / 原生 H.264 38917）连到 iPhone 上的 TrollVNC 时，把实体屏幕亮度降到最低；全部断开后恢复连接前的亮度。</p>
-<ul>
-<li>独立守护进程（mirror17dimd），不改 TrollVNC 本体</li>
-<li>原亮度持久化在 /var/jb/tmp/mirror17dim.state：进程崩溃或被杀死后重启会读回，不会把手机永久锁在最低亮度</li>
-<li>通过 TrollVNC 自带的控制套接字 127.0.0.1:46752 读客户端数量，同时用 libproc 扫 5901 / 38917 上的 established 连接</li>
-</ul>
-<p><strong>配套的 Mac 端（Mirror17）</strong></p>
+<div class="prose"><p><strong>配套的 Mac 端（Mirror17）</strong></p>
 <p>装好这个包之后，Mac 上运行 Mirror17，用数据线或 Wi-Fi 连上 iPhone，画面会直接显示在 Mac 窗口里。窗口底部有一条悬浮控制条，从左到右是：</p>
+<p>      最左边那个箭头是系统返回手势， </p>
+<p>      最右边的「⋯」里是更多（切换采集卡画面 / 开启媒体键映射 / 翻转滚动方向）。</p>
 <ul>
-<li><strong>返回主页</strong> —— 回到 iPhone 主屏幕</li>
+<li><strong>主页</strong> —— 回到 iPhone 主屏幕</li>
 <li><strong>后台</strong> —— 打开多任务</li>
 <li><strong>后退10秒</strong> —— 在画面上模拟向左拖动进度</li>
 <li><strong>暂停</strong> —— 播放 / 暂停</li>
 <li><strong>快进10秒</strong> —— 在画面上模拟向右拖动进度</li>
-</ul>
-<p>最左边那个箭头是系统返回手势，最右边的「⋯」里是更多（切换采集卡画面 / 开启媒体键映射 / 翻转滚动方向）。</p>
-<p>配合 com.a0.mirror17ka（投屏期间禁止自动锁屏）一起用：一个管亮度，一个管锁屏。</p></div>
-<table class="info"><tr><th>版本</th><td>1.0.0</td></tr><tr><th>兼容</th><td>iOS 17.0（无根 /var/jb）</td></tr><tr><th>作者</th><td>wangyuan</td></tr></table>
+</ul></div>
+<table class="info"><tr><th>版本</th><td>1.0.0</td></tr><tr><th>兼容</th><td>iOS 17.0</td></tr><tr><th>作者</th><td>wangyuan</td></tr></table>
 </div>
 <button class="editbtn" id="editbtn">✏️ 编辑</button>
 <div class="toolbar">
