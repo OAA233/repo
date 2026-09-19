@@ -100,7 +100,7 @@ Replaces: com.82flex.trollvnc
 Provides: com.82flex.trollvnc
 Icon: https://wangyuan-repo.pages.dev/icons/com.wangyuan.trollvnc.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.wangyuan.trollvnc.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc.json?v=868b3f4b
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc.json?v=01d5e412
 Filename: debs/com.wangyuan.trollvnc_3.2-293-2_iphoneos-arm64.deb
 Size: 1753898
 SHA256: f2a563128f88c6100291493d9780b793ffd7bcfaf6e519093cc54b79c037cfd5

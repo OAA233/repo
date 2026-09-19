@@ -6,14 +6,14 @@ Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
 Description: Wangyuan's rootless tweaks (iOS 17) · 王源的无根越狱插件源
-Date: Sat, 19 Sep 2026 07:28:33 GMT
+Date: Sat, 19 Sep 2026 08:30:26 GMT
 MD5Sum:
- b38d13276f3442d31c958c31e2ee0bcc 4642 Packages
- 3c389d1417a8789210601a2fc251e1d9 1779 Packages.bz2
- 1dfc6120d8066105a0cbdf431c085463 1632 Packages.gz
- 1922bb977299e0a43f12f00dfc5cf319 1668 Packages.zst
+ e1015b735cf7b874e8a8ee6fd5d157b7 4642 Packages
+ ec9ad5ca7c1207d9bcb08b65ab5a5b21 1778 Packages.bz2
+ 1f8caa261bd7022ade801d9fa892dc42 1630 Packages.gz
+ 6867f2ca61b3a080a089e449d80d6cef 1668 Packages.zst
 SHA256:
- f295c829ffb12bc415b2c2c25967ceed13ef841e9961da2c08b0865117378515 4642 Packages
- 079935318529e3ca983226f52df340dac666b4b28e437098c35a1e810f086b07 1779 Packages.bz2
- d5a0d6aec811818fa72dc5fe8bcabedc87c55f4ba7c434cae2dc4b5cfcc68cb4 1632 Packages.gz
- 9c0ddf4772c1769879206b33a347ab9e3c29b77a188c8706435c16f27d41406b 1668 Packages.zst
+ f970633826b9596c00f048d150736fdf282796f022516372d51a0751ba8fb603 4642 Packages
+ 6ec2e4c2c01f732544e6ae19f9dd1a357494603bbc60b068466857674f3f8a96 1778 Packages.bz2
+ 74c9ed63b275ad438096e2354f04febc12b21b402ec827f49d95d9fa2cf5473c 1630 Packages.gz
+ d3ffe0ecfce8950b72b2df17879580e0f26ef950eb109ee734693d2cacfe9e60 1668 Packages.zst
