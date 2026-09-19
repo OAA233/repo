@@ -109,6 +109,15 @@ def shot_files(pkg):
             if n.lower().endswith((".png", ".jpg", ".jpeg")) and n != "banner.png"]
 
 
+def pics_url(pkg):
+    """「查看图片」页的地址。有人装完看不到 Sileo 的横滑图，就靠这个按钮兜底。"""
+    names = shot_files(pkg)
+    if not names:
+        return ""
+    v = hashlib.md5("|".join(names).encode()).hexdigest()[:8]
+    return f"{MIRRORS[0]}pkg/{pkg}-pics.html?v={v}"
+
+
 def newest_mac():
     """mac/ 里最新的那个下载件（zip/dmg/pkg），给 meta 里的 "mac:" 快捷写法用。"""
     if not os.path.isdir(MAC):
@@ -211,6 +220,9 @@ def build_depiction(stanza, meta):
         views.append({"class": "DepictionTableButtonView", "title": b["title"],
                       "action": raw if raw.startswith("http") else f"{DEP_BASE}{raw}",
                       "openExternal": b["external"], "tintColor": b["tintColor"]})
+    if shot_files(pkg):                          # 有图才挂：Sileo 不显示横滑图时，点这个看大图
+        views.append({"class": "DepictionTableButtonView", "title": "📷 查看图片",
+                      "action": pics_url(pkg), "openExternal": True, "tintColor": "#5b5bd6"})
     if sponsor_on():                             # 所有包的介绍页底部挂一个赞赏入口
         views.append({"class": "DepictionTableButtonView", "title": "♥ " + SPONSOR_LABEL,
                       "action": f"{MIRRORS[0]}sponsor/", "openExternal": True,
@@ -439,6 +451,28 @@ try{
 """
 
 
+def build_pics_page(d, meta, doc):
+    """「查看图片」页：只放图，点图开原图。给 Sileo 不显示横滑图的情况兜底。"""
+    pkg = d["Package"]
+    shots = [s["url"] for t in doc.get("tabs", []) for v in t.get("views", [])
+             if v.get("class") == "DepictionScreenshotsView" for s in v["screenshots"]]
+    imgs = "".join(f'<a href="{esc_html(u)}" target="_blank"><img src="{esc_html(u)}" alt=""></a>'
+                   for u in shots)
+    return f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{esc_html(d.get("Name", pkg))} · 图片</title>
+<style>
+body{{margin:0;background:#0d0d12;color:#e8e8ef;font:15px/1.6 -apple-system,"PingFang SC",sans-serif}}
+header{{padding:12px 16px;border-bottom:1px solid #262631;display:flex;justify-content:space-between;align-items:center}}
+header span{{font-weight:600}}a{{color:#8f8ff0;text-decoration:none}}
+main{{padding:14px 12px 44px;display:flex;flex-direction:column;gap:14px;align-items:center}}
+main img{{width:100%;max-width:520px;display:block;border-radius:12px;border:1px solid #262631}}
+</style></head><body>
+<header><span>{esc_html(d.get("Name", pkg))} · 图片</span><a href="{MIRRORS[0]}">← 返回源首页</a></header>
+<main>{imgs}</main></body></html>
+"""
+
+
 def build_pkg_page(d, meta, doc):
     """把介绍页（depiction）渲染成给人看的静态网页，落地页卡片点开就是它。带 ✏️ 编辑模式。"""
     pkg = d["Package"]
@@ -455,6 +489,8 @@ def build_pkg_page(d, meta, doc):
     btns_html = "".join(
         f'<a class="dlbtn" href="{esc_html(b["raw"] if b["raw"].startswith("http") else MIRRORS[0] + b["raw"])}">'
         f'{esc_html(b["title"])}</a>' for b in resolve_buttons(meta))
+    if shots:
+        btns_html += f'<a class="dlbtn" href="{esc_html(pics_url(pkg))}">📷 查看图片</a>'
     if sponsor_on():
         btns_html += f'<a class="dlbtn" href="{MIRRORS[0]}sponsor/">♥ {esc_html(SPONSOR_LABEL)}</a>'
     return f"""<!doctype html>
@@ -527,6 +563,9 @@ def build_packages():
             os.makedirs(PKG, exist_ok=True)
             with open(os.path.join(PKG, d["Package"] + ".html"), "w", encoding="utf-8") as fh:
                 fh.write(build_pkg_page(d, meta, doc))
+            if shot_files(d["Package"]):
+                with open(os.path.join(PKG, d["Package"] + "-pics.html"), "w", encoding="utf-8") as fh:
+                    fh.write(build_pics_page(d, meta, doc))
         if d["Package"] in paid:
             tags = [t.strip() for t in d.get("Tag", "").split(",") if t.strip()]
             if "cydia::commercial" not in tags:

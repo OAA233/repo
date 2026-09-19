@@ -43,9 +43,12 @@ for stanza in pkgs.decode().split("\n\n"):
         assert get("depictions/" + depfile), f"{d['Package']} 介绍页拉不到"
     if "Header" in d:
         assert get("shots/" + d["Package"] + "/banner.png"), f"{d['Package']} 顶图拉不到"
-    for url in re.findall(r'"url": "([^"]+)"', (get("depictions/" + depfile).decode()
-                                               if "SileoDepiction" in d else "")):
+    urls = re.findall(r'"url": "([^"]+)"', (get("depictions/" + depfile).decode()
+                                            if "SileoDepiction" in d else ""))
+    for url in urls:
         assert get("shots/" + d["Package"] + "/" + url.rsplit("/", 1)[1]), f"{d['Package']} 贴图 {url} 拉不到"
+    if urls:                                    # 有图的包都会有「查看图片」按钮，它指向这页
+        assert get("pkg/" + d["Package"] + "-pics.html"), f"{d['Package']} 查看图片页拉不到"
 print(f"本地自检通过：{len([s for s in pkgs.decode().split(chr(10)+chr(10)) if s.strip()])} 个包 + 图标/介绍页/贴图")
 EOF
 

@@ -26,7 +26,7 @@ Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17dim.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17dim.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim-13dc17c0.json
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim-f17ece23.json
 Filename: debs/com.a0.mirror17dim_1.0.1_iphoneos-arm64.deb
 Size: 16904
 SHA256: f4b06508764e8be978300aed07f0d4ebd60f1340d4c40e691569f612bcfc022e
@@ -43,7 +43,7 @@ Section: Tweaks
 Depends: firmware (>= 14.0), ellekit, com.a0.mirror17dim
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17ka.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17ka.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka-9d115302.json
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka-6704633d.json
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
@@ -60,7 +60,7 @@ Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.noswipe.png?v=eb309fd0
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.noswipe.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe-7d03dbfd.json
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe-0d1e1863.json
 Filename: debs/com.a0.noswipe_7.12.deb
 Size: 24872
 SHA256: 734ad4be01fbc9f9ddbeec0364a88f1868b2b10927b2f375336d7c9ae5d04515
@@ -100,7 +100,7 @@ Replaces: com.82flex.trollvnc
 Provides: com.82flex.trollvnc
 Icon: https://wangyuan-repo.pages.dev/icons/com.wangyuan.trollvnc.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.wangyuan.trollvnc.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc-35f0ab10.json
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc-8e7657e3.json
 Filename: debs/com.wangyuan.trollvnc_3.2-293-2_iphoneos-arm64.deb
 Size: 1753898
 SHA256: f2a563128f88c6100291493d9780b793ffd7bcfaf6e519093cc54b79c037cfd5

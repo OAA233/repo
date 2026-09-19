@@ -9,11 +9,11 @@
    "views": [
     {
      "class": "DepictionHeaderView",
-     "title": "Mirror17 常亮"
+     "title": "XHS NoSwipe (net_buffer_aux)"
     },
     {
      "class": "DepictionSubheaderView",
-     "title": "1.0.0 · wangyuan"
+     "title": "7.12 · wangyuan"
     },
     {
      "class": "DepictionScreenshotsView",
@@ -24,12 +24,7 @@
      },
      "screenshots": [
       {
-       "url": "https://wangyuan-repo.pages.dev/shots/com.a0.mirror17ka/01-connect.png?v=560108ba",
-       "accessibilityText": "",
-       "video": false
-      },
-      {
-       "url": "https://wangyuan-repo.pages.dev/shots/com.a0.mirror17ka/02-connected.png?v=af44f89f",
+       "url": "https://wangyuan-repo.pages.dev/shots/com.a0.noswipe/01-settings.png?v=dc264908",
        "accessibilityText": "",
        "video": false
       }
@@ -37,7 +32,7 @@
     },
     {
      "class": "DepictionMarkdownView",
-     "markdown": "投屏 / 镜像期间禁止 iPhone 自动锁屏\n\n**配套的 Mac 端（Mirror17）**装好这个包之后，Mac 上运行 Mirror17，用数据线或 Wi-Fi 连上 iPhone，画面会直接显示在 Mac 窗口里。"
+     "markdown": "小红书禁滑：禁止下滑，改变习惯，节约时间。\n\n**使用提示**\n\n- 禁止下滑，改变习惯，节约时间。\n- 「隐藏首页视频」开了会显示不完全，慎用。\n- 想强行首页无视频，用 Loon 等规则实现。\n\n**版本说明**\n\n- 7.12 为测试版本：适配小红书 9.43。"
     },
     {
      "class": "DepictionSeparatorView"
@@ -45,7 +40,7 @@
     {
      "class": "DepictionTableTextView",
      "title": "版本",
-     "text": "1.0.0"
+     "text": "7.12"
     },
     {
      "class": "DepictionTableTextView",
@@ -59,15 +54,8 @@
     },
     {
      "class": "DepictionTableButtonView",
-     "title": "下载 Mac 客户端（zip）",
-     "action": "https://wangyuan-repo.pages.dev/mac/Mirror17-mac-1.0.1.zip",
-     "openExternal": true,
-     "tintColor": "#5b5bd6"
-    },
-    {
-     "class": "DepictionTableButtonView",
-     "title": "安装说明 README.txt",
-     "action": "https://wangyuan-repo.pages.dev/mac/README.txt",
+     "title": "📷 查看图片",
+     "action": "https://wangyuan-repo.pages.dev/pkg/com.a0.noswipe-pics.html?v=c1cffccd",
      "openExternal": true,
      "tintColor": "#5b5bd6"
     },
