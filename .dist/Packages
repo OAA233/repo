@@ -50,13 +50,13 @@ Package: com.a0.noswipe
 Name: XHS NoSwipe (net_buffer_aux)
 Version: 7.12
 Architecture: iphoneos-arm64
-Description: 小红书禁滑：视频 / 图文详情页禁止继续下滑，只作用于 com.xingin.discover（小红书），不碰别的 App。
+Description: 小红书禁滑：禁止下滑，改变习惯，节约时间。只作用于 com.xingin.discover（小红书），不碰别的 App。
 Author: wangyuan
 Maintainer: wangyuan
 Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.noswipe.png?v=eb309fd0
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=7f054786
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=87fad6cd
 Filename: debs/com.a0.noswipe_7.12.deb
 Size: 24872
 SHA256: 734ad4be01fbc9f9ddbeec0364a88f1868b2b10927b2f375336d7c9ae5d04515
