@@ -146,6 +146,11 @@ def sponsor_qrs():
     return out
 
 
+def sponsor_on():
+    """有收款码（至少一张）才对外挂赞赏入口 —— 免得访客看到还没配好的页面。"""
+    return SPONSOR and bool(sponsor_qrs())
+
+
 def write_sponsor_page():
     """生成 sponsor/index.html（赞赏页）。没放收款码也能生成，只是那一格不显示。"""
     qrs = sponsor_qrs()
@@ -211,7 +216,7 @@ def build_depiction(stanza, meta):
         views.append({"class": "DepictionTableButtonView", "title": b["title"],
                       "action": raw if raw.startswith("http") else f"{DEP_BASE}{raw}",
                       "openExternal": b["external"], "tintColor": b["tintColor"]})
-    if SPONSOR:                                  # 所有包的介绍页底部挂一个赞赏入口
+    if sponsor_on():                             # 所有包的介绍页底部挂一个赞赏入口
         views.append({"class": "DepictionTableButtonView", "title": "♥ " + SPONSOR_LABEL,
                       "action": f"{MIRRORS[0]}sponsor/", "openExternal": True,
                       "tintColor": "#e08a3c"})
@@ -455,7 +460,7 @@ def build_pkg_page(d, meta, doc):
     btns_html = "".join(
         f'<a class="dlbtn" href="{esc_html(b["raw"] if b["raw"].startswith("http") else MIRRORS[0] + b["raw"])}">'
         f'{esc_html(b["title"])}</a>' for b in resolve_buttons(meta))
-    if SPONSOR:
+    if sponsor_on():
         btns_html += f'<a class="dlbtn" href="{MIRRORS[0]}sponsor/">♥ {esc_html(SPONSOR_LABEL)}</a>'
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -726,6 +731,7 @@ function fb(t){try{var x=document.createElement('textarea');x.value=t;document.b
 x.select();document.execCommand('copy');document.body.removeChild(x)}catch(e){}}"""
 
     date = __import__("time").strftime("%Y-%m-%d")
+    foot_sponsor = ' · <a href="sponsor/" style="color:inherit">♥ 赞赏支持</a>' if sponsor_on() else ""
     # 备用地址按 MIRRORS 列表实际长度生成，别写死下标（列表增删会 IndexError）
     _labels = ["GitHub Pages · 海外快", "Cloudflare Pages · 备用", "备用", "备用"]
     mirror_rows = "\n".join(
@@ -764,7 +770,7 @@ x.select();document.execCommand('copy');document.body.removeChild(x)}catch(e){}}
   </div>
 </section>
 {mac_html}
-<footer><small>本页由 build_repo.py 生成 · 更新 {date} · 主源 {esc(MIRRORS[0])} · <a href="sponsor/" style="color:inherit">♥ 赞赏支持</a></small></footer>
+<footer><small>本页由 build_repo.py 生成 · 更新 {date} · 主源 {esc(MIRRORS[0])} {foot_sponsor}</small></footer>
 </div>
 <script>{JS}</script>
 </html>""")
