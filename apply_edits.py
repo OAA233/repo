@@ -66,7 +66,8 @@ def self_test():
         p = os.path.join(md, "com.a0.demo.json")
         with open(p, "w", encoding="utf-8") as fh:
             json.dump({"desc": "旧文字\n\n- 一条", "info": {"版本": "1.0"}, "depends": "ellekit"}, fh, ensure_ascii=False)
-        edits = {"package": "com.a0.demo", "name": "Demo", "desc": "新文字\n\n- 改过的条目", "info": {"版本": "1.1"}}
+        edits = {"package": "com.a0.demo", "name": "Demo", "nameChanged": True,
+                 "desc": "新文字\n\n- 改过的条目", "info": {"版本": "1.1"}}
         ch = merge(dict(edits), meta_dir=md)
         got = json.load(open(p, encoding="utf-8"))
         assert set(ch) == {"name", "desc", "info"}, ch
@@ -75,6 +76,10 @@ def self_test():
         assert got["depends"] == "ellekit", "无关的键必须原样保留"
         assert os.path.exists(p + ".bak"), "必须留备份"
         assert merge(dict(edits), meta_dir=md) == [], "重复应用应当报告无变化（幂等）"
+        # 标题没改过时，导出里带的 name 不该覆盖 meta
+        assert merge({"package": "com.a0.demo", "name": "别的名字", "nameChanged": False,
+                      "desc": got["desc"], "info": got["info"]}, meta_dir=md) == []
+        assert json.load(open(p, encoding="utf-8"))["name"] == "Demo", "标题没改就不该动 name"
         try:
             merge({"desc": "没有包名"}, meta_dir=md)
             raise AssertionError("缺 package 时必须报错")
