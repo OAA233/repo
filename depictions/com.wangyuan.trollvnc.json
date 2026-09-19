@@ -32,12 +32,17 @@
        "url": "https://wangyuan-repo.pages.dev/shots/com.wangyuan.trollvnc/02-connected.png?v=af44f89f",
        "accessibilityText": "",
        "video": false
+      },
+      {
+       "url": "https://wangyuan-repo.pages.dev/shots/com.wangyuan.trollvnc/03-settings.png?v=8c92e2ad",
+       "accessibilityText": "",
+       "video": false
       }
      ]
     },
     {
      "class": "DepictionMarkdownView",
-     "markdown": "**这是什么**\n\n- 手机端 VNC 服务端（TrollVNC），装完 iPhone 就能被 VNC 客户端连上屏幕、接受触控\n- 基于开源上游 `OwnGoalStudio/TrollVNC`（GPL-2.0）自行编译，额外加入 Mirror17 需要的原生 H.264 推流通道（`127.0.0.1:38917`）\n\n- 与 82Flex 的付费版互斥：装上会自动替换掉它，两者别同时装\n- 装完在「设置」里出现 TrollVNC 条目：设 VNC 全访问密码（建议字母+数字，别用纯数字）、开关、帧率\n\n**用法**\n\n- Mac 端配合 Mirror17 使用，数据线直连即可；Wi-Fi 直连用 TigerVNC 连 `手机IP:5901`\n- 默认端口：5901（VNC）、38917（Mirror17 原生 H.264 流）\n\n**来源与许可（GPL-2.0）**\n\n- 本包是**开源上游的自行编译版，不是官方版本**；官方付费版在 havoc.app/package/trollvnc，想支持原作者请买官方版\n\n**遇到问题怎么反馈（手机端诊断）**\n\n- 装好后，TrollVNC 每次启动都会把环境 + 报错写进：「文件」App → 我的 iPhone → Mirror17 → `trollvnc-diagnostic.txt`\n- 连不上 / 闪退 / 黑屏，就把那个文件发到 oaawallet@gmail.com —— 里面含 iOS 版本、机型、越狱环境、私有接口可用性、以及最近的崩溃日志副本，够定位 iOS 15/16 这类兼容问题"
+     "markdown": "**这是什么**\n\n- 手机端 VNC 服务端（TrollVNC），装完 iPhone 就能被 VNC 客户端连上屏幕、接受触控\n- 与 82Flex 的付费版互斥：装上会自动替换掉它，两者别同时装\n- 装完在「设置」里出现 TrollVNC 条目：设 VNC 全访问密码（建议字母+数字，别用纯数字）、开关、帧率\n\n**用法**\n\n- Mac 端配合 Mirror17 使用，数据线直连即可\n- 默认端口：5901（VNC）、38917（Mirror17 原生 H.264 流）\n\n- 本包是**开源上游的自行编译版，不是官方版本**；官方付费版在 havoc.app/package/trollvnc，想支持原作者请买官方版\n\n- 许可 GPL-2.0（上游）；对应源码在源站 `source/` 目录，可自由编译、再分发\n- 遇到问题：把「文件」App → 我的 iPhone → Mirror17 → `trollvnc-diagnostic.txt` 发到 oaawallet@gmail.com"
     },
     {
      "class": "DepictionSeparatorView"
@@ -55,31 +60,7 @@
     {
      "class": "DepictionTableTextView",
      "title": "作者",
-     "text": "王源"
-    },
-    {
-     "class": "DepictionTableTextView",
-     "title": "许可",
-     "text": "GPL-2.0（上游）"
-    },
-    {
-     "class": "DepictionTableTextView",
-     "title": "源码",
-     "text": "source/trollvnc-3.2-293-2-src.tar.gz"
-    },
-    {
-     "class": "DepictionTableButtonView",
-     "title": "对应源码（GPL-2.0，可自由编译再分发）",
-     "action": "https://wangyuan-repo.pages.dev/source/trollvnc-3.2-293-2-src.tar.gz",
-     "openExternal": true,
-     "tintColor": "#5b5bd6"
-    },
-    {
-     "class": "DepictionTableButtonView",
-     "title": "官方付费版（支持原作者）",
-     "action": "https://havoc.app/package/trollvnc",
-     "openExternal": true,
-     "tintColor": "#5b5bd6"
+     "text": "wangyuan"
     },
     {
      "class": "DepictionTableButtonView",
