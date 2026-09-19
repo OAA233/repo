@@ -28,8 +28,9 @@ table.info{border-collapse:collapse;width:100%;margin-top:26px}
 table.info th,table.info td{border-bottom:1px solid var(--border);text-align:left;padding:9px 4px;font-size:.95em;font-weight:normal}
 table.info th{color:var(--sub);width:7em}
 /* ---------- ✏️ 编辑模式（草稿只存本机浏览器 localStorage，不上传） ---------- */
-.editbtn{position:fixed;right:14px;bottom:14px;z-index:20;background:var(--accent);color:#fff;border:0;
+.editbtn{display:none;position:fixed;right:14px;bottom:14px;z-index:20;background:var(--accent);color:#fff;border:0;
   border-radius:999px;padding:11px 16px;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.35);cursor:pointer}
+body.editor .editbtn{display:block}
 .editbtn.dirty{background:#c98a12}
 .toolbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:19;background:var(--panel);
   border-top:1px solid var(--border);padding:9px 12px;gap:8px;flex-wrap:wrap;align-items:center}
@@ -45,7 +46,7 @@ body.editing .prose *{outline:0}
 body.editing .rowdel{display:inline}
 .banner{display:none;margin:0 0 16px;padding:9px 11px;border-radius:8px;font-size:13.5px;
   background:rgba(255,180,0,.13);border:1px solid rgba(255,180,0,.4);color:var(--text)}
-body.editing .banner,body.hasdraft .banner{display:block}
+body.editing .banner{display:block}
 </style>
 <div class="wrap">
 <p class="backlink"><a href="../index.html">← 返回源首页</a></p>
@@ -178,9 +179,18 @@ try{
   });
   document.getElementById("bexit").addEventListener("click", () => setEditable(false));
 
+  // 编辑入口默认对访客隐藏：只有你自己在本浏览器打开过一次 #edit 之后才会出现 ✏️
+  const FLAG = "wangyuan-editor";
+  try{
+    if(location.hash === "#edit") localStorage.setItem(FLAG, "1");
+    if(location.hash === "#editoff") localStorage.removeItem(FLAG);
+  }catch(e){}
+  let isEditor = false;
+  try{ isEditor = localStorage.getItem(FLAG) === "1"; }catch(e){}
+  if(isEditor) document.body.classList.add("editor");
   const draft = load();
   if(draft) applyDraft(draft);
-  if(location.hash === "#edit") setEditable(true);
+  if(isEditor && location.hash === "#edit") setEditable(true);
 }catch(e){ console.error("edit mode failed:", e); }
 })();
 </script>
