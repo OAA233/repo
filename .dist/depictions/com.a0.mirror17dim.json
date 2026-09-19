@@ -60,7 +60,7 @@
     {
      "class": "DepictionTableButtonView",
      "title": "下载 Mac 客户端（zip）",
-     "action": "https://wangyuan-repo.pages.dev/mac/Mirror17-mac-1.0.0.zip",
+     "action": "https://wangyuan-repo.pages.dev/mac/Mirror17-mac-1.0.1.zip",
      "openExternal": true,
      "tintColor": "#5b5bd6"
     },
