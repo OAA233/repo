@@ -39,10 +39,11 @@ for stanza in pkgs.decode().split("\n\n"):
     icon = "icons/" + d["Icon"].rsplit("/", 1)[1].split("?")[0]   # 图标可能不在主源上，只取文件名本地验（?v= 是缓存版本号）
     assert get(icon), f"{d['Package']} 图标拉不到"
     if "SileoDepiction" in d:
-        assert get("depictions/" + d["SileoDepiction"].rsplit("/", 1)[1]), f"{d['Package']} 介绍页拉不到"
+        depfile = d["SileoDepiction"].rsplit("/", 1)[1]   # 已带内容哈希，例如 com.a0.noswipe-7d03dbfd.json
+        assert get("depictions/" + depfile), f"{d['Package']} 介绍页拉不到"
     if "Header" in d:
         assert get("shots/" + d["Package"] + "/banner.png"), f"{d['Package']} 顶图拉不到"
-    for url in re.findall(r'"url": "([^"]+)"', (get("depictions/" + d["Package"] + ".json").decode()
+    for url in re.findall(r'"url": "([^"]+)"', (get("depictions/" + depfile).decode()
                                                if "SileoDepiction" in d else "")):
         assert get("shots/" + d["Package"] + "/" + url.rsplit("/", 1)[1]), f"{d['Package']} 贴图 {url} 拉不到"
 print(f"本地自检通过：{len([s for s in pkgs.decode().split(chr(10)+chr(10)) if s.strip()])} 个包 + 图标/介绍页/贴图")

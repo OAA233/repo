@@ -11,7 +11,7 @@
        name 会覆盖包列表里显示的名字(不用重打 deb)，desc 第一行进列表、整段进介绍页。
        贴图丢进 shots/<包名>/ 里(任意 *.png|jpg，按文件名排序)，
        文件名叫 banner.png 的那张会当介绍页顶图。
-       有 meta 或贴图的包会自动生成 depictions/<包名>.json 原生介绍页。
+       有 meta 或贴图的包会自动生成 depictions/<包名>-<内容哈希>.json 原生介绍页（哈希在路径里，客户端不会拿旧的）。
 新版本: 把新 .deb 丢进 debs/ 再跑一次即可，同一个包名多版本没问题，装的时候取最高版。
 """
 import bz2, gzip, hashlib, io, json, os, re, shutil, subprocess, sys, tarfile
@@ -518,10 +518,12 @@ def build_packages():
             os.makedirs(DEPICTIONS, exist_ok=True)
             doc = build_depiction(d, meta)
             doc_json = json.dumps(doc, ensure_ascii=False, indent=1)
-            with open(os.path.join(DEPICTIONS, d["Package"] + ".json"), "w", encoding="utf-8") as fh:
+            # 版本放进**路径**而不是查询串：有些客户端（含 Sileo 的缓存层）只按路径缓存，
+            # 忽略 ?v=，于是介绍页改了它也拿旧的 —— 直接换文件名就没这问题。
+            dep_hash = hashlib.md5(doc_json.encode()).hexdigest()[:8]
+            with open(os.path.join(DEPICTIONS, f"{d['Package']}-{dep_hash}.json"), "w", encoding="utf-8") as fh:
                 fh.write(doc_json)
-            # URL 带内容哈希：介绍页一变 URL 就变，绕开 Sileo 与 CDN 的旧缓存
-            dep_ver = "?v=" + hashlib.md5(doc_json.encode()).hexdigest()[:8]
+            dep_ver = "-" + dep_hash
             os.makedirs(PKG, exist_ok=True)
             with open(os.path.join(PKG, d["Package"] + ".html"), "w", encoding="utf-8") as fh:
                 fh.write(build_pkg_page(d, meta, doc))
@@ -549,7 +551,7 @@ def build_packages():
             if not WEB_DEPICTION:
                 # Sileo 读原生介绍页，且官方文档写明 SileoDepiction 优先于 Depiction；
                 # 想让 Sileo 也去读网页版二级页，把 WEB_DEPICTION 改成 True 即可。
-                out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json{dep_ver}")
+                out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}{dep_ver}.json")
             if os.path.exists(os.path.join(SHOTS, d["Package"], "banner.png")):
                 bv = hashlib.md5(open(os.path.join(SHOTS, d["Package"], "banner.png"), "rb").read()).hexdigest()[:8]
                 out.append(f"Header: {DEP_BASE}shots/{d['Package']}/banner.png?v={bv}")
