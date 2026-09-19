@@ -70,6 +70,13 @@
      "action": "https://wangyuan-repo.pages.dev/mac/README.txt",
      "openExternal": true,
      "tintColor": "#5b5bd6"
+    },
+    {
+     "class": "DepictionTableButtonView",
+     "title": "手机端 VNC 服务端（TrollVNC · 付费）",
+     "action": "https://havoc.app/package/trollvnc",
+     "openExternal": true,
+     "tintColor": "#5b5bd6"
     }
    ]
   }

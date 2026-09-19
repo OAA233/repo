@@ -24,7 +24,7 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17dim.png?v=d247d1f7
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json?v=692139db
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json?v=2604a188
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
 SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
@@ -40,7 +40,7 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit, com.a0.mirror17dim
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17ka.png?v=d247d1f7
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json?v=498c90c0
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json?v=4cb5a387
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
