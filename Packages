@@ -56,7 +56,7 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.noswipe.png?v=eb309fd0
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=627ab04d
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=7f054786
 Filename: debs/com.a0.noswipe_7.12.deb
 Size: 24872
 SHA256: 734ad4be01fbc9f9ddbeec0364a88f1868b2b10927b2f375336d7c9ae5d04515
