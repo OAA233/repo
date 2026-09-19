@@ -138,7 +138,7 @@ def resolve_buttons(meta):
 def sponsor_qrs():
     """赞赏页上的收款码：[（标签, 绝对 URL）]，只列真实存在的图片。"""
     out = []
-    for key, label in (("wechat", "微信"), ("alipay", "支付宝")):
+    for key, label in (("wechat", "微信 · 长按识别"), ("alipay", "支付宝 · 扫一扫")):
         p = os.path.join(SPONSOR_DIR, key + ".png")
         if os.path.exists(p):
             v = hashlib.md5(open(p, "rb").read()).hexdigest()[:8]
@@ -168,22 +168,16 @@ def write_sponsor_page():
 <style>{PKG_CSS}
 .qrs{{display:flex;flex-wrap:wrap;gap:22px;margin:20px 0}}
 .qrs figure{{margin:0;text-align:center}}
-.qrs img{{width:230px;max-width:60vw;border-radius:14px;border:1px solid var(--border);display:block}}
+.qrs img{{width:260px;max-width:72vw;border-radius:14px;border:1px solid var(--border);display:block}}
 .qrs figcaption{{color:var(--sub);font-size:.9rem;margin-top:8px}}
 </style>
 <div class="wrap">
 <p class="backlink"><a href="../index.html">← 返回源首页</a></p>
 <h1>赞赏支持</h1>
-<p class="tagline">这些插件是业余时间一个人做的，帮到你了可以扫个码请我喝杯咖啡 —— 完全自愿，不打赏也照样更新。</p>
+<p class="tagline">请我喝杯牛奶 🥛</p>
 <div class="qrs">{cards}</div>
-<div class="prose">
-<p><strong>说明</strong></p>
-<ul>
-<li>个人收款码没有回调接口，扫码付款我这边收不到任何信息，所以做不了「打赏名单 / 支持人数」那种页面。</li>
-<li>想让我知道是你支持的，付完可以发封邮件到 <code>{esc_html(SPONSOR_MAIL)}</code>，我记在心里。</li>
-<li>金额随意，一分钱也是情分。</li>
-</ul>
-</div>
+<p class="fine">微信：把本页链接发到微信里打开，长按上面的码 → 识别图中二维码。<br>
+支付宝：保存图片后用支付宝「扫一扫」→ 相册选取，或直接用支付宝扫这个码。</p>
 </div>
 </html>"""
     os.makedirs(SPONSOR_DIR, exist_ok=True)
