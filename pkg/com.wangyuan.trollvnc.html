@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>TrollVNC 王源构建版 · Wangyuan's Repo</title>
+<style>
+:root{--bg:#0d0f13;--panel:#161a21;--border:#282d38;--text:#e9ebef;--sub:#9aa2ad;--accent:#5b5bd6}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--panel:#ffffff;--border:#e4e6eb;--text:#17181c;--sub:#6d7480}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:28px 16px 56px}
+.backlink a{color:var(--sub);text-decoration:none;font-size:.9rem}
+h1{font-size:1.6rem;margin:6px 0 4px}
+.tagline{color:var(--sub);margin:0 0 20px}
+.shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
+.shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.dlbtns{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 18px}
+.dlbtn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  padding:11px 16px;border-radius:12px;font-weight:600;font-size:.95rem}
+.dlbtn+.dlbtn{background:transparent;color:var(--text);border:1px solid var(--border);font-weight:500}
+.prose h2,.prose h3{margin:1.4em 0 .5em}
+.prose p{margin:.8em 0}
+.prose ul{margin:.6em 0;padding-left:1.3em}
+.prose li{margin:.35em 0}
+table.info{border-collapse:collapse;width:100%;margin-top:26px}
+table.info th,table.info td{border-bottom:1px solid var(--border);text-align:left;padding:9px 4px;font-size:.95em;font-weight:normal}
+table.info th{color:var(--sub);width:7em}
+/* ---------- ✏️ 编辑模式（草稿只存本机浏览器 localStorage，不上传） ---------- */
+.editbtn{position:fixed;right:14px;bottom:14px;z-index:20;background:var(--accent);color:#fff;border:0;
+  border-radius:999px;padding:11px 16px;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.35);cursor:pointer}
+.editbtn.dirty{background:#c98a12}
+.toolbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:19;background:var(--panel);
+  border-top:1px solid var(--border);padding:9px 12px;gap:8px;flex-wrap:wrap;align-items:center}
+body.editing .toolbar{display:flex}
+body.editing{padding-bottom:120px}
+body.editing .prose,body.editing .info th,body.editing .info td{background:rgba(91,91,214,.10);
+  border-radius:6px;outline:1px dashed rgba(91,91,214,.5);min-height:1.3em}
+body.editing .prose *{outline:0}
+.toolbar button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 13px;font-size:14px;cursor:pointer}
+.toolbar button.ghost{background:transparent;color:var(--sub);border:1px solid var(--border)}
+.toolbar .hint{color:var(--sub);font-size:12.5px;margin-left:auto}
+.rowdel{display:none;background:none;border:0;color:#e5534b;font-size:15px;cursor:pointer}
+body.editing .rowdel{display:inline}
+.banner{display:none;margin:0 0 16px;padding:9px 11px;border-radius:8px;font-size:13.5px;
+  background:rgba(255,180,0,.13);border:1px solid rgba(255,180,0,.4);color:var(--text)}
+body.editing .banner,body.hasdraft .banner{display:block}
+</style>
+<div class="wrap">
+<p class="backlink"><a href="../index.html">← 返回源首页</a></p>
+<div class="banner">你在编辑本页 —— 改的是你自己浏览器里的草稿，没上传。改完点「导出 JSON」或「复制 JSON」发给我，我合进源里再发布。</div>
+<h1>TrollVNC 王源构建版</h1>
+<p class="tagline">3.2-293-1 · 王源 &lt;wangzhengwz666@gmail.com&gt;</p>
+
+<div class="dlbtns"><a class="dlbtn" href="https://wangyuan-repo.pages.dev/source/trollvnc-3.2-293-1-src.tar.gz">对应源码（GPL-2.0，可自由编译再分发）</a><a class="dlbtn" href="https://havoc.app/package/trollvnc">官方付费版（支持原作者）</a></div>
+<div class="prose"><p><strong>这是什么</strong></p>
+<ul>
+<li>手机端 VNC 服务端（TrollVNC），装完 iPhone 就能被 VNC 客户端连上屏幕、接受触控</li>
+<li>基于开源上游 `OwnGoalStudio/TrollVNC`（GPL-2.0）自行编译，额外加入 Mirror17 需要的原生 H.264 推流通道（`127.0.0.1:38917`）</li>
+</ul>
+<p><strong>安装</strong></p>
+<ul>
+<li>iOS 14+ 无根越狱（NathanLR 等），装完 respring 生效</li>
+<li>与 82Flex 的付费版互斥：装上会自动替换掉它，两者别同时装</li>
+<li>装完在「设置」里出现 TrollVNC 条目：设 VNC 全访问密码（建议字母+数字，别用纯数字）、开关、帧率</li>
+</ul>
+<p><strong>用法</strong></p>
+<ul>
+<li>Mac 端配合 Mirror17 使用，数据线直连即可；Wi-Fi 直连用 TigerVNC 连 `手机IP:5901`</li>
+<li>默认端口：5901（VNC）、38917（Mirror17 原生 H.264 流）</li>
+</ul>
+<p><strong>来源与许可（GPL-2.0）</strong></p>
+<ul>
+<li>本包是<strong>开源上游的自行编译版，不是官方版本</strong>；官方付费版在 havoc.app/package/trollvnc，想支持原作者请买官方版</li>
+<li>对应源码随包公开，任何人可自行获取、编译、再分发：`source/trollvnc-3.2-293-1-src.tar.gz`</li>
+</ul>
+<p><strong>版本</strong></p>
+<ul>
+<li>`3.2-293-1`：上游 3.2-293 + 王源的 native H.264 补丁</li>
+</ul></div>
+<table class="info"><tr><th>版本</th><td>3.2-293-1</td></tr><tr><th>兼容</th><td>iOS 14+ 无根越狱</td></tr><tr><th>作者</th><td>王源</td></tr><tr><th>许可</th><td>GPL-2.0（上游）</td></tr><tr><th>源码</th><td>source/trollvnc-3.2-293-1-src.tar.gz</td></tr></table>
+</div>
+<button class="editbtn" id="editbtn">✏️ 编辑</button>
+<div class="toolbar">
+  <button id="bexp">导出 JSON</button>
+  <button id="bcopy" class="ghost">复制 JSON</button>
+  <button id="baddrow" class="ghost">+ 表格一行</button>
+  <button id="breset" class="ghost">还原原始</button>
+  <button id="bexit" class="ghost">退出编辑</button>
+  <span class="hint" id="hint"></span>
+</div>
+<script>
+(function(){
+try{
+  const PKG = "com.wangyuan.trollvnc", KEY = "wangyuan-edit:" + PKG;
+  const btn = document.getElementById("editbtn"), hint = document.getElementById("hint");
+  const prose = document.querySelector(".prose"), info = document.querySelector("table.info");
+  const h1 = document.querySelector("h1");
+  const NAME0 = h1 ? h1.innerText.trim() : "";   // 原始标题，没改就不把 name 带进导出结果
+  const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+  /* DOM → markdown：只覆盖 desc 用到的那套语法（**粗体** / - 列表 / ## ### / 段落） */
+  function inlineHtml(n){
+    return n.innerHTML.replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, "**$1**")
+      .replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").trim();
+  }
+  function toMD(){
+    if(!prose) return "";
+    const out = [];
+    prose.childNodes.forEach(n => {
+      if(n.nodeType === 3){ if(n.textContent.trim()) out.push("", n.textContent.trim()); return; }
+      if(n.nodeType !== 1) return;
+      const tag = n.tagName.toLowerCase();
+      if(tag === "ul" || tag === "ol"){ [...n.children].forEach(li => out.push("- " + inlineHtml(li))); out.push(""); }
+      else if(tag === "h2") out.push("## " + inlineHtml(n), "");
+      else if(tag === "h3") out.push("### " + inlineHtml(n), "");
+      else out.push(inlineHtml(n), "");
+    });
+    return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+  function toInfo(){
+    const o = {};
+    if(info) info.querySelectorAll("tr").forEach(tr => {
+      const c = tr.children;
+      if(c.length < 2) return;
+      const k = c[0].innerText.trim(), v = c[1].innerText.trim();
+      if(k) o[k] = v;
+    });
+    return o;
+  }
+  function collect(){
+    const nm = h1 ? h1.innerText.trim() : "";
+    return { package: PKG, name: nm, nameChanged: nm !== NAME0,
+      desc: toMD(), info: toInfo(), proseHTML: prose ? prose.innerHTML : "",
+      editedAt: new Date().toLocaleString("sv-SE").slice(0, 16) };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(collect())); }
+    catch(e){ hint.textContent = "保存失败：" + e.message; return; }
+    document.body.classList.add("hasdraft"); btn.classList.add("dirty");
+    hint.textContent = "草稿存在这台浏览器（没上传）";
+  }
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ return null; } }
+  function applyDraft(d){
+    if(d.proseHTML && prose) prose.innerHTML = d.proseHTML;
+    if(d.info && info){
+      info.innerHTML = Object.entries(d.info).map(([k, v]) =>
+        '<tr><th>' + esc(k) + '</th><td>' + esc(v) + '</td><td><button class="rowdel" title="删除这行">✕</button></td></tr>').join("");
+    }
+    document.body.classList.add("hasdraft");
+    btn.classList.add("dirty");
+  }
+  function setEditable(on){
+    document.body.classList.toggle("editing", on);
+    if(prose) prose.contentEditable = on ? "true" : "false";
+    if(h1) h1.contentEditable = on ? "true" : "false";
+    if(info) info.querySelectorAll("th,td").forEach(c => { if(!c.querySelector(".rowdel")) c.contentEditable = on ? "true" : "false"; });
+    btn.textContent = on ? "✅ 编辑中" : (load() ? "✏️ 编辑（有草稿）" : "✏️ 编辑");
+    hint.textContent = on ? "点文字直接改；改完「导出 JSON」发我" : "";
+  }
+  function addRow(){
+    if(!info) return;
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<th contenteditable="true"></th><td contenteditable="true"></td><td><button class="rowdel">✕</button></td>';
+    info.appendChild(tr); save(); (tr.querySelector("th")).focus();
+  }
+  function download(){
+    const b = new Blob([JSON.stringify(collect(), null, 1)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(b); a.download = PKG + ".edits.json"; a.click();
+    hint.textContent = "已导出 " + PKG + ".edits.json —— 发给我";
+  }
+  function copyJSON(){
+    const s = JSON.stringify(collect(), null, 1);
+    const fallback = () => {
+      const ta = document.createElement("textarea"); ta.value = s; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); hint.textContent = "已复制，直接粘给我"; }
+      catch(e){ hint.textContent = "复制失败，用「导出 JSON」"; }
+      ta.remove();
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(s).then(() => hint.textContent = "已复制，直接粘给我", fallback);
+    else fallback();
+  }
+  let timer = null;
+  document.addEventListener("input", () => {
+    if(!document.body.classList.contains("editing")) return;
+    clearTimeout(timer); timer = setTimeout(save, 500);
+  });
+  document.addEventListener("click", e => {
+    if(e.target.classList && e.target.classList.contains("rowdel")){ e.target.closest("tr").remove(); save(); }
+  });
+  btn.addEventListener("click", () => setEditable(!document.body.classList.contains("editing")));
+  document.getElementById("baddrow").addEventListener("click", addRow);
+  document.getElementById("bexp").addEventListener("click", download);
+  document.getElementById("bcopy").addEventListener("click", copyJSON);
+  document.getElementById("breset").addEventListener("click", () => {
+    if(confirm("清掉本地草稿，恢复线上原文？")){ localStorage.removeItem(KEY); location.reload(); }
+  });
+  document.getElementById("bexit").addEventListener("click", () => setEditable(false));
+
+  const draft = load();
+  if(draft) applyDraft(draft);
+  if(location.hash === "#edit") setEditable(true);
+}catch(e){ console.error("edit mode failed:", e); }
+})();
+</script>
+</html>

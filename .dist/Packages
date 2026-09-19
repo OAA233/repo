@@ -80,3 +80,22 @@ Filename: debs/com.a0.resumerecafterflip_0.8.0_iphoneos-arm64.deb
 Size: 16846
 SHA256: 20f9cd7b74a03980785fb31f451218e567bd95993b02055498730f94d72342d4
 MD5sum: c776fdbb14969aa986c3f361779a63c8
+
+Package: com.wangyuan.trollvnc
+Name: TrollVNC 王源构建版
+Version: 3.2-293-1
+Architecture: iphoneos-arm64
+Description: 这是什么
+Author: 王源 <wangzhengwz666@gmail.com>
+Maintainer: 王源 <wangzhengwz666@gmail.com>
+Section: Tweaks
+Depends: firmware (>= 14.0), preferenceloader
+Conflicts: com.82flex.trollvnc
+Replaces: com.82flex.trollvnc
+Provides: com.82flex.trollvnc
+Icon: https://wangyuan-repo.pages.dev/icons/com.wangyuan.trollvnc.png?v=32330157
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc.json?v=6b859638
+Filename: debs/com.wangyuan.trollvnc_3.2-293-1_iphoneos-arm64.deb
+Size: 1747158
+SHA256: 282cd4caff3ceb1afd8fc5cec29ec67c843256603a80be6a6ec288c76ca652f2
+MD5sum: dc0b33a7e90b48190d48a54647259863
