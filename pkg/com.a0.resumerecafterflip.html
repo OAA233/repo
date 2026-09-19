@@ -23,9 +23,29 @@ h1{font-size:1.6rem;margin:6px 0 4px}
 table.info{border-collapse:collapse;width:100%;margin-top:26px}
 table.info th,table.info td{border-bottom:1px solid var(--border);text-align:left;padding:9px 4px;font-size:.95em;font-weight:normal}
 table.info th{color:var(--sub);width:7em}
+/* ---------- ✏️ 编辑模式（草稿只存本机浏览器 localStorage，不上传） ---------- */
+.editbtn{position:fixed;right:14px;bottom:14px;z-index:20;background:var(--accent);color:#fff;border:0;
+  border-radius:999px;padding:11px 16px;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.35);cursor:pointer}
+.editbtn.dirty{background:#c98a12}
+.toolbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:19;background:var(--panel);
+  border-top:1px solid var(--border);padding:9px 12px;gap:8px;flex-wrap:wrap;align-items:center}
+body.editing .toolbar{display:flex}
+body.editing{padding-bottom:120px}
+body.editing .prose,body.editing .info th,body.editing .info td{background:rgba(91,91,214,.10);
+  border-radius:6px;outline:1px dashed rgba(91,91,214,.5);min-height:1.3em}
+body.editing .prose *{outline:0}
+.toolbar button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 13px;font-size:14px;cursor:pointer}
+.toolbar button.ghost{background:transparent;color:var(--sub);border:1px solid var(--border)}
+.toolbar .hint{color:var(--sub);font-size:12.5px;margin-left:auto}
+.rowdel{display:none;background:none;border:0;color:#e5534b;font-size:15px;cursor:pointer}
+body.editing .rowdel{display:inline}
+.banner{display:none;margin:0 0 16px;padding:9px 11px;border-radius:8px;font-size:13.5px;
+  background:rgba(255,180,0,.13);border:1px solid rgba(255,180,0,.4);color:var(--text)}
+body.editing .banner,body.hasdraft .banner{display:block}
 </style>
 <div class="wrap">
 <p class="backlink"><a href="../index.html">← 返回源首页</a></p>
+<div class="banner">你在编辑本页 —— 改的是你自己浏览器里的草稿，没上传。改完点「导出 JSON」或「复制 JSON」发给我，我合进源里再发布。</div>
 <h1>Camera Resume Rec</h1>
 <p class="tagline">0.8.0 · wangyuan</p>
 
@@ -37,4 +57,131 @@ table.info th{color:var(--sub);width:7em}
 </ul></div>
 <table class="info"><tr><th>版本</th><td>0.8.0</td></tr><tr><th>兼容</th><td>iOS 17.0</td></tr><tr><th>作者</th><td>wangyuan</td></tr></table>
 </div>
+<button class="editbtn" id="editbtn">✏️ 编辑</button>
+<div class="toolbar">
+  <button id="bexp">导出 JSON</button>
+  <button id="bcopy" class="ghost">复制 JSON</button>
+  <button id="baddrow" class="ghost">+ 表格一行</button>
+  <button id="breset" class="ghost">还原原始</button>
+  <button id="bexit" class="ghost">退出编辑</button>
+  <span class="hint" id="hint"></span>
+</div>
+<script>
+(function(){
+try{
+  const PKG = "com.a0.resumerecafterflip", KEY = "wangyuan-edit:" + PKG;
+  const btn = document.getElementById("editbtn"), hint = document.getElementById("hint");
+  const prose = document.querySelector(".prose"), info = document.querySelector("table.info");
+  const h1 = document.querySelector("h1");
+  const NAME0 = h1 ? h1.innerText.trim() : "";   // 原始标题，没改就不把 name 带进导出结果
+  const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+  /* DOM → markdown：只覆盖 desc 用到的那套语法（**粗体** / - 列表 / ## ### / 段落） */
+  function inlineHtml(n){
+    return n.innerHTML.replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, "**$1**")
+      .replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").trim();
+  }
+  function toMD(){
+    if(!prose) return "";
+    const out = [];
+    prose.childNodes.forEach(n => {
+      if(n.nodeType === 3){ if(n.textContent.trim()) out.push("", n.textContent.trim()); return; }
+      if(n.nodeType !== 1) return;
+      const tag = n.tagName.toLowerCase();
+      if(tag === "ul" || tag === "ol"){ [...n.children].forEach(li => out.push("- " + inlineHtml(li))); out.push(""); }
+      else if(tag === "h2") out.push("## " + inlineHtml(n), "");
+      else if(tag === "h3") out.push("### " + inlineHtml(n), "");
+      else out.push(inlineHtml(n), "");
+    });
+    return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+  function toInfo(){
+    const o = {};
+    if(info) info.querySelectorAll("tr").forEach(tr => {
+      const c = tr.children;
+      if(c.length < 2) return;
+      const k = c[0].innerText.trim(), v = c[1].innerText.trim();
+      if(k) o[k] = v;
+    });
+    return o;
+  }
+  function collect(){
+    const nm = h1 ? h1.innerText.trim() : "";
+    return { package: PKG, name: nm, nameChanged: nm !== NAME0,
+      desc: toMD(), info: toInfo(), proseHTML: prose ? prose.innerHTML : "",
+      editedAt: new Date().toLocaleString("sv-SE").slice(0, 16) };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(collect())); }
+    catch(e){ hint.textContent = "保存失败：" + e.message; return; }
+    document.body.classList.add("hasdraft"); btn.classList.add("dirty");
+    hint.textContent = "草稿存在这台浏览器（没上传）";
+  }
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ return null; } }
+  function applyDraft(d){
+    if(d.proseHTML && prose) prose.innerHTML = d.proseHTML;
+    if(d.info && info){
+      info.innerHTML = Object.entries(d.info).map(([k, v]) =>
+        '<tr><th>' + esc(k) + '</th><td>' + esc(v) + '</td><td><button class="rowdel" title="删除这行">✕</button></td></tr>').join("");
+    }
+    document.body.classList.add("hasdraft");
+    btn.classList.add("dirty");
+  }
+  function setEditable(on){
+    document.body.classList.toggle("editing", on);
+    if(prose) prose.contentEditable = on ? "true" : "false";
+    if(h1) h1.contentEditable = on ? "true" : "false";
+    if(info) info.querySelectorAll("th,td").forEach(c => { if(!c.querySelector(".rowdel")) c.contentEditable = on ? "true" : "false"; });
+    btn.textContent = on ? "✅ 编辑中" : (load() ? "✏️ 编辑（有草稿）" : "✏️ 编辑");
+    hint.textContent = on ? "点文字直接改；改完「导出 JSON」发我" : "";
+  }
+  function addRow(){
+    if(!info) return;
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<th contenteditable="true"></th><td contenteditable="true"></td><td><button class="rowdel">✕</button></td>';
+    info.appendChild(tr); save(); (tr.querySelector("th")).focus();
+  }
+  function download(){
+    const b = new Blob([JSON.stringify(collect(), null, 1)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(b); a.download = PKG + ".edits.json"; a.click();
+    hint.textContent = "已导出 " + PKG + ".edits.json —— 发给我";
+  }
+  function copyJSON(){
+    const s = JSON.stringify(collect(), null, 1);
+    const fallback = () => {
+      const ta = document.createElement("textarea"); ta.value = s; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); hint.textContent = "已复制，直接粘给我"; }
+      catch(e){ hint.textContent = "复制失败，用「导出 JSON」"; }
+      ta.remove();
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(s).then(() => hint.textContent = "已复制，直接粘给我", fallback);
+    else fallback();
+  }
+  let timer = null;
+  document.addEventListener("input", () => {
+    if(!document.body.classList.contains("editing")) return;
+    clearTimeout(timer); timer = setTimeout(save, 500);
+  });
+  document.addEventListener("click", e => {
+    if(e.target.classList && e.target.classList.contains("rowdel")){ e.target.closest("tr").remove(); save(); }
+  });
+  btn.addEventListener("click", () => setEditable(!document.body.classList.contains("editing")));
+  document.getElementById("baddrow").addEventListener("click", addRow);
+  document.getElementById("bexp").addEventListener("click", download);
+  document.getElementById("bcopy").addEventListener("click", copyJSON);
+  document.getElementById("breset").addEventListener("click", () => {
+    if(confirm("清掉本地草稿，恢复线上原文？")){ localStorage.removeItem(KEY); location.reload(); }
+  });
+  document.getElementById("bexit").addEventListener("click", () => setEditable(false));
+
+  const draft = load();
+  if(draft) applyDraft(draft);
+  if(location.hash === "#edit") setEditable(true);
+}catch(e){ console.error("edit mode failed:", e); }
+})();
+</script>
 </html>
