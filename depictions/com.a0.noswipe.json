@@ -51,6 +51,13 @@
      "class": "DepictionTableTextView",
      "title": "作者",
      "text": "wangyuan"
+    },
+    {
+     "class": "DepictionTableButtonView",
+     "title": "♥ 赞赏支持（微信 / 支付宝）",
+     "action": "https://wangyuan-repo.pages.dev/sponsor/",
+     "openExternal": true,
+     "tintColor": "#e08a3c"
     }
    ]
   }

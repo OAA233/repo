@@ -35,6 +35,10 @@ ARCHS = "iphoneos-arm iphoneos-arm64"
 
 # 包里 control 写的还是旧占位名，仓库侧统一显示成这个（改 deb 要重新打包，先不动 deb）
 AUTHOR = "wangyuan"
+SPONSOR_DIR = os.path.join(ROOT, "sponsor")   # 赞赏页；微信/支付宝收款码放这儿（wechat.png / alipay.png）
+SPONSOR = True                                # 各包的介绍页/详情页要不要挂「赞赏支持」入口
+SPONSOR_LABEL = "赞赏支持（微信 / 支付宝）"
+SPONSOR_MAIL = "oaawallet@gmail.com"
 # 这些旧名字一律在源侧改写成 AUTHOR（deb 本体不动）
 LEGACY_AUTHORS = ("a0", "", "王", "Wang", "wang", "wangyuan")
 
@@ -131,6 +135,58 @@ def resolve_buttons(meta):
     return out
 
 
+def sponsor_qrs():
+    """赞赏页上的收款码：[（标签, 绝对 URL）]，只列真实存在的图片。"""
+    out = []
+    for key, label in (("wechat", "微信"), ("alipay", "支付宝")):
+        p = os.path.join(SPONSOR_DIR, key + ".png")
+        if os.path.exists(p):
+            v = hashlib.md5(open(p, "rb").read()).hexdigest()[:8]
+            out.append((label, f"{MIRRORS[0]}sponsor/{key}.png?v={v}"))
+    return out
+
+
+def write_sponsor_page():
+    """生成 sponsor/index.html（赞赏页）。没放收款码也能生成，只是那一格不显示。"""
+    qrs = sponsor_qrs()
+    cards = "".join(
+        f'<figure><img src="{esc_html(u)}" alt="{esc_html(l)}收款码"><figcaption>{esc_html(l)}</figcaption></figure>'
+        for l, u in qrs)
+    if not cards:
+        cards = ('<p class="fine">（这里会显示微信 / 支付宝收款码：把两张图放到仓库的 '
+                 '<code>sponsor/wechat.png</code> 和 <code>sponsor/alipay.png</code> 即可）</p>')
+    html = f"""<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>赞赏支持 · {esc_html(LABEL)}</title>
+<style>{PKG_CSS}
+.qrs{{display:flex;flex-wrap:wrap;gap:22px;margin:20px 0}}
+.qrs figure{{margin:0;text-align:center}}
+.qrs img{{width:230px;max-width:60vw;border-radius:14px;border:1px solid var(--border);display:block}}
+.qrs figcaption{{color:var(--sub);font-size:.9rem;margin-top:8px}}
+</style>
+<div class="wrap">
+<p class="backlink"><a href="../index.html">← 返回源首页</a></p>
+<h1>赞赏支持</h1>
+<p class="tagline">这些插件是业余时间一个人做的，帮到你了可以扫个码请我喝杯咖啡 —— 完全自愿，不打赏也照样更新。</p>
+<div class="qrs">{cards}</div>
+<div class="prose">
+<p><strong>说明</strong></p>
+<ul>
+<li>个人收款码没有回调接口，扫码付款我这边收不到任何信息，所以做不了「打赏名单 / 支持人数」那种页面。</li>
+<li>想让我知道是你支持的，付完可以发封邮件到 <code>{esc_html(SPONSOR_MAIL)}</code>，我记在心里。</li>
+<li>金额随意，一分钱也是情分。</li>
+</ul>
+</div>
+</div>
+</html>"""
+    os.makedirs(SPONSOR_DIR, exist_ok=True)
+    with open(os.path.join(SPONSOR_DIR, "index.html"), "w", encoding="utf-8") as fh:
+        fh.write(html)
+    return len(qrs)
+
+
 def build_depiction(stanza, meta):
     pkg = stanza["Package"]
     views = [{"class": "DepictionHeaderView", "title": stanza.get("Name", pkg)},
@@ -155,6 +211,10 @@ def build_depiction(stanza, meta):
         views.append({"class": "DepictionTableButtonView", "title": b["title"],
                       "action": raw if raw.startswith("http") else f"{DEP_BASE}{raw}",
                       "openExternal": b["external"], "tintColor": b["tintColor"]})
+    if SPONSOR:                                  # 所有包的介绍页底部挂一个赞赏入口
+        views.append({"class": "DepictionTableButtonView", "title": "♥ " + SPONSOR_LABEL,
+                      "action": f"{MIRRORS[0]}sponsor/", "openExternal": True,
+                      "tintColor": "#e08a3c"})
     doc = {"minVersion": "0.4", "class": "DepictionTabView", "tintColor": "#5b5bd6",
            "tabs": [{"class": "DepictionStackView", "tabname": "介绍", "views": views}]}
     banner = os.path.join(SHOTS, pkg, "banner.png")
@@ -395,6 +455,8 @@ def build_pkg_page(d, meta, doc):
     btns_html = "".join(
         f'<a class="dlbtn" href="{esc_html(b["raw"] if b["raw"].startswith("http") else MIRRORS[0] + b["raw"])}">'
         f'{esc_html(b["title"])}</a>' for b in resolve_buttons(meta))
+    if SPONSOR:
+        btns_html += f'<a class="dlbtn" href="{MIRRORS[0]}sponsor/">♥ {esc_html(SPONSOR_LABEL)}</a>'
     return f"""<!doctype html>
 <html lang="zh-CN">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -507,6 +569,7 @@ def write_all():
     os.makedirs(MAC, exist_ok=True)
     shutil.rmtree(DEPICTIONS, ignore_errors=True)   # 清掉已删包的旧介绍页
     shutil.rmtree(PKG, ignore_errors=True)          # 同上：网页版详情页
+    _qrs = write_sponsor_page()                     # 赞赏页（收款码放 sponsor/ 里）
     text = build_packages()
     blob = text.encode()
     variants = ["Packages", "Packages.bz2", "Packages.gz"]
@@ -701,7 +764,7 @@ x.select();document.execCommand('copy');document.body.removeChild(x)}catch(e){}}
   </div>
 </section>
 {mac_html}
-<footer><small>本页由 build_repo.py 生成 · 更新 {date} · 主源 {esc(MIRRORS[0])}</small></footer>
+<footer><small>本页由 build_repo.py 生成 · 更新 {date} · 主源 {esc(MIRRORS[0])} · <a href="sponsor/" style="color:inherit">♥ 赞赏支持</a></small></footer>
 </div>
 <script>{JS}</script>
 </html>""")

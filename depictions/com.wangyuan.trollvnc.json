@@ -60,6 +60,13 @@
      "action": "https://havoc.app/package/trollvnc",
      "openExternal": true,
      "tintColor": "#5b5bd6"
+    },
+    {
+     "class": "DepictionTableButtonView",
+     "title": "♥ 赞赏支持（微信 / 支付宝）",
+     "action": "https://wangyuan-repo.pages.dev/sponsor/",
+     "openExternal": true,
+     "tintColor": "#e08a3c"
     }
    ]
   }

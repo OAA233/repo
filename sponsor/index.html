@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>赞赏支持 · Wangyuan&#x27;s Repo</title>
+<style>
+:root{--bg:#0d0f13;--panel:#161a21;--border:#282d38;--text:#e9ebef;--sub:#9aa2ad;--accent:#5b5bd6}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--panel:#ffffff;--border:#e4e6eb;--text:#17181c;--sub:#6d7480}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:28px 16px 56px}
+.backlink a{color:var(--sub);text-decoration:none;font-size:.9rem}
+h1{font-size:1.6rem;margin:6px 0 4px}
+.tagline{color:var(--sub);margin:0 0 20px}
+.shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
+.shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.dlbtns{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 18px}
+.dlbtn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  padding:11px 16px;border-radius:12px;font-weight:600;font-size:.95rem}
+.dlbtn+.dlbtn{background:transparent;color:var(--text);border:1px solid var(--border);font-weight:500}
+.prose h2,.prose h3{margin:1.4em 0 .5em}
+.prose p{margin:.8em 0}
+.prose ul{margin:.6em 0;padding-left:1.3em}
+.prose li{margin:.35em 0}
+table.info{border-collapse:collapse;width:100%;margin-top:26px}
+table.info th,table.info td{border-bottom:1px solid var(--border);text-align:left;padding:9px 4px;font-size:.95em;font-weight:normal}
+table.info th{color:var(--sub);width:7em}
+/* ---------- ✏️ 编辑模式（草稿只存本机浏览器 localStorage，不上传） ---------- */
+.editbtn{display:none;position:fixed;right:14px;bottom:14px;z-index:20;background:var(--accent);color:#fff;border:0;
+  border-radius:999px;padding:11px 16px;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.35);cursor:pointer}
+body.editor .editbtn{display:block}
+.editbtn.dirty{background:#c98a12}
+.toolbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:19;background:var(--panel);
+  border-top:1px solid var(--border);padding:9px 12px;gap:8px;flex-wrap:wrap;align-items:center}
+body.editing .toolbar{display:flex}
+body.editing{padding-bottom:120px}
+body.editing .prose,body.editing .info th,body.editing .info td{background:rgba(91,91,214,.10);
+  border-radius:6px;outline:1px dashed rgba(91,91,214,.5);min-height:1.3em}
+body.editing .prose *{outline:0}
+.toolbar button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 13px;font-size:14px;cursor:pointer}
+.toolbar button.ghost{background:transparent;color:var(--sub);border:1px solid var(--border)}
+.toolbar .hint{color:var(--sub);font-size:12.5px;margin-left:auto}
+.rowdel{display:none;background:none;border:0;color:#e5534b;font-size:15px;cursor:pointer}
+body.editing .rowdel{display:inline}
+.banner{display:none;margin:0 0 16px;padding:9px 11px;border-radius:8px;font-size:13.5px;
+  background:rgba(255,180,0,.13);border:1px solid rgba(255,180,0,.4);color:var(--text)}
+body.editing .banner{display:block}
+
+.qrs{display:flex;flex-wrap:wrap;gap:22px;margin:20px 0}
+.qrs figure{margin:0;text-align:center}
+.qrs img{width:230px;max-width:60vw;border-radius:14px;border:1px solid var(--border);display:block}
+.qrs figcaption{color:var(--sub);font-size:.9rem;margin-top:8px}
+</style>
+<div class="wrap">
+<p class="backlink"><a href="../index.html">← 返回源首页</a></p>
+<h1>赞赏支持</h1>
+<p class="tagline">这些插件是业余时间一个人做的，帮到你了可以扫个码请我喝杯咖啡 —— 完全自愿，不打赏也照样更新。</p>
+<div class="qrs"><p class="fine">（这里会显示微信 / 支付宝收款码：把两张图放到仓库的 <code>sponsor/wechat.png</code> 和 <code>sponsor/alipay.png</code> 即可）</p></div>
+<div class="prose">
+<p><strong>说明</strong></p>
+<ul>
+<li>个人收款码没有回调接口，扫码付款我这边收不到任何信息，所以做不了「打赏名单 / 支持人数」那种页面。</li>
+<li>想让我知道是你支持的，付完可以发封邮件到 <code>oaawallet@gmail.com</code>，我记在心里。</li>
+<li>金额随意，一分钱也是情分。</li>
+</ul>
+</div>
+</div>
+</html>
