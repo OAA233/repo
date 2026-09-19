@@ -138,7 +138,7 @@ def resolve_buttons(meta):
 def sponsor_qrs():
     """赞赏页上的收款码：[（标签, 绝对 URL）]，只列真实存在的图片。"""
     out = []
-    for key, label in (("wechat", "微信 · 长按识别"), ("alipay", "支付宝 · 扫一扫")):
+    for key, label in (("wechat", "微信 · 扫一扫→相册"), ("alipay", "支付宝 · 长按识别")):
         p = os.path.join(SPONSOR_DIR, key + ".png")
         if os.path.exists(p):
             v = hashlib.md5(open(p, "rb").read()).hexdigest()[:8]
@@ -176,8 +176,9 @@ def write_sponsor_page():
 <h1>赞赏支持</h1>
 <p class="tagline">请我喝杯牛奶 🥛</p>
 <div class="qrs">{cards}</div>
-<p class="fine">微信：把本页链接发到微信里打开，长按上面的码 → 识别图中二维码。<br>
-支付宝：保存图片后用支付宝「扫一扫」→ 相册选取，或直接用支付宝扫这个码。</p>
+<p class="fine"><strong>微信</strong>：保存本图 → 打开微信「扫一扫」→ 右下角「相册」→ 选这张图，就能直接进付款页。<br>
+（微信 8.0.32 之后禁止长按识别<strong>个人收款码</strong>，长按没反应是微信的限制，不是页面问题。）<br>
+<strong>支付宝</strong>：长按这张码选「识别图中二维码」，或用支付宝「扫一扫」直接扫。</p>
 </div>
 </html>"""
     os.makedirs(SPONSOR_DIR, exist_ok=True)
