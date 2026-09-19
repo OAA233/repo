@@ -14,10 +14,6 @@
   {
    "title": "安装说明 README.txt",
    "url": "mac/README.txt"
-  },
-  {
-   "title": "手机端 VNC 服务端（TrollVNC · 付费）",
-   "url": "https://havoc.app/package/trollvnc"
   }
  ],
  "depends": "firmware (>= 14.0), ellekit, com.a0.mirror17dim"

@@ -47,6 +47,9 @@ MIRRORS = ["https://wangyuan-repo.pages.dev/",     # 主源（Cloudflare Pages�
 # 临时把 ICON_BASE 改回 jsDelivr 并手动 purge。
 ICON_BASE = MIRRORS[0]
 DEP_BASE = ICON_BASE
+# False = Sileo 看原生介绍页（depictions/*.json，好看、快）；
+# True  = 连 Sileo 也去看网页版二级页（pkg/*.html，就是你在编辑模式里改的那个）
+WEB_DEPICTION = False
 
 
 # ---------- .deb 读取 (ar + control.tar.*) ----------
@@ -469,7 +472,12 @@ def build_packages():
             icon_ver = hashlib.md5(open(icon, "rb").read()).hexdigest()[:8]
             out.append(f"Icon: {ICON_BASE}icons/{os.path.basename(icon)}?v={icon_ver}")
         if has_depiction(d["Package"]):
-            out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json{dep_ver}")
+            # Zebra / Cydia / 老客户端读 Depiction（网页版二级页）
+            out.append(f"Depiction: {MIRRORS[0]}pkg/{quote(d['Package'])}.html")
+            if not WEB_DEPICTION:
+                # Sileo 读原生介绍页，且官方文档写明 SileoDepiction 优先于 Depiction；
+                # 想让 Sileo 也去读网页版二级页，把 WEB_DEPICTION 改成 True 即可。
+                out.append(f"SileoDepiction: {DEP_BASE}depictions/{d['Package']}.json{dep_ver}")
             if os.path.exists(os.path.join(SHOTS, d["Package"], "banner.png")):
                 bv = hashlib.md5(open(os.path.join(SHOTS, d["Package"], "banner.png"), "rb").read()).hexdigest()[:8]
                 out.append(f"Header: {DEP_BASE}shots/{d['Package']}/banner.png?v={bv}")

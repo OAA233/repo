@@ -8,6 +8,7 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.doubletapflipcameraplus.png?v=8cfe6032
+Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.doubletapflipcameraplus.html
 SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.doubletapflipcameraplus.json?v=7adb6d6f
 Filename: debs/com.a0.doubletapflipcameraplus_0.0.7_iphoneos-arm64.deb
 Size: 6298
@@ -24,7 +25,8 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17dim.png?v=d247d1f7
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json?v=2604a188
+Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17dim.html
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim.json?v=692139db
 Filename: debs/com.a0.mirror17dim_1.0.0_iphoneos-arm64.deb
 Size: 14076
 SHA256: e60705e874fa1c06c3b3a6e483d0b3adf2a56fd57987a0c21e7caa401fd61303
@@ -40,7 +42,8 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit, com.a0.mirror17dim
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17ka.png?v=d247d1f7
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json?v=4cb5a387
+Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17ka.html
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka.json?v=498c90c0
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1
@@ -56,6 +59,7 @@ Maintainer: wangyuan
 Section: Tweaks
 Depends: mobilesubstrate | ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.noswipe.png?v=eb309fd0
+Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.noswipe.html
 SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.noswipe.json?v=87fad6cd
 Filename: debs/com.a0.noswipe_7.12.deb
 Size: 24872
@@ -75,6 +79,7 @@ Conflicts: com.local.resumerecafterflip
 Replaces: com.local.resumerecafterflip
 Provides: com.local.resumerecafterflip
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.resumerecafterflip.png?v=8cfe6032
+Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.resumerecafterflip.html
 SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.resumerecafterflip.json?v=37d59a35
 Filename: debs/com.a0.resumerecafterflip_0.8.0_iphoneos-arm64.deb
 Size: 16846
@@ -82,20 +87,21 @@ SHA256: 20f9cd7b74a03980785fb31f451218e567bd95993b02055498730f94d72342d4
 MD5sum: c776fdbb14969aa986c3f361779a63c8
 
 Package: com.wangyuan.trollvnc
-Name: TrollVNC 王源构建版
+Name: Mirror17
 Version: 3.2-293-1
 Architecture: iphoneos-arm64
 Description: 这是什么
-Author: 王源 <wangzhengwz666@gmail.com>
-Maintainer: 王源 <wangzhengwz666@gmail.com>
+Author: 王源 <oaawallet@gmail.com>
+Maintainer: 王源 <oaawallet@gmail.com>
 Section: Tweaks
 Depends: firmware (>= 14.0), preferenceloader
 Conflicts: com.82flex.trollvnc
 Replaces: com.82flex.trollvnc
 Provides: com.82flex.trollvnc
-Icon: https://wangyuan-repo.pages.dev/icons/com.wangyuan.trollvnc.png?v=32330157
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc.json?v=6b859638
+Icon: https://wangyuan-repo.pages.dev/icons/com.wangyuan.trollvnc.png?v=d247d1f7
+Depiction: https://wangyuan-repo.pages.dev/pkg/com.wangyuan.trollvnc.html
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc.json?v=7989d8ba
 Filename: debs/com.wangyuan.trollvnc_3.2-293-1_iphoneos-arm64.deb
-Size: 1747158
-SHA256: 282cd4caff3ceb1afd8fc5cec29ec67c843256603a80be6a6ec288c76ca652f2
-MD5sum: dc0b33a7e90b48190d48a54647259863
+Size: 1747154
+SHA256: 8e477c969daa77ee6c54af317106bd363f78bf03d6e25e967cde641994aa9c78
+MD5sum: 1679ad478fef978a8c001d298d99dfcb

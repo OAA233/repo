@@ -1,8 +1,8 @@
 {
- "desc": "**这是什么**\n\n- 手机端 VNC 服务端（TrollVNC），装完 iPhone 就能被 VNC 客户端连上屏幕、接受触控\n- 基于开源上游 `OwnGoalStudio/TrollVNC`（GPL-2.0）自行编译，额外加入 Mirror17 需要的原生 H.264 推流通道（`127.0.0.1:38917`）\n\n**安装**\n\n- iOS 14+ 无根越狱（NathanLR 等），装完 respring 生效\n- 与 82Flex 的付费版互斥：装上会自动替换掉它，两者别同时装\n- 装完在「设置」里出现 TrollVNC 条目：设 VNC 全访问密码（建议字母+数字，别用纯数字）、开关、帧率\n\n**用法**\n\n- Mac 端配合 Mirror17 使用，数据线直连即可；Wi-Fi 直连用 TigerVNC 连 `手机IP:5901`\n- 默认端口：5901（VNC）、38917（Mirror17 原生 H.264 流）\n\n**来源与许可（GPL-2.0）**\n\n- 本包是**开源上游的自行编译版，不是官方版本**；官方付费版在 havoc.app/package/trollvnc，想支持原作者请买官方版\n- 对应源码随包公开，任何人可自行获取、编译、再分发：`source/trollvnc-3.2-293-1-src.tar.gz`\n\n**版本**\n\n- `3.2-293-1`：上游 3.2-293 + 王源的 native H.264 补丁",
+ "desc": "**这是什么**\n\n- 手机端 VNC 服务端（TrollVNC），装完 iPhone 就能被 VNC 客户端连上屏幕、接受触控\n- 基于开源上游 `OwnGoalStudio/TrollVNC`（GPL-2.0）自行编译，额外加入 Mirror17 需要的原生 H.264 推流通道（`127.0.0.1:38917`）\n\n- 与 82Flex 的付费版互斥：装上会自动替换掉它，两者别同时装\n- 装完在「设置」里出现 TrollVNC 条目：设 VNC 全访问密码（建议字母+数字，别用纯数字）、开关、帧率\n\n**用法**\n\n- Mac 端配合 Mirror17 使用，数据线直连即可；Wi-Fi 直连用 TigerVNC 连 `手机IP:5901`\n- 默认端口：5901（VNC）、38917（Mirror17 原生 H.264 流）\n\n**来源与许可（GPL-2.0）**\n\n- 本包是**开源上游的自行编译版，不是官方版本**；官方付费版在 havoc.app/package/trollvnc，想支持原作者请买官方版",
  "info": {
   "版本": "3.2-293-1",
-  "兼容": "iOS 14+ 无根越狱",
+  "兼容": "ios17",
   "作者": "王源",
   "许可": "GPL-2.0（上游）",
   "源码": "source/trollvnc-3.2-293-1-src.tar.gz"
@@ -17,5 +17,6 @@
    "title": "官方付费版（支持原作者）",
    "url": "https://havoc.app/package/trollvnc"
   }
- ]
+ ],
+ "name": "Mirror17"
 }
