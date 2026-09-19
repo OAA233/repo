@@ -123,3 +123,20 @@ Sileo / Zebra 包列表里每个包的图标来自这里：
 
 - `.nojekyll` 是必须的，否则 Pages 的 Jekyll 会动这些文件。
 - 包的描述/依赖来自 .deb 里的 control 文件，改文案要重新打包 deb，不是改这里。
+
+## 二级页自己改字（✏️ 编辑模式）
+
+每个 `pkg/<包名>.html` 右下角有 **✏️ 编辑** 按钮：
+
+1. 点开 → 正文、标题、底部信息表格都能像文档一样直接改（表格可 + 一行 / ✕ 删一行）
+2. 改动自动存在**你自己浏览器**的 localStorage（没上传，草稿只在你这台机器）
+3. 改完点 **导出 JSON**（下载 `<包名>.edits.json`）或 **复制 JSON**（直接粘给助手）
+4. 助手一条命令合并回源并发布：
+   ```bash
+   python3 apply_edits.py ~/Downloads/com.a0.noswipe.edits.json   # 只改 name/desc/info，旧文件备份成 .json.bak
+   python3 build_repo.py && ./deploy.sh
+   ```
+   合并脚本自检：`python3 apply_edits.py --self-test`
+
+想从零重来点「还原原始」即可；想让编辑模式一打开就进，访问页面加 `#edit`。
+截图（`shots/<包名>/`）不在编辑模式里，换图把图片丢进对应目录再说一声。

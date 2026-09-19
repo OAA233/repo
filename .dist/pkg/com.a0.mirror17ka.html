@@ -16,6 +16,10 @@ h1{font-size:1.6rem;margin:6px 0 4px}
 .tagline{color:var(--sub);margin:0 0 20px}
 .shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
 .shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.dlbtns{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 18px}
+.dlbtn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  padding:11px 16px;border-radius:12px;font-weight:600;font-size:.95rem}
+.dlbtn+.dlbtn{background:transparent;color:var(--text);border:1px solid var(--border);font-weight:500}
 .prose h2,.prose h3{margin:1.4em 0 .5em}
 .prose p{margin:.8em 0}
 .prose ul{margin:.6em 0;padding-left:1.3em}
@@ -49,6 +53,7 @@ body.editing .banner,body.hasdraft .banner{display:block}
 <h1>Mirror17 常亮</h1>
 <p class="tagline">1.0.0 · wangyuan</p>
 <div class="shots"><img src="https://wangyuan-repo.pages.dev/shots/com.a0.mirror17ka/01-connect.png?v=560108ba" alt=""><img src="https://wangyuan-repo.pages.dev/shots/com.a0.mirror17ka/02-connected.png?v=af44f89f" alt=""></div>
+<div class="dlbtns"><a class="dlbtn" href="https://wangyuan-repo.pages.dev/mac/Mirror17-mac-1.0.0.zip">下载 Mac 客户端（zip）</a><a class="dlbtn" href="https://wangyuan-repo.pages.dev/mac/README.txt">安装说明 README.txt</a></div>
 <div class="prose"><p>投屏 / 镜像期间禁止 iPhone 自动锁屏。</p>
 <p>做法是注入 SpringBoard 设 `idleTimerDisabled` —— iOS 17 上别的办法（后台任务、定时器、私有断言）都拦不住自动锁屏，只有从 SpringBoard 内部下手才可靠。</p>
 <p><strong>配套的 Mac 端（Mirror17）</strong></p>

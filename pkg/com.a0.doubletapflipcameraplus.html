@@ -16,6 +16,10 @@ h1{font-size:1.6rem;margin:6px 0 4px}
 .tagline{color:var(--sub);margin:0 0 20px}
 .shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
 .shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.dlbtns{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 18px}
+.dlbtn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  padding:11px 16px;border-radius:12px;font-weight:600;font-size:.95rem}
+.dlbtn+.dlbtn{background:transparent;color:var(--text);border:1px solid var(--border);font-weight:500}
 .prose h2,.prose h3{margin:1.4em 0 .5em}
 .prose p{margin:.8em 0}
 .prose ul{margin:.6em 0;padding-left:1.3em}
@@ -48,6 +52,7 @@ body.editing .banner,body.hasdraft .banner{display:block}
 <div class="banner">你在编辑本页 —— 改的是你自己浏览器里的草稿，没上传。改完点「导出 JSON」或「复制 JSON」发给我，我合进源里再发布。</div>
 <h1>DoubleTapFlipCamera Plus</h1>
 <p class="tagline">0.0.7 · wangyuan</p>
+
 
 <div class="prose"><p>系统相机里双击屏幕翻转前后摄（仅在空闲状态下），不打断正在进行的录像。</p>
 <p>本版是带探测日志的构建，当初用来查「录像中翻转会打断录像」的成因 —— 那个问题的成品解法见同源的 Camera Resume Rec。</p></div>

@@ -111,6 +111,23 @@ def newest_mac():
     return max(files, key=lambda n: os.path.getmtime(os.path.join(MAC, n))) if files else None
 
 
+def resolve_buttons(meta):
+    """meta 里的 buttons → [{title, raw, external, tintColor}]。
+    raw 是仓库内的相对路径（"mac:" 自动指向 mac/ 里最新的那个下载件），
+    调用方自己决定前缀：Sileo 介绍页用 DEP_BASE，网页用 MIRRORS[0]。"""
+    out = []
+    for b in (meta.get("buttons") or []):
+        raw = (b.get("url") or "").strip()
+        if raw == "mac:":                        # 自动指向 mac/ 里最新的那个
+            raw = "mac/" + (newest_mac() or "")
+        if not raw:
+            continue
+        out.append({"title": b.get("title", ""), "raw": raw,
+                    "external": bool(b.get("external", True)),
+                    "tintColor": b.get("tintColor", "#5b5bd6")})
+    return out
+
+
 def build_depiction(stanza, meta):
     pkg = stanza["Package"]
     views = [{"class": "DepictionHeaderView", "title": stanza.get("Name", pkg)},
@@ -130,14 +147,11 @@ def build_depiction(stanza, meta):
         views.append({"class": "DepictionTableTextView", "title": str(k), "text": str(v)})
     if meta.get("info"):
         views.insert(len(views) - len(meta["info"]), {"class": "DepictionSeparatorView"})
-    for b in (meta.get("buttons") or []):        # 介绍页里的按钮（比如 Mac 客户端下载）
-        raw = b["url"]
-        if raw == "mac:":                        # 自动指向 mac/ 里最新的那个
-            raw = "mac/" + (newest_mac() or "")
-        url = raw if raw.startswith("http") else f"{DEP_BASE}{raw}"
-        views.append({"class": "DepictionTableButtonView", "title": b["title"], "action": url,
-                      "openExternal": bool(b.get("external", True)),
-                      "tintColor": b.get("tintColor", "#5b5bd6")})
+    for b in resolve_buttons(meta):              # 介绍页里的按钮（比如 Mac 客户端下载）
+        raw = b["raw"]
+        views.append({"class": "DepictionTableButtonView", "title": b["title"],
+                      "action": raw if raw.startswith("http") else f"{DEP_BASE}{raw}",
+                      "openExternal": b["external"], "tintColor": b["tintColor"]})
     doc = {"minVersion": "0.4", "class": "DepictionTabView", "tintColor": "#5b5bd6",
            "tabs": [{"class": "DepictionStackView", "tabname": "介绍", "views": views}]}
     banner = os.path.join(SHOTS, pkg, "banner.png")
@@ -199,6 +213,10 @@ h1{font-size:1.6rem;margin:6px 0 4px}
 .tagline{color:var(--sub);margin:0 0 20px}
 .shots{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px}
 .shots img{height:320px;border-radius:12px;border:1px solid var(--border);display:block}
+.dlbtns{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 18px}
+.dlbtn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  padding:11px 16px;border-radius:12px;font-weight:600;font-size:.95rem}
+.dlbtn+.dlbtn{background:transparent;color:var(--text);border:1px solid var(--border);font-weight:500}
 .prose h2,.prose h3{margin:1.4em 0 .5em}
 .prose p{margin:.8em 0}
 .prose ul{margin:.6em 0;padding-left:1.3em}
@@ -361,6 +379,9 @@ def build_pkg_page(d, meta, doc):
         f"<tr><th>{esc_html(k)}</th><td>{esc_html(v)}</td></tr>"
         for k, v in (meta.get("info") or {}).items())
     edit_js = PKG_EDIT_JS.replace("__PKG__", json.dumps(pkg))
+    btns_html = "".join(
+        f'<a class="dlbtn" href="{esc_html(b["raw"] if b["raw"].startswith("http") else MIRRORS[0] + b["raw"])}">'
+        f'{esc_html(b["title"])}</a>' for b in resolve_buttons(meta))
     return f"""<!doctype html>
 <html lang="zh-CN">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -373,6 +394,7 @@ def build_pkg_page(d, meta, doc):
 <h1>{esc_html(d["Name"])}</h1>
 <p class="tagline">{esc_html(d.get("Version", "?"))} · {esc_html(d.get("Author", AUTHOR))}</p>
 {f'<div class="shots">{shots_html}</div>' if shots else ""}
+{f'<div class="dlbtns">{btns_html}</div>' if btns_html else ""}
 <div class="prose">{md_to_html(meta.get("desc") or "")}</div>
 {('<table class="info">' + info_rows + "</table>") if info_rows else ""}
 </div>
@@ -507,13 +529,21 @@ def write_all():
         if not os.path.exists(os.path.join(ROOT, icon)):
             icon = "icons/default.png"
         cards.append((d["Name"], d["Version"], d["Description"].splitlines()[0], icon, d["Package"]))
-    pkg_html = "".join(
-        f'<a class="card" href="pkg/{quote(pid)}.html">'
-        f'<img class="icon" src="{esc(icon)}" alt="" width="56" height="56">'
-        f'<div class="meta"><div class="row"><span class="name">{esc(name)}</span>'
-        f'<span class="ver">{esc(ver)}</span></div>'
-        f'<div class="desc" title="{esc(desc)}">{esc(desc)}</div></div></a>'
-        for name, ver, desc, icon, pid in cards)
+    def _card(name, ver, desc, icon, pid):
+        card = (f'<a class="card" href="pkg/{quote(pid)}.html">'
+                f'<img class="icon" src="{esc(icon)}" alt="" width="56" height="56">'
+                f'<div class="meta"><div class="row"><span class="name">{esc(name)}</span>'
+                f'<span class="ver">{esc(ver)}</span></div>'
+                f'<div class="desc" title="{esc(desc)}">{esc(desc)}</div></div></a>')
+        btns = resolve_buttons(load_meta(pid))     # 有 buttons 的包（如 Mirror17）在卡片下方直接给下载
+        if not btns:
+            return card
+        row = "".join(
+            f'<a class="dlbtn" href="{esc(b["raw"] if b["raw"].startswith("http") else MIRRORS[0] + b["raw"])}">'
+            f'⬇ {esc(b["title"])}</a>' for b in btns)
+        return f'<div class="cardwrap">{card}<div class="cardbtns">{row}</div></div>'
+
+    pkg_html = "".join(_card(*c) for c in cards)
 
     # 非 APT 的普通下载件：mac/ 里的 zip/dmg（Mac 客户端这类东西 Sileo 装不了，只能当附件下）
     macs = sorted((n for n in os.listdir(MAC)
@@ -586,7 +616,11 @@ h2{font-size:.9rem;font-weight:600;letter-spacing:.1em;color:var(--sub);margin:3
 code{background:var(--code);padding:.1em .35em;border-radius:6px}
 .card{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--border);
   border-radius:16px;padding:13px 14px;transition:border-color .15s ease}
-.cards .card+.card{margin-top:10px}
+.cards>*+*{margin-top:10px}
+.cardbtns{display:flex;flex-wrap:wrap;gap:8px;padding:9px 4px 0 84px}
+.dlbtn{display:inline-block;border:1px solid var(--border);background:var(--panel);color:var(--text);
+  text-decoration:none;border-radius:10px;padding:7px 12px;font-size:.86rem}
+.dlbtn:hover{border-color:var(--accent)}
 a.card{text-decoration:none;color:inherit}
 .card:hover{border-color:var(--accent)}
 .icon{width:56px;height:56px;border-radius:13px;flex:none;display:block;background:var(--code);object-fit:cover}
