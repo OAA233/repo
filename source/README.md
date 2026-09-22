@@ -5,8 +5,8 @@
 | 项 | 值 |
 |---|---|
 | 包名 | `com.wangyuan.trollvnc` |
-| 版本 | `3.2-293-1` |
-| 源码 | `trollvnc-3.2-293-1-src.tar.gz` |
+| 版本 | `3.2-293-2` |
+| 源码 | `trollvnc-3.2-293-2-src.tar.gz` |
 | 上游 | https://github.com/OwnGoalStudio/TrollVNC （GPL-2.0，commit a3e4081 起） |
 | 官方付费版 | https://havoc.app/package/trollvnc （与本包无关，想支持原作者请买它） |
 
@@ -23,11 +23,11 @@
 ## 怎么自己编译
 
 ```bash
-tar -xzf trollvnc-3.2-293-1-src.tar.gz
+tar -xzf trollvnc-3.2-293-2-src.tar.gz
 cd trollvnc-src
 export THEOS=~/theos THEOS_PACKAGE_SCHEME=rootless   # 无根越狱环境
-make package PACKAGE_VERSION=3.2-293-1
-# 产物在 packages/com.wangyuan.trollvnc_3.2-293-1_iphoneos-arm64.deb
+make package PACKAGE_VERSION=3.2-293-2
+# 产物在 packages/com.wangyuan.trollvnc_3.2-293-2_iphoneos-arm64.deb
 ```
 
 需要 theos、iOS 16.5 SDK（theos 自带即可）。装包：`dpkg -i` 或直接丢进 Sileo 安装。
