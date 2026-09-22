@@ -46,6 +46,8 @@ LEGACY_AUTHORS = ("a0", "", "王", "Wang", "wang", "wangyuan")
 # 实测会出现三个镜像三个版本的惨案（主源 7.12 / cdn 7.13 / fastly 7.15），所以索引不用它。
 MIRRORS = ["https://wangyuan-repo.pages.dev/",     # 主源（Cloudflare Pages）
            "https://oaa233.github.io/repo/"]        # 同一份 push 重建，天然同步
+# 注意：MIRRORS[1] 只作为真实存在的备用源保留（设备上配的就是它），
+# 落地页 index.html 已不再展示任何备用地址/镜像直链，别顺手又加回去。
 # 图标/介绍页/贴图也走主源：jsDelivr 对 @main 不认 purge，介绍页会一直拿旧缓存。
 # URL 全部带内容哈希(?v=)，改完刷新源立即生效。国内裸网打不开 pages.dev 时，
 # 临时把 ICON_BASE 改回 jsDelivr 并手动 purge。
@@ -704,7 +706,6 @@ def write_all():
   <code>brew install --cask tigervnc</code>。没做 Apple 公证，第一次打开可能要在「终端」跑
   <code>xattr -dr com.apple.quarantine /Applications/Mirror17.app</code>。</p>
   {docs_html}
-  <p class="fine">镜像直链（主源连不上时用）：<a href="{MIRRORS[1]}mac/{quote(macs[0])}">{esc(MIRRORS[1])}mac/{esc(macs[0])}</a></p>
 </section>"""
 
     CSS = """
