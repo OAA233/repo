@@ -23,25 +23,36 @@ npx wrangler login     # 浏览器里点一下授权
 ## 加源地址（在 Zebra/Sileo 的「添加源」里只粘纯网址，不要粘 `sileo://` 开头那种链接 —— 那是给浏览器点击用的）
 
     主：  https://wangyuan-repo.pages.dev/       ← Cloudflare Pages
-    备用：https://cdn.jsdelivr.net/gh/OAA233/repo@main/
+    备用：https://oaa233.github.io/repo/         ← 同一份 push 重建，和主源天然同步（推荐）
+          https://cdn.jsdelivr.net/gh/OAA233/repo@main/
           https://fastly.jsdelivr.net/gh/OAA233/repo@main/
-          https://sileo-repo.pages.dev/
-          https://oaa233.github.io/repo/
 
 jsDelivr 是国内 CDN，不通就依次换后面的节点。一键加源链接（发到手机点开）：<https://wangyuan-repo.pages.dev/>
+
+> ⚠️ `https://sileo-repo.pages.dev/` 是另一个 Cloudflare Pages 项目，**不跟着 push 更新**。2026-09-22 实测它只有
+> 5 个包（缺 `com.wangyuan.trollvnc`），别往设备上配 —— 要么重建它，要么把这个项目删掉。
+> ⚠️ jsDelivr 只当"能用就用"的兜底：它对分支(@main)缓存不认 purge，索引可能滞后最多 12 小时
+> （`deploy.sh` 每次会清一遍）。设备上首选主源或 GitHub Pages 镜像。
+> ⚠️ 落地页（`index.html`）**不展示任何备用地址**，上面这份列表只留在这里给开发/排障用。
 
 ## 当前包
 
 | 包 | 版本 | 说明 |
 |---|---|---|
-| com.a0.noswipe | 7.13 | XHS NoSwipe — 小红书禁滑 + 图文守护 |
-| com.a0.mirror17dim | 1.0.0 | Mirror17 Dim — 有镜像客户端连接时把 iPhone 亮度降到最低 |
+| com.a0.noswipe | 7.12 | XHS NoSwipe — 小红书禁滑 + 图文守护 |
+| com.a0.mirror17dim | 1.0.1 | Mirror17 Dim — 有镜像客户端连接时把 iPhone 亮度降到最低 |
 | com.a0.mirror17ka | 1.0.0 | Mirror17 Keep Awake — 投屏期间禁止自动锁屏 |
 | com.a0.doubletapflipcameraplus | 0.0.7 | 双击翻转相机 |
 | com.a0.resumerecafterflip | 0.8.0 | 相机翻转打断录像后自动续录，停止时把各分段无损拼成一个完整视频 |
+| com.wangyuan.trollvnc | 3.2-293-2 | Mirror17 — iOS 端投屏服务端（TrollVNC），配套 Mac 客户端用 |
 
 > 列表里显示的名字默认取 deb control 里的 `Name:`。想覆盖它，在 `meta/<包名>.json` 里加
-> `"name": "新名字"` 即可（deb 本体不动）。现在 5 个包都没有用这个覆盖。
+> `"name": "新名字"` 即可（deb 本体不动）。现在三个包在用这个覆盖：
+> `mirror17dim` → 「Mirror17 调暗」、`mirror17ka` → 「Mirror17 常亮」、`wangyuan.trollvnc` → 「Mirror17」。
+>
+> ⚠️ `com.wangyuan.trollvnc` 的 deb 描述还是占位文案「这是什么」，改它要重打 deb（改 Packages 文件没用）。
+>
+> 上表版本号由人工维护，`build_repo.py` 不会改它 —— 发新版后记得回来对一遍（`grep '^Package:\|^Version:' Packages`）。
 
 ## Mac 客户端（不在 APT 里）
 
