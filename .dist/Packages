@@ -17,20 +17,20 @@ MD5sum: 2b80f4415e98624ec28bad0a1ca3fb72
 
 Package: com.a0.mirror17dim
 Name: Mirror17 调暗
-Version: 1.0.1
+Version: 1.0.2
 Architecture: iphoneos-arm64
-Description: 配套的 Mac 端（Mirror17）
+Description: 连上镜像客户端时把 iPhone 亮度降到最低，断开后自动恢复（配套 Mac 端 Mirror17）
 Author: 王源 <oaawallet@gmail.com>
 Maintainer: 王源 <oaawallet@gmail.com>
 Section: Tweaks
 Depends: firmware (>= 14.0), ellekit
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17dim.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17dim.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim-f17ece23.json
-Filename: debs/com.a0.mirror17dim_1.0.1_iphoneos-arm64.deb
-Size: 16904
-SHA256: f4b06508764e8be978300aed07f0d4ebd60f1340d4c40e691569f612bcfc022e
-MD5sum: 8b35cf8c8e808465e49eb87837056bf0
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17dim-3d361eab.json
+Filename: debs/com.a0.mirror17dim_1.0.2_iphoneos-arm64.deb
+Size: 16938
+SHA256: a21fdccf32f9c9f0b2b301012accd9de02122a4119e6b0a679ddbf44eed28df5
+MD5sum: 717e05e963a0bc63034bc4ff681721b5
 
 Package: com.a0.mirror17ka
 Name: Mirror17 常亮
@@ -90,7 +90,7 @@ Package: com.wangyuan.trollvnc
 Name: Mirror17
 Version: 3.2-293-2
 Architecture: iphoneos-arm64
-Description: 这是什么
+Description: 手机端 VNC 服务端（TrollVNC 王源构建版），装完 iPhone 就能被 VNC 客户端连上屏幕、接受触控
 Author: 王源 <oaawallet@gmail.com>
 Maintainer: 王源 <oaawallet@gmail.com>
 Section: Tweaks
@@ -100,7 +100,7 @@ Replaces: com.82flex.trollvnc
 Provides: com.82flex.trollvnc
 Icon: https://wangyuan-repo.pages.dev/icons/com.wangyuan.trollvnc.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.wangyuan.trollvnc.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc-8e7657e3.json
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.wangyuan.trollvnc-9777ea1d.json
 Filename: debs/com.wangyuan.trollvnc_3.2-293-2_iphoneos-arm64.deb
 Size: 1753898
 SHA256: f2a563128f88c6100291493d9780b793ffd7bcfaf6e519093cc54b79c037cfd5

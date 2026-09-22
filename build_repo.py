@@ -551,6 +551,7 @@ def build_packages():
             d["Name"] = meta["name"]
         if meta.get("desc"):
             first = re.sub(r"[#*`>]", "", meta["desc"].strip().split("\n")[0]).strip()
+            first = re.sub(r"^[-–—•]\s*", "", first)   # 首行是列表项时去掉 "- " 前缀，别把项目符号带进列表摘要
             d["Description"] = first[:120]
         dep_ver = ""
         if has_depiction(d["Package"]):

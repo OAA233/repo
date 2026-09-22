@@ -40,7 +40,7 @@ jsDelivr 是国内 CDN，不通就依次换后面的节点。一键加源链接�
 | 包 | 版本 | 说明 |
 |---|---|---|
 | com.a0.noswipe | 7.12 | XHS NoSwipe — 小红书禁滑 + 图文守护 |
-| com.a0.mirror17dim | 1.0.1 | Mirror17 Dim — 有镜像客户端连接时把 iPhone 亮度降到最低 |
+| com.a0.mirror17dim | 1.0.2 | Mirror17 Dim — 有镜像客户端连接时把 iPhone 亮度降到最低 |
 | com.a0.mirror17ka | 1.0.0 | Mirror17 Keep Awake — 投屏期间禁止自动锁屏 |
 | com.a0.doubletapflipcameraplus | 0.0.7 | 双击翻转相机 |
 | com.a0.resumerecafterflip | 0.8.0 | 相机翻转打断录像后自动续录，停止时把各分段无损拼成一个完整视频 |
