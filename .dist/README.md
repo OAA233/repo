@@ -102,7 +102,8 @@ cd ~/Desktop/王源/Mirror17
 
 ## 发新版
 
-1. 新 .deb 丢进 `debs/`（同名多版本也行，装的时候取最高版）
+1. 新 .deb 丢进 `debs/`，**同名只留一个版本** —— `build_repo.py` 不做去重，放两个版本会出现两条 stanza、
+   落地页两张同名卡片。发新版就把旧的从 `debs/` 删掉（工程自己的 `packages/` 里那份留着当回退档）。
 2. `python3 build_repo.py` — 生成 Packages / Packages.bz2 / Packages.gz / Release / index.html，并自校验哈希
 3. `git add -A && git commit -m "xxx 1.2" && git push`
 4. 清 jsDelivr 缓存，否则备用地址最多 12 小时才看到新版：
