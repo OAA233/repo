@@ -27,11 +27,6 @@ h2{font-size:.9rem;font-weight:600;letter-spacing:.1em;color:var(--sub);margin:3
 .btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 18px;border-radius:12px;
   text-decoration:none;font-weight:600;font-size:.98rem}
 .btn:hover{filter:brightness(1.12)}
-.mirrors{margin-top:16px;border-top:1px solid var(--border);padding-top:12px}
-.mhead{color:var(--sub);font-size:.85rem;margin-bottom:8px}
-.mrow{display:flex;gap:10px;align-items:baseline;justify-content:space-between;padding:3px 0}
-.mrow code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;word-break:break-all}
-.mrow span{color:var(--sub);font-size:.78rem;flex:none}
 code{background:var(--code);padding:.1em .35em;border-radius:6px}
 .card{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--border);
   border-radius:16px;padding:13px 14px;transition:border-color .15s ease}
@@ -52,8 +47,7 @@ a.card{text-decoration:none;color:inherit}
 .sectionnote{color:var(--sub);margin:-4px 0 12px;font-size:.92rem}
 .fine{color:var(--sub);font-size:.82rem;line-height:1.75;overflow-wrap:anywhere}
 .fine a{color:var(--text)}
-.fine code,.warn code{font-size:.9em}
-.warn{margin:14px 1px 0;color:var(--sub);font-size:.85rem}
+.fine code{font-size:.9em}
 footer{margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
 footer small{color:var(--sub);word-break:break-all}
 </style>
@@ -70,11 +64,6 @@ footer small{color:var(--sub);word-break:break-all}
     <button class="copy" type="button" onclick="cp(this,'https://wangyuan-repo.pages.dev/')">复制</button>
   </div>
   <a class="btn" href="sileo://source/https://wangyuan-repo.pages.dev/">添加到 Sileo</a>
-  <div class="mirrors">
-    <div class="mhead">备用地址 —— 主源连不上时在「添加源」里手动粘贴：</div>
-    <div class="mrow"><code>https://oaa233.github.io/repo/</code><span>GitHub Pages · 海外快</span></div>
-  </div>
-  <p class="warn">⚠️ 添加源时只粘上面这种纯网址，不要粘 <code>sileo://</code> 开头的一键链接（那是给浏览器点开的）。</p>
 </section>
 
 <section>
@@ -95,7 +84,7 @@ footer small{color:var(--sub);word-break:break-all}
   <p class="fine">安装说明与许可证：<a href="mac/README.txt">README.txt</a> <a href="mac/NOTICE.txt">NOTICE.txt</a> </p>
   <p class="fine">镜像直链（主源连不上时用）：<a href="https://oaa233.github.io/repo/mac/Mirror17-mac-1.0.1.zip">https://oaa233.github.io/repo/mac/Mirror17-mac-1.0.1.zip</a></p>
 </section>
-<footer><small>本页由 build_repo.py 生成 · 更新 2026-09-19 · 主源 https://wangyuan-repo.pages.dev/  · <a href="sponsor/" style="color:inherit">♥ 赞赏支持</a></small></footer>
+<footer><small>本页由 build_repo.py 生成 · 更新 2026-09-22 · 主源 https://wangyuan-repo.pages.dev/  · <a href="sponsor/" style="color:inherit">♥ 赞赏支持</a></small></footer>
 </div>
 <script>function cp(b,t){var d=function(){b.textContent='已复制';
 setTimeout(function(){b.textContent='复制'},1200)};

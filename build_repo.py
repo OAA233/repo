@@ -731,11 +731,6 @@ h2{font-size:.9rem;font-weight:600;letter-spacing:.1em;color:var(--sub);margin:3
 .btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 18px;border-radius:12px;
   text-decoration:none;font-weight:600;font-size:.98rem}
 .btn:hover{filter:brightness(1.12)}
-.mirrors{margin-top:16px;border-top:1px solid var(--border);padding-top:12px}
-.mhead{color:var(--sub);font-size:.85rem;margin-bottom:8px}
-.mrow{display:flex;gap:10px;align-items:baseline;justify-content:space-between;padding:3px 0}
-.mrow code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;word-break:break-all}
-.mrow span{color:var(--sub);font-size:.78rem;flex:none}
 code{background:var(--code);padding:.1em .35em;border-radius:6px}
 .card{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--border);
   border-radius:16px;padding:13px 14px;transition:border-color .15s ease}
@@ -756,8 +751,7 @@ a.card{text-decoration:none;color:inherit}
 .sectionnote{color:var(--sub);margin:-4px 0 12px;font-size:.92rem}
 .fine{color:var(--sub);font-size:.82rem;line-height:1.75;overflow-wrap:anywhere}
 .fine a{color:var(--text)}
-.fine code,.warn code{font-size:.9em}
-.warn{margin:14px 1px 0;color:var(--sub);font-size:.85rem}
+.fine code{font-size:.9em}
 footer{margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
 footer small{color:var(--sub);word-break:break-all}
 """
@@ -769,11 +763,6 @@ x.select();document.execCommand('copy');document.body.removeChild(x)}catch(e){}}
 
     date = __import__("time").strftime("%Y-%m-%d")
     foot_sponsor = ' · <a href="sponsor/" style="color:inherit">♥ 赞赏支持</a>' if sponsor_on() else ""
-    # 备用地址按 MIRRORS 列表实际长度生成，别写死下标（列表增删会 IndexError）
-    _labels = ["GitHub Pages · 海外快", "Cloudflare Pages · 备用", "备用", "备用"]
-    mirror_rows = "\n".join(
-        f'    <div class="mrow"><code>{esc(u)}</code><span>{_labels[i - 1]}</span></div>'
-        for i, u in enumerate(MIRRORS[1:], start=1))
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(f"""<!doctype html>
 <html lang="zh-CN">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -793,11 +782,6 @@ x.select();document.execCommand('copy');document.body.removeChild(x)}catch(e){}}
     <button class="copy" type="button" onclick="cp(this,'{MIRRORS[0]}')">复制</button>
   </div>
   <a class="btn" href="sileo://source/{MIRRORS[0]}">添加到 Sileo</a>
-  <div class="mirrors">
-    <div class="mhead">备用地址 —— 主源连不上时在「添加源」里手动粘贴：</div>
-{mirror_rows}
-  </div>
-  <p class="warn">⚠️ 添加源时只粘上面这种纯网址，不要粘 <code>sileo://</code> 开头的一键链接（那是给浏览器点开的）。</p>
 </section>
 
 <section>
