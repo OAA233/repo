@@ -43,7 +43,7 @@ Section: Tweaks
 Depends: firmware (>= 14.0), ellekit, com.a0.mirror17dim
 Icon: https://wangyuan-repo.pages.dev/icons/com.a0.mirror17ka.png?v=d247d1f7
 Depiction: https://wangyuan-repo.pages.dev/pkg/com.a0.mirror17ka.html
-SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka-6704633d.json
+SileoDepiction: https://wangyuan-repo.pages.dev/depictions/com.a0.mirror17ka-e0c6d5b5.json
 Filename: debs/com.a0.mirror17ka_1.0.0_iphoneos-arm64.deb
 Size: 5758
 SHA256: c55d8087049d5a838376dafaa0accc82a6048aaf9a08006e332ce28b0515a8d1

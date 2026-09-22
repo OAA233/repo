@@ -37,7 +37,7 @@
     },
     {
      "class": "DepictionMarkdownView",
-     "markdown": "投屏 / 镜像期间禁止 iPhone 自动锁屏\n\n**配套的 Mac 端（Mirror17）**装好这个包之后，Mac 上运行 Mirror17，用数据线或 Wi-Fi 连上 iPhone，画面会直接显示在 Mac 窗口里。"
+     "markdown": "投屏 / 镜像期间禁止 iPhone 自动锁屏\n\n**配套的 Mac 端（Mirror17）**\n\n装好这个包之后，Mac 上运行 Mirror17，用数据线或 Wi-Fi 连上 iPhone，画面会直接显示在 Mac 窗口里。"
     },
     {
      "class": "DepictionSeparatorView"
